@@ -22,7 +22,7 @@ copyright = '2022, PHASEシステム研究会'
 author = 'PHASEシステム研究会'
 
 # The full version, including alpha/beta/rc tags
-release = '2021.02'
+release = '2022.01'
 
 
 # -- General configuration ---------------------------------------------------
@@ -79,14 +79,23 @@ class CustomLatexFormatter(LatexFormatter):
         super(CustomLatexFormatter, self).__init__(**options)
         self.verboptions = r"formatcom=\small"
 
-PygmentsBridge.latex_formatter = CustomLatexFormatter
-
-latex_elements = {
-        'preamble': r''' \usepackage{braket} '''
-}
 rst_prolog=u"""
 .. |PHASE020XX.YY| replace:: phase0_2022.01
 """
 
+PygmentsBridge.latex_formatter = CustomLatexFormatter
+
 master_doc = 'index'
-latex_engine = 'uplatex'
+latex_engine = 'lualatex'
+latex_elements = {
+    "papersize": "a4paper",
+    "pointsize": "12pt",
+    # "extraclassoptions": "tombow",
+    "fontpkg": "",
+    "extrapackages": "",
+    "preamble": "",
+    "polyglossia": "",
+    "fncychap": r"\usepackage[Bjornstrup]{fncychap}",
+}
+latex_docclass = {'manual': 'ltjsbook'}
+
