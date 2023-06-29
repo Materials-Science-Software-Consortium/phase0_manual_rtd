@@ -1425,6 +1425,7 @@ nspin=1の出力例
  (後略)
  
 nspin=2の出力例
+
 .. code-block:: text
 
  #    dk[Bohr-1]            energy[eV]

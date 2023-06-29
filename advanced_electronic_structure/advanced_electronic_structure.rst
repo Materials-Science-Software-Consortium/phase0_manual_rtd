@@ -409,15 +409,6 @@ occmat.dataは計算を継続する場合や、占有行列の初期値を与え
 
 :math:`U_{\text{eff}}`\ が0 eVのときは、4f軌道によるバンドはフェルミレベルの上1.5eV上に現れますが、\ :math:`U_{\text{eff}}`\ を20eVとすると8eV下に現れます。
 
-斜方晶LaVO3
-
-斜方晶LaVO3の計算例です。
-
--  :code:`samples/DFT+U/LaVO3/orthrombic+u` 　(:math:`U_{\text{eff}}`\ は、V 3d軌道は 5 eV、La 4f 軌道は20 eV )
--  :code:`samples/DFT+U/LaVO3/orthrombic` (:math:`U_{\text{eff}}`\ は0 eV)
-
-DFT+U計算ではV原子上の磁気モーメントが反強磁性的に配列します。
-
 立方晶FeO
 
 立方晶FeOの計算例です。この計算例は、occmat.data
@@ -803,6 +794,7 @@ sw_output_hybrid_infoをonとすると必要な情報がF_HYBRIDINFOファイル
 SCF計算はハイブリッド計算でも通常のPBE計算でもよいです。バンド計算を行うためには、通常のバンド計算の入力にハイブリッド汎関数計算の設定を施し、さらにfile_names.dataファイルを以下のように記述します(SCF計算が行われたディレクトリーを1階層上のscfというディレクトリーだったとして)。
 
 .. code-block:: text
+ :emphasize-lines: 3,4
 
  &fnames
  F_CHGT = ‘../scf/nfchgt.data’
@@ -810,7 +802,7 @@ SCF計算はハイブリッド計算でも通常のPBE計算でもよいです�
  F_HYBRIDINFO = ‘../scf/nfhybridinfo.data’
  /
 
-赤字で示したエントリーが通常のバンド計算と異なる部分です。ファイルポインターF_SCF_ZAJによってSCF計算によって得られた波動関数ファイルのファイル名を指定しています。これは「固定波動関数」として使われるものです。F_HYBRIDINFOにはハイブリッド汎関数法の様々な情報が記録されています。両方ともバンド計算中は純粋に入力として利用され、その内容がバンド計算の前後で変化することはありません。SiおよびCのハイブリッド汎関数法によるバンド構造計算の入力ファイルが :code:`samples/hybrid/Si/band_hse06` および :code:`samples/hybrid/C/band_hse06` にあります。
+ハイライトで示したエントリーが通常のバンド計算と異なる部分です。ファイルポインターF_SCF_ZAJによってSCF計算によって得られた波動関数ファイルのファイル名を指定しています。これは「固定波動関数」として使われるものです。F_HYBRIDINFOにはハイブリッド汎関数法の様々な情報が記録されています。両方ともバンド計算中は純粋に入力として利用され、その内容がバンド計算の前後で変化することはありません。SiおよびCのハイブリッド汎関数法によるバンド構造計算の入力ファイルが :code:`samples/hybrid/Si/band_hse06` および :code:`samples/hybrid/C/band_hse06` にあります。
 
 .. _使用における注意点-1:
 
@@ -1979,8 +1971,6 @@ ESMの場合と同様、ポテンシャルの差分は、真空域において�
 PBEsol汎関数（バージョン2019.02以降）
 -------------------------------------
 
-.. _概要-4:
-
 概要
 ~~~~~
 
@@ -1998,8 +1988,6 @@ PBEsol汎関数では、交換エネルギー及び相関エネルギーは、�
 
 で与えられます。ここで、 :math:`\mu=10 /81` 及び :math:`\beta=0.046` です。
 
-.. _入力-1:
-
 入力
 ~~~~~~~
 
@@ -2014,8 +2002,6 @@ xctypeとして pbesol を指定します。擬ポテンシャルは通常の PB
 
 擬ポテンシャルは通常のPBEのものを利用してください。
 
-.. _出力-3:
-
 出力
 ~~~~~~~
 
@@ -2027,8 +2013,6 @@ xctypeとして pbesol を指定します。擬ポテンシャルは通常の PB
 
 この例では、読み込んだ擬ポテンシャルは PBEであるが、計算は PBEsol
 で行うことを意味しています。これ以外に、PBEsol特有の出力はありません。
-
-.. _計算例-8:
 
 計算例
 ~~~~~~~
@@ -2059,8 +2043,6 @@ PBEsol 3.149 (-0.012) 3.293 (+0.008) 3.146 (-0.007) 3.289 (+0.001)
 meta-gga（バージョン2019.02以降）
 ----------------------------------
 
-.. _概要-5:
-
 概要
 ~~~~~~
 
@@ -2089,8 +2071,6 @@ modified Becke Johnson
 
 なお、 :eq:`advanced_metagga_eq4` の解は数値的に解いても得られますが、計算速度の観点から
 Proynovら [Proynov08]_ の近似解を使用します。
-
-.. _入力-2:
 
 入力
 ~~~~~
@@ -2150,8 +2130,6 @@ modified Becke Johnson 交換ポテンシャルを利用するには、
 
 k点、xctype、収束条件の指定は SCF計算と同様です。
 
-.. _出力-4:
-
 出力
 ~~~~~~~
 
@@ -2159,8 +2137,6 @@ k点、xctype、収束条件の指定は SCF計算と同様です。
 (デフォルトファイル名：nfenergy.data )
 に出力されます。なお、運動エネルギー密度は、電荷密度F_CHGTと同様に、バイナリ―形式で
 F_EKINDENS ( デフォルトファイル名：ekindens_bin.data )に出力されます。
-
-.. _計算例-9:
 
 計算例
 ~~~~~~~
@@ -2217,6 +2193,119 @@ a) ref.  [Oadri83]_ , b) ref. [Tran09]_
 .. [Proynov08] E. Proynov, Z. Gan, and J. Kong, Chem. Phys. Lett. **455** (2008) 103.
 .. [Atdaev87] B. S. Atdaev, V. F. Grin, E. A. Salkov, and V. G. Chalaya, Inorg.  Mater. **23** (1987) 1835.
 .. [Oadri83] S. B. Oadri, E. F. Skelton, A. W. Webb, J. Appl. Phys. **64** (1983) 3609.
+
+.. _advanced_libxc_section:
+
+Libxcライブラリー(バージョン2023.01以降)
+-----------------------------------------
+
+概要
+~~~~~~
+PHASE/0は多くの汎関数に対応した交換相関項ライブラリーであるLibxc ( [Lehtola18]_ , URL https://www.tddft.org/programs/libxc/ )に対応しています。
+PHASE/0をLibxcにリンクし、実行する方法を説明します。
+
+コンパイルする方法
+~~~~~~~~~~~~~~~~~~~~~~
+まずはLibxcをビルドする必要があります。先にあげたウエブサイトからダウンロードすることができますが、環境によってはうまくダウンロードできないようです。その場合 GitHub のページ ( https://github.com/ElectronicStructureLibrary/libxc )から取得することもできるようです。本計算機能はLibxcのバージョン5.1.7を用いて検証を行ったので、このバージョンを利用することが推奨されます。ダウンロードしたら以下の要領でコンパイル/インストールします。
+
+.. code-block:: bash
+
+ tar -zxvf libxc-5.1.7.tar.gz
+ cd libxc-5.1.7
+ autoreconf -i
+ ./configure --prefix=LIBXC FC=FORTRAN_COMPILER
+ make
+ make install
+
+:code:`LIBXC` はLibxcライブラリーのインストールディレクトリーです。 :code:`FORTRAN_COMPILER` にはお使いのFortranコンパイラーを指定します。デフォルト値はgfortranなので、gfortranを用いる場合は指定する必要はありません。うまくいけば :code:`LIBXC` の下にLibxcがインストールされます。
+
+つぎにPHASE/0のMakefileの以下の箇所に手を加えます。
+
+.. code-block:: make
+
+ LIBXC=
+ ifdef LIBXC
+   LIBXC_PATH=
+   LIBXC_INC=-I$(LIBXC_PATH)/include
+   LIBXC_LIB=-L$(LIBXC_PATH)/lib -lxcf03 -lxc
+   CPPFLAGS += -DLIBXC
+   F90FLAGS += $(LIBXC_INC)
+   F77FLAGS += $(LIBXC_INC)
+   LIBS += $(LIBXC_LIB)
+ endif
+
+:code:`LIBXC=` のあとに何らかの文字列(たとえばyes)を入力し、さらに :code:`LIBXC_PATH` のあとにLibxcのインストールディレクトリーを指定します。PHASE/0がすでにコンパイルされた状態の場合以下の要領で関連するソースファイルのタイムスタンプを更新し、makeします。
+
+.. code-block:: bash
+
+  grep -l LIBXC *.F90|xargs touch
+  make
+
+以上の手続きによってLibxcを組み込んだ状態のPHASE/0のバイナリーを得ることができます。
+
+入力パラメータ
+~~~~~~~~~~~~~~~
+Libxcで定義されている交換相関ポテンシャルを用いるには入力パラメーターファイルに以下のような記述を行います。
+
+.. code-block:: text
+
+ accuracy{
+   xctype = libxc
+   libxc{
+       exch_id = 116,     corr_id = 133
+ 或いは
+       exch_name = GGA_X_PBE_SOL,   corr_name = GGA_C_PBE_SOL
+   }
+ }
+
+まず、xctype として libxc を指定します。次に、libxc ブロックで、交換相互作用を exch_id もしくは exch_name で指定します。同様に、相関相互作用を corr_id 或いは corr_name で指定します。用いることのできるid あるいは name は、 https://tddft.org/programs/libxc/functionals/ を参照してください。上記の例では、交換・相関相互作用にPBEsol を指定しています。
+
+出力
+~~~~~~~~~~~~~~~
+実行すると、output000ファイルにLibxcのバージョンおよび交換相関相互作用の名称が出力されるので、意図したポテンシャルを用いているかどうか確認することができます。
+
+.. code-block:: text
+
+ !** Libxc version  5. 1. 7
+   exchange  : gga_x_pbe_sol
+   correlation : gga_c_pbe_sol
+
+例題
+~~~~~~~~~~~~~~~~
+例題の入力ファイルはPHASE/0のサンプルディレクトリーの下のlibxc以下にあります。 :code:`samples/libxc/Si_2atom` には2原子からなるSi結晶の例題が、 :code:`samples/libxc/Si6AlP_8atomSi6AlP_8atom` には8原子からなるSi結晶の内2つの原子をAlおよびPに置換した例題が配置されています。後者の場合は構造最適化も行う設定が施されています。各々さらに汎関数ごとにディレクトリーが準備されています。得られる結果は次の表に報告する通り。
+
+.. csv-table:: 2原子からなるSi結晶の計算結果
+
+   "交換相関相互作用","iter_total","エネルギー (Hartree)","バンドギャップ (eV)"
+   "LDAPW91 (LDA)","12","-7.8646521308","0.667"
+   "PBEsol (GGA)","12","-7.8611951084","0.687"
+   "M06-L (meta-GGA)","55","-7.8508524741","1.256"
+   "TPSS (meta-GGA)","12","-7.8667488111","0.975"
+   "SCAN (meta-GGA)","13","-7.8810471789","1.092"
+
+.. csv-table:: 8原子からなるSi結晶のうち2原子をAl, Pで置換した系の計算結果
+
+   "交換相関相互作用","iter_total","エネルギー (Hartree)","バンドギャップ (eV)"
+   "PBEsol (GGA)","58","-32.2319042482","0.402"
+   "M06-L (meta-GGA)","105","-32.1962355376","0.930"
+   "TPSS (meta-GGA)","61","-32.2619120889","0.680"
+   "SCAN (meta-GGA)","59","-32.3154777459","0.747"
+
+制限事項
+~~~~~~~~~~~~~~~~
+本計算機能に関する制限事項は次の表に示す通りです。
+
+.. csv-table:: Libxcに関する制限事項
+
+   "汎関数の種類","SCF計算","内部座標最適化", "格子最適化", "PAW", "擬ポテンシャル"
+   "LDA", "対応", "対応", "対応", "対応", "制限なし"
+   "GGA", "対応", "対応", "対応", "対応", "制限なし"
+   "meta-GGA", "対応", "対応", "非対応", "非対応", "ノルム保存型のみ"
+
+
+**参考文献**
+
+.. [Lehtola18] Susi Lehtola, Conrad Steigemann, Micael J.T. Oliveira, and Miguel A.L. Marques, SoftwareX, **7** (2018) 1-5.
 
 .. _advanced_opencore_section:
 

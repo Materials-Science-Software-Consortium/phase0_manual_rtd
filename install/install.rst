@@ -3,6 +3,8 @@
 PHASE/0のインストール
 =====================
 
+PHASE/0をインストールする方法を説明します。個別の環境についてのインストール方法について `このGitHub <https://github.com/Materials-Science-Software-Consortium/phase0_install>`_ のページにも情報があります。
+
 動作環境
 --------
 
@@ -203,14 +205,22 @@ C shell(シーシェル)系であれば、$HOME/.cshrcにPATHを記述します�
 
   $ mpirun -np 2 phase ne=1 nk=2
 
+**gfortranを用いる場合の注意点**
+
+Fortranコンパイラーとしてバージョン10以上のgfortranを用いる場合、上述のinstall.shスクリプトを用いた方法は失敗します。\ ``src_phase/Makefile`` を編集する必要があります。
+
+.. code-block:: make
+
+   F90 = mpif90 -m64
+
+この行に ``-fallow-argument-mismatch`` という文字列を追加したのちに ``make`` コマンドを実行してください。
+
+
 .. _section_install_mpifftw:
 
 Distributed-memory FFTWとリンクする方法（バージョン2022.01以降）
 ------------------------------------------------------------------
-3次元版PHASE/0を `Distributed-memory FFTWライブラリー <https://fftw.org/doc/Distributed_002dmemory-FFTW-with-MPI.html>`_ とリンクし、MPI並列FFTの処理をこのライブラリーに任せることができます。
-MPI並列FFTの処理は3次元版のPHASE/0に組み込まれており、3次元FFTの2軸を面とみなし分割する仕組みとなっています。
-これに対しDistributed-memory FFTWは1軸を分割します。したがってPHASE/0内蔵の並列FFTの方がスケーラビリティが高いのですが、
-系の形状やカットオフエネルギー、G点並列数によっては1軸分割の方が通信が少なくなる場合があり、そのような場合に利用するとより高速な計算を実現することができます。
+3次元版PHASE/0を `Distributed-memory FFTWライブラリー <https://fftw.org/doc/Distributed_002dmemory-FFTW-with-MPI.html>`_ とリンクし、MPI並列FFTの処理をこのライブラリーに任せることができます。MPI並列FFTの処理は3次元版のPHASE/0に組み込まれており、3次元FFTの2軸を面とみなし分割する仕組みとなっています。これに対しDistributed-memory FFTWは1軸を分割します。したがってPHASE/0内蔵の並列FFTの方がスケーラビリティが高いのですが、系の形状やカットオフエネルギー、G点並列数によっては1軸分割の方が通信が少なくなる場合があり、そのような場合に利用するとより高速な計算を実現することができます。
 
 リンクする方法は環境などによって異なります。ここでは `Intel MKLに付属するdistributed-memory FFTW <https://www.intel.com/content/www/us/en/develop/documentation/onemkl-developer-reference-fortran/top/appendix-c-fftw-interface-to-onemkl/fftw3-interface-to-onemkl/mpi-fftw3-wrappers.html>`_ とリンクする方法を紹介します。
 
@@ -218,14 +228,14 @@ MPI並列FFTの処理は3次元版のPHASE/0に組み込まれており、3次�
 
 .. code-block:: shell
 
- cp $MKROOT/interfaces/fftw3x_cdft .
+ cp -r $MKLROOT/interfaces/fftw3x_cdft .
  cd fftw3x_cdft
  make libintel64 MKLROOT=$MKLROOT INSTALL_DIR=$HOME/mkl
 
 Makefileを以下のように編集します。
 
- - ``CPPFLAGS = -D_USE_DATE_AND_TIME_ ...`` に ``-DMPI_FFTW`` を追加
- - ``--start-group ... ${MKLHOME}/libmkl_sequential.a ...`` に ``${HOME}/mkl/libfftw3x_cdft_lp64.a ${MKLHOME}/libmkl_cdft_core.a`` を追加
+- ``CPPFLAGS = -D_USE_DATE_AND_TIME_ ...`` に ``-DMPI_FFTW`` を追加
+- ``--start-group ... ${MKLHOME}/libmkl_sequential.a ...`` に ``${HOME}/mkl/libfftw3x_cdft_lp64.a ${MKLHOME}/libmkl_cdft_core.a`` を追加
 
 環境変数CPATHにfftwのインクルードディレクトリーを追加します。
 
@@ -235,7 +245,7 @@ Makefileを以下のように編集します。
 
 この状態で ``make clean;make`` とするとdistributed-memory FFTWを利用することのできるバイナリーを得ることができます。
 
-デフォルトの状態では内蔵の並列FFTを用います。Distributed-memmory FFTWを使う場合は以下のような設定を施します。
+デフォルトの状態では内蔵の並列FFTを用います。Distributed-memory FFTWを使う場合は以下のような設定を施します。
 
 .. code-block:: text
 

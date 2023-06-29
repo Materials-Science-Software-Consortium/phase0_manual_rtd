@@ -2378,13 +2378,13 @@ num_force_dataは力を計算する配置の数であり、displaced_atomは変�
 
   --- Vibrational modes ---
   Nmode= nmode   Natom= natm
- do m = 1,nmode
-   n=   m  representation(m) acvtive(m)
-   hbarW= omega_ha(m) Ha = omega_ev(m) eV; nu= omega_nu(m) cm^-1
-   do i=1,natm
-      i  vec(m,i,1) vec(m,i,2) vec(m,i,3)
-   end do
- end do
+  do m = 1,nmode
+    n=   m  representation(m) acvtive(m)
+    hbarW= omega_ha(m) ; om = omega_ev(m) ; nu= omega_nu(m)
+    do i=1,natm
+       i  vec(m,i,1) vec(m,i,2) vec(m,i,3)
+    end do
+  end do
 
 representationは既約表現の配列である。active(m)はラマン活性なモードあれば
 Rになり、赤外活性なモードであればIRとなる。両活性であれば、IR&Rとなる。
@@ -2398,15 +2398,15 @@ omega_evは電子ボルト単位での振動数であり、omega_nuは波数で�
 
   --- Vibrational modes ---
   Nmode= nmode   Natom= natm
- do m = 1,nmode
-   n=   m  character(m) active(m)
-   hbarW= omega_ha(m) Ha = omega_ev(m) eV; nu= omega_nu(m) cm^-1
-    do i=1,natm
-      i  vec(m,i,1) vec(m,i,2) vec(m,i,3)
-    end do
-    Mode effective charge and its average:
-    Z=  z(m,1)   z(m,2)   z(m,3)   Ave.=  zave
- end do
+  do m = 1,nmode
+    n=   m  character(m) active(m)
+    hbarW= omega_ha(m) ; om = omega_ev(m) ; nu= omega_nu(m)
+     do i=1,natm
+       i  vec(m,i,1) vec(m,i,2) vec(m,i,3)
+     end do
+     Mode effective charge and its average:
+     Z=  z(m,1)   z(m,2)   z(m,3)   Ave.=  zave
+  end do
 
 そして、最後に誘電率が次の形式で出力される。
 
@@ -3879,7 +3879,7 @@ berry.plの振る舞いは，コントロールファイルを介して指定し
  | template_scf   | SCF計算用のテンプレートディレクトリーのディレ      |
  |                | クトリ名を指定します。デフォルト値はtemplate_scf。 |
  +----------------+----------------------------------------------------+
- | template_berry | ベ                                                 |
+ | template_berry | ベ\                                                |
  |                | リー位相計算用のテンプレートディレクトリのディレク |
  |                | トリ名を指定します。デフォルト値はtemplate_berry。 |
  +----------------+----------------------------------------------------+
@@ -3889,17 +3889,17 @@ berry.plの振る舞いは，コントロールファイルを介して指定し
  | strain_list    | ひずみ成                                           |
  |                | 分を空白区切りで指定します。対応は，次の通りです。 |
  |                |                                                    |
- |                | 1 → 11 成分                                        |
+ |                | 1 :math:`\rightarrow` 11 成分                      |
  |                |                                                    |
- |                | 2 → 22 成分                                        |
+ |                | 2 -> 22 成分                                       |
  |                |                                                    |
- |                | 3 → 33 成分                                        |
+ |                | 3 -> 33 成分                                       |
  |                |                                                    |
- |                | 4 → 23 成分                                        |
+ |                | 4 -> 23 成分                                       |
  |                |                                                    |
- |                | 5 → 13 成分                                        |
+ |                | 5 -> 13 成分                                       |
  |                |                                                    |
- |                | 6 → 12 成分                                        |
+ |                | 6 -> 12 成分                                       |
  |                |                                                    |
  |                | property=piezo および strfrcの場合必須の指定です。 |
  +----------------+----------------------------------------------------+
@@ -3957,7 +3957,7 @@ berry.plの振る舞いは，コントロールファイルを介して指定し
  |                | NGは，計算実行時に上述のnp, ne, nk,                |
  |                | ngに                                               |
  |                | 置き換わります。ただし，ディレクトリ並列の数によっ |
- |                | ては“あまり”が発生することがあり，その場合はne=NE  |
+ |                | ては"あまり"が発生することがあり，その場合はne=NE  |
  |                | nk=NK                                              |
  |                | ng=NGは                                            |
  |                | 省略されて計算が投入されます。デフォルト値はmpirun |

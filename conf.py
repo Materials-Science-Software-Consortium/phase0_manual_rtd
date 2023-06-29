@@ -18,11 +18,11 @@
 # -- Project information -----------------------------------------------------
 
 project = 'PHASE/0 Manual'
-copyright = '2022, PHASEシステム研究会'
+copyright = '2023, PHASEシステム研究会'
 author = 'PHASEシステム研究会'
 
 # The full version, including alpha/beta/rc tags
-release = '2022.01'
+release = '2023.01'
 
 
 # -- General configuration ---------------------------------------------------
@@ -32,7 +32,7 @@ release = '2022.01'
 # ones.
 extensions = [
 #'sphinxcontrib.rsvgconverter',
-#'sphinxcontrib.inkscapeconverter'
+'sphinxcontrib.inkscapeconverter'
 #'sphinxcontrib.cairosvgconverter'
 ]
 #inkscape_converter_bin = '/usr/bin/inkscape'
@@ -79,23 +79,14 @@ class CustomLatexFormatter(LatexFormatter):
         super(CustomLatexFormatter, self).__init__(**options)
         self.verboptions = r"formatcom=\small"
 
-rst_prolog=u"""
-.. |PHASE020XX.YY| replace:: phase0_2022.01
-"""
-
 PygmentsBridge.latex_formatter = CustomLatexFormatter
 
-master_doc = 'index'
-latex_engine = 'lualatex'
 latex_elements = {
-    "papersize": "a4paper",
-    "pointsize": "12pt",
-    # "extraclassoptions": "tombow",
-    "fontpkg": "",
-    "extrapackages": "",
-    "preamble": "",
-    "polyglossia": "",
-    "fncychap": r"\usepackage[Bjornstrup]{fncychap}",
+        'preamble': r''' \usepackage{braket} '''
 }
-latex_docclass = {'manual': 'ltjsbook'}
+rst_prolog=u"""
+.. |PHASE020XX.YY| replace:: phase0_2023.01
+"""
 
+master_doc = 'index'
+latex_engine = 'uplatex'

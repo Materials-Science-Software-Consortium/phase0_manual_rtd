@@ -27,14 +27,14 @@ file_names.dataは以下のように記述します。
 
  &fnames
  F_INP    = './input_scf_Si8.data'
- F_POT(1) = '../pp/Si_ldapw91_nc_01.pp'
+ F_POT(1) = '../../pp/Si_ggapbe_paw_nc_01m.pp'
   ...
  F_CHR    = './nfchr.cube'
  /
 
 PHASEを実行するためには、擬ポテンシャルデータ F_POT(1)
 と、入力ファイルF_INPが指定されている必要があります。
-Si_ldapw91_nc_01.pp はシリコンの擬ポテンシャル・データです。
+Si_ggapbe_paw_nc_01m.pp はシリコンの擬ポテンシャル・データです。
 
 入力パラメータファイルinput_scf_Si8.data について説明します。
 
@@ -52,31 +52,28 @@ Accuracyブロックでは、計算精度を指定します。
 .. code-block:: text
 
  accuracy{
-         cutoff_wf =   9.00  rydberg
-         cutoff_cd =  36.00  rydberg
+         cutoff_wf =  20.00  rydberg
+         cutoff_cd =  80.00  rydberg
          num_bands = 20
          ksampling{
                  method = mesh ! {mesh|file|directin|gamma}
                  mesh{  nx = 4, ny =  4, nz =  4  }
          }
          ...
-         xctype = ldapw91
          scf_convergence{
-              delta_total_energy = 1.e-12 hartree
-              succession = 3
+              delta_total_energy = 1.e-10 hartree
+              succession = 2
          }
          ...
  }
 
-cutoff_wf と cutoff_cd は、 波動関数と電荷密度分布のカットオフ・エネルギーが、 それぞれ 9.0Ry と36.0Ry という値であることを表しています。
+cutoff_wf と cutoff_cd は、 波動関数と電荷密度分布のカットオフ・エネルギーが、 それぞれ 20.0 Ry と80.0 Ry という値であることを表しています。
 
 num_bands はエネルギー準位数を表します。この計算では、Si原子8個を扱いますが、各原子は4個の価電子をもつため、占有される準位数は、スピンの縮退度を考慮すると8\ :math:`\times`\ 4/2=16となります。 このため num_bands は、17以上に設定しておく必要があります。
 また、ksampling というタグは、\ :math:`k`\ 点のサンプリングの方法を
 指定するのに使われます。この例では、\ :math:`4 \times 4 \times 4`\ のメッシュ点がk点サンプリングとなります。
 
-xctype = ldapw91 では、LDA型交換相関エネルギーを指定しています。
-
-scf_convergenceでは、計算の収束条件を指定します。この例の場合、全エネルギーの計算誤差が\ :math:`10^{- 12}` Hartree 未満に収まるという結果が連続して3回続いたら、計算を終了させるように指定されています。
+scf_convergenceでは、計算の収束条件を指定します。この例の場合、全エネルギーの計算誤差が\ :math:`10^{- 10}` Hartree 未満に収まるという結果が連続して2回続いたら、計算を終了させるように指定されています。
 
 Structureブロックでは、結晶構造を指定します。単位はデフォルトが原子単位となっています（長さの単位は Bohr)。
 
@@ -156,24 +153,28 @@ PHASEを以下のように実行します。
 
 .. code-block:: text
 
-  % grep TOTAL output000
+  % grep TH output000
 
 Si8 のサンプルを使って得られた output000では、次のような結果が表示されます。
 
 .. code-block:: text
 
- TOTAL ENERGY FOR  1 -TH ITER= -30.829890224786 edel = -0.308299D+02 : SOLVER = MATDIAGON
- TOTAL ENERGY FOR  2 -TH ITER= -31.552279425330 edel = -0.722389D+00 : SOLVER = DAVIDSON
- TOTAL ENERGY FOR  3 -TH ITER= -31.585338309210 edel = -0.330589D-01 : SOLVER = DAVIDSON
- TOTAL ENERGY FOR  4 -TH ITER= -31.587690531430 edel = -0.235222D-02 : SOLVER = SUBMAT + RMM3
- TOTAL ENERGY FOR  5 -TH ITER= -31.587917448876 edel = -0.226917D-03 : SOLVER = SUBMAT + RMM3
- TOTAL ENERGY FOR  6 -TH ITER= -31.587936739174 edel = -0.192903D-04 : SOLVER = SUBMAT + RMM3
- TOTAL ENERGY FOR  7 -TH ITER= -31.587937104439 edel = -0.365265D-06 : SOLVER = SUBMAT + RMM3
- TOTAL ENERGY FOR  8 -TH ITER= -31.587937141798 edel = -0.373598D-07 : SOLVER = SUBMAT + RMM3
- TOTAL ENERGY FOR  9 -TH ITER= -31.587937146347 edel = -0.454873D-08 : SOLVER = SUBMAT + RMM3
- TOTAL ENERGY FOR 10 -TH ITER= -31.587937147067 edel = -0.720142D-09 : SOLVER = SUBMAT + RMM3
- TOTAL ENERGY FOR 11 -TH ITER= -31.587937147180 edel = -0.112617D-09 : SOLVER = SUBMAT + RMM3
- TOTAL ENERGY FOR 12 -TH ITER= -31.587937147235 edel = -0.548042D-10 : SOLVER = SUBMAT + RMM3
+ TOTAL ENERGY FOR     1 -TH ITER=    -30.525762143533 EDEL =  -0.305258D+02 : SOLVER = MATDIAGON : Charge-Mixing = BROYD2
+ TOTAL ENERGY FOR     2 -TH ITER=    -31.439227176416 EDEL =  -0.913465D+00 : SOLVER = SUBMAT + PKOSUGI : Charge-Mixing = BROYD2
+ TOTAL ENERGY FOR     3 -TH ITER=    -31.469956871528 EDEL =  -0.307297D-01 : SOLVER = SUBMAT + PKOSUGI : Charge-Mixing = BROYD2
+ TOTAL ENERGY FOR     4 -TH ITER=    -31.487810280728 EDEL =  -0.178534D-01 : SOLVER = SUBMAT + PKOSUGI : Charge-Mixing = BROYD2
+ TOTAL ENERGY FOR     5 -TH ITER=    -31.495578938717 EDEL =  -0.776866D-02 : SOLVER = SUBMAT + PKOSUGI : Charge-Mixing = BROYD2
+ TOTAL ENERGY FOR     6 -TH ITER=    -31.500918535399 EDEL =  -0.533960D-02 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = BROYD2
+ TOTAL ENERGY FOR     7 -TH ITER=    -31.501113667547 EDEL =  -0.195132D-03 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = BROYD2
+ TOTAL ENERGY FOR     8 -TH ITER=    -31.501186121230 EDEL =  -0.724537D-04 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = BROYD2
+ TOTAL ENERGY FOR     9 -TH ITER=    -31.501187563396 EDEL =  -0.144217D-05 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = BROYD2
+ TOTAL ENERGY FOR    10 -TH ITER=    -31.501187881041 EDEL =  -0.317645D-06 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = BROYD2
+ TOTAL ENERGY FOR    11 -TH ITER=    -31.501187967072 EDEL =  -0.860305D-07 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = BROYD2
+ TOTAL ENERGY FOR    12 -TH ITER=    -31.501187974714 EDEL =  -0.764159D-08 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = BROYD2
+ TOTAL ENERGY FOR    13 -TH ITER=    -31.501187977198 EDEL =  -0.248405D-08 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = BROYD2
+ TOTAL ENERGY FOR    14 -TH ITER=    -31.501187977591 EDEL =  -0.393619D-09 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = BROYD2
+ TOTAL ENERGY FOR    15 -TH ITER=    -31.501187977742 EDEL =  -0.150855D-09 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = BROYD2
+
 
 SCF計算において、全エネルギーの値が収束してゆく様子が分かります。
 
@@ -187,7 +188,8 @@ Si8の例題では、 F_ENF ファイル(ファイル名：nfefn.data)は以下�
 .. code-block:: text
 
  iter_ion, iter_total, etotal, forcmx
-     1 12 -31.5879371472 0.0000003022
+     1      15      -31.5087632805        0.0000104146
+
 
 計算が終了すると、電荷密度ファイルnfchr.cubeが作成されます。電荷密度分布を :numref:`charge_si8` に示します。原子数を増やすなど、cube file に修正を加えています。
 
@@ -236,7 +238,18 @@ PHASEには、結晶の対称性を考慮することによって計算量を低
 
 この方法は, unit_cell_type がBravais の時のみ使用できます。ブラベー格子を指定して入力した場合、対称性の指定により, プログラム内で基本格子を決定します。計算は、プログラムが決定した基本格子を元に行われるので、原子座標の指定、k点分割数や、バンド計算時の対称k点の指定などは、この基本格子を元に行う必要がある点に注意ください。
 
-unit_cell_type としてBravais を利用する場合、副格子点に位置する原子は指定しないようにしてください。たとえば体心原子を含む結晶の場合, (0, 0, 0) の原子は指定し, (0.5, 0.5, 0.5) の原子は指定しないようにしてください。Bravais を利用する際に指定が必要な結晶の型は, lattice system という変数で指定します. :numref:`basics_table_bravais_lattice` を参照してください。
+unit_cell_type としてBravais を利用する場合、副格子点に位置する原子は指定しないようにしてください。たとえば体心原子を含む結晶の場合, (0, 0, 0) の原子は指定し, (0.5, 0.5, 0.5) の原子は指定しないようにしてください。Bravais を利用する際に指定が必要な結晶の型は、tspaceブロックの下のlattice_system という変数で指定します。具体的には以下のように指定します。
+
+.. code-block:: text
+
+   structure{
+     unit_cell_type = Bravais
+     tspace{
+       lattice_system = facecentered
+     }
+   }
+
+lattice_systemにおいて指定できるパラメーターについては\ :numref:`basics_table_bravais_lattice` を参照してください。
 
 菱面体晶系(rhombohedral) の場合には, 対応する六方晶系(hexagonal) の格子定数を入力します。六方晶系と菱面体晶系の基本並進ベクトルの関係を :numref:`basics_image3` に示します.。
 
@@ -401,7 +414,7 @@ method変数にautomaticを指定することで, 対称性は自動的に決定
 
 生成元の回転操作は, 以下のコードで指定します. 各行は, それぞれ一つの回転操作に対応します.  一列目の数字か二列目の記号を利用してgeneratorsテーブルのrotation列に対称操作を指定します.  三列目から五列目までが対応する回転操作を表します. なお, 三方晶, 六方晶の場合に現れているWはX-Yを表します. コードは, 一列目の数字でも二列目の文字列でも指定することが可能です.
 
-三方晶, 六方晶の場合.
+三方晶, 六方晶の場合
 
 .. code-block:: text
 
@@ -468,8 +481,7 @@ method変数にautomaticを指定することで, 対称性は自動的に決定
    }
  }
 
-反転対称性を考慮する設定は、symmetryブロックの下でsw_inversion =
-onとすることによって行います。
+反転対称性を考慮する設定は、symmetryブロックの下でsw_inversion = onとすることによって行います。
 
 .. code-block:: text
 
@@ -499,12 +511,7 @@ onとすることによって行います。
 
 weight属性値が2の原子は、反転対称位置に自分自身のコピーが作成されます。
 
-第 2節で指定した対称群に反転対称操作が含まれる場合,
-このoptionを指定することを推奨します。 なお,
-原子座標を入力する場合反転対称操作の中心は,
-原点であることにご注意ください。
-また、反転対称性のない系においてsw_inversion =
-onを指定するとエラーメッセージを出力して計算を終了します。
+前節で指定した対称群に反転対称操作が含まれる場合、このoptionを指定することを推奨します。 なお、原子座標を入力する場合反転対称操作の中心は原点であることにご注意ください。また、反転対称性のない系においてsw_inversion = onを指定するとエラーメッセージを出力して計算を終了します。
 
 .. _section_basics_Si2:
 
@@ -529,8 +536,7 @@ SCF計算を行い、電荷密度を計算します。計算例題は :code:`sam
 
 .. code-block:: text
 
- F_INP    = './input_scf_Si.data'
- F_POT(1) = '../../pp/Si_ldapw91_nc_01.pp'
+ F_POT(1) = '../../pp/Si_ggapbe_paw_nc_01m.pp'
  F_CHGT   = '../scf/nfchgt.data'
  ...
 
@@ -539,8 +545,8 @@ SCF計算を行い、電荷密度を計算します。計算例題は :code:`sam
 .. code-block:: text
 
  accuracy{
-         cutoff_wf =   9.00  rydberg
-         cutoff_cd =  36.00  rydberg
+         cutoff_wf =  20.00  rydberg
+         cutoff_cd =  80.00  rydberg
          num_bands = 8
  }
  structure{
@@ -585,7 +591,7 @@ file_names.data では、入出力ファイルを以下のように指定して�
 .. code-block:: text
 
  F_INP    = './input_dos_Si.data'
- F_POT(1) = '../../pp/Si_ldapw91_nc_01.pp'
+ F_POT(1) = '../../pp/Si_ggapbe_paw_nc_01m.pp'
     ...
  F_CHGT   = '../scf/nfchgt.data'
     ...          ...
@@ -603,8 +609,8 @@ input_scf_Si.data と異なる部分を以下に示します。
         condition = fixed_charge
  }
  accuracy{
-         cutoff_wf =   9.00  rydberg
-         cutoff_cd =  36.00  rydberg
+         cutoff_wf =  20.00  rydberg
+         cutoff_cd =  80.00  rydberg
          num_bands = 8
          ksampling{
                  method = mesh
@@ -613,7 +619,6 @@ input_scf_Si.data と異なる部分を以下に示します。
          smearing{
                  method = tetrahedral
          }
-         xctype = ldapw91
          initial_wavefunctions = matrix_diagon
          matrix_diagon{
             cutoff_wf =  9.00  rydberg
@@ -634,7 +639,7 @@ input_scf_Si.data と異なる部分を以下に示します。
         }
  }
 
-最初のタグである Control の部分で、SCF計算で得られた電荷の分布を固定して使用することを指定します。ksamplingでは\ :math:`k`\ 点サンプリングが\ :math:`4 \times 4 \times 4`\ 、smearingでは四面体法を用いること、ek_convergenceでは収束条件を指定しています。
+Controlブロックのconditionをfixed_chargeと設定することによってSCF計算で得られた電荷の分布を固定して使用することを指定します。ksamplingでは\ :math:`k`\ 点サンプリングが\ :math:`4 \times 4 \times 4`\であることを指定しています。smearingでは四面体法を用いることを指定しています。ek_convergenceブロックでは固定電荷計算の収束条件を指定しています。
 Postprocessingブロックでは、計算終了後の後処理として、四面体法による状態密度の計算のパラメータが指定されています。
 これらの入力ファイルを使って、プログラムekcalを用いて、状態密度の計算を行います。
 
@@ -705,19 +710,18 @@ file_names.data では、入出力ファイルを以下のように指定して�
 .. code-block:: text
 
   F_INP    = './input_band_Si.data'
-  F_POT(1) = '../../pp/Si_ldapw91_nc_01.pp'
-  F_KPOINT = '../tools/kpoint.data'
+  F_POT(1) = '../../pp/Si_ggapbe_paw_nc_01m.pp'
+  F_KPOINT = './kpoint.data'
   F_CHGT   = '../scf/nfchgt.data'
     ...         ...
 
-入力ファイルはinput_band_Si.data を、k点のデータは
-kpoint.dataであることを指定しています。
+入力パラメーターファイルはF_INPによってinput_band_Si.data を、k点のデータはF_KPOINTによってkpoint.dataであることを指定しています。
 
 入力ファイル kpoint.data は、ツールband_kpoint.plを用いて生成します。band_kpoint.plのFCC用の入力ファイルは :code:`samples/tools/bandkpt_fcc_xglux.in` です。
 
 .. code-block:: bash
 
-  % band_kpoint.pl ../../../../tools/bandkpt_fcc_xglux.in
+  % ../../../../bin/band_kpoint.pl ../../../../tools/bandkpt_fcc_xglux.in
 
 これらの入力ファイルを使って、プログラムekcal を実行します。
 
@@ -731,13 +735,13 @@ kpoint.dataであることを指定しています。
 
 .. code-block:: bash
 
- % band.pl nfenergy.data ../../../../tools/bandkpt_fcc_xglux.in -erange=E1,E2 -with_fermi -color
+ % ../../../../bin/band.pl nfenergy.data ../../../../tools/bandkpt_fcc_xglux.in -erange=E1,E2 -with_fermi -color
 
 この例題では、描画するエネルギー範囲の最小値 E1 と最大値 E2 を、以前同様 E1 = -13 と E2 = 5 として、 以下のように実行します。
 
 .. code-block:: bash
 
-  % band.pl nfenergy.data ../../../../tools/bandkpt_fcc_xglux.in -erange=-13,5 -with_fermi -color
+  % ../../../../bin/band.pl nfenergy.data ../../../../tools/bandkpt_fcc_xglux.in -erange=-13,5 -with_fermi -color
 
 Si2のバンド構造を、:numref:`basics_image6` に示します。
 
@@ -831,7 +835,7 @@ Si2のバンド構造を、:numref:`basics_image6` に示します。
 
 結晶構造の指定
 
-変数crystal_structureで、体心立方構造の結晶(bccという値)であることを指定しています。よって、ユニットセルはブラベー格子によって指定しているので原子は1つのみ記述しています.  体心位置にある原子は指定していない点にご注意ください.  crystal_structureにbccという値を指定すると、プログラムが指定の格子を基本格子に変換するので体心位置の原子の指定は不要となります。
+変数crystal_structureで、体心立方構造の結晶(bccという値)であることを指定しています。よって、ユニットセルはブラベー格子によって指定しているので原子は1つのみ記述しています。体心位置にある原子は指定していない点にご注意ください.  crystal_structureにbccという値を指定すると、プログラムが指定の格子を基本格子に変換するので体心位置の原子の指定は不要となります。
 
 スピン自由度の指定方法
 
@@ -843,8 +847,8 @@ Si2のバンド構造を、:numref:`basics_image6` に示します。
    magnetic_state =  ferro   !{para|antiferro|ferro}
  }
 
-さらに, 各原子のスピン分極の初期値を指定する必要があります.
-入力ファイルにある,
+さらに各原子のスピン分極の初期値を指定する必要があります。
+入力ファイルにある
 
 .. code-block:: text
 
@@ -862,63 +866,31 @@ Si2のバンド構造を、:numref:`basics_image6` に示します。
 計算結果の出力
 ^^^^^^^^^^^^^^
 
-スピン分極の変化は,
-ログファイルoutput000に出力されます。以下のようにして確認することができます.
+スピン分極の変化はログファイルoutput000に出力されます。以下のようにして確認することができます.
 
 .. code-block:: text
 
- % grep charge output000 | grep NEW | more
+ % grep charge output000 | grep NEW
 
-  !*--- input-file style = NEW
-  !NEW total charge (UP, DOWN, SUM) =     4.91749982 (+)    3.08250018 (=)    8.00000000
-  !NEW total charge (UP, DOWN, SUM) =     4.75677803 (+)    3.24322197 (=)    8.00000000
-  !NEW total charge (UP, DOWN, SUM) =     4.64472738 (+)    3.35527262 (=)    8.00000000
-  !NEW total charge (UP, DOWN, SUM) =     4.55104317 (+)    3.44895683 (=)    8.00000000
-  !NEW total charge (UP, DOWN, SUM) =     4.47221206 (+)    3.52778794 (=)    8.00000000
-  !NEW total charge (UP, DOWN, SUM) =     4.46057861 (+)    3.53942139 (=)    8.00000000
-  !NEW total charge (UP, DOWN, SUM) =     4.48476557 (+)    3.51523443 (=)    8.00000000
-  !NEW total charge (UP, DOWN, SUM) =     4.52141098 (+)    3.47858902 (=)    8.00000000
-  !NEW total charge (UP, DOWN, SUM) =     4.56555794 (+)    3.43444206 (=)    8.00000000
-  !NEW total charge (UP, DOWN, SUM) =     4.61364243 (+)    3.38635757 (=)    8.00000000
-    .................................................................
-    .................................................................
-    .................................................................
-  !NEW total charge (UP, DOWN, SUM) =     5.11286684 (+)    2.88713316 (=)    8.00000000
-  !NEW total charge (UP, DOWN, SUM) =     5.11285665 (+)    2.88714335 (=)    8.00000000
-  !NEW total charge (UP, DOWN, SUM) =     5.11284790 (+)    2.88715210 (=)    8.00000000
-  !NEW total charge (UP, DOWN, SUM) =     5.11284030 (+)    2.88715970 (=)    8.00000000
-  !NEW total charge (UP, DOWN, SUM) =     5.11283035 (+)    2.88716965 (=)    8.00000000
-  !NEW total charge (UP, DOWN, SUM) =     5.11282059 (+)    2.88717941 (=)    8.00000000
+  !NEW total charge (UP, DOWN, SUM) =     5.02955985 (+)    2.97044015 (=)    8.00000000
+  !NEW total charge (UP, DOWN, SUM) =     5.03034164 (+)    2.96965836 (=)    8.00000000
+  !NEW total charge (UP, DOWN, SUM) =     5.04318734 (+)    2.95681266 (=)    8.00000000
+  !NEW total charge (UP, DOWN, SUM) =     5.05422913 (+)    2.94577087 (=)    8.00000000
+  !NEW total charge (UP, DOWN, SUM) =     5.07574696 (+)    2.92425304 (=)    8.00000000
+  !NEW total charge (UP, DOWN, SUM) =     5.10717707 (+)    2.89282293 (=)    8.00000000
+  !NEW total charge (UP, DOWN, SUM) =     5.12471628 (+)    2.87528372 (=)    8.00000000
+  !NEW total charge (UP, DOWN, SUM) =     5.12861238 (+)    2.87138762 (=)    8.00000000
+  !NEW total charge (UP, DOWN, SUM) =     5.12847549 (+)    2.87152451 (=)    8.00000000
+  !NEW total charge (UP, DOWN, SUM) =     5.12852226 (+)    2.87147774 (=)    8.00000000
+  !NEW total charge (UP, DOWN, SUM) =     5.12859310 (+)    2.87140690 (=)    8.00000000
+  !NEW total charge (UP, DOWN, SUM) =     5.12859664 (+)    2.87140336 (=)    8.00000000
+  !NEW total charge (UP, DOWN, SUM) =     5.12859623 (+)    2.87140377 (=)    8.00000000
+  !NEW total charge (UP, DOWN, SUM) =     5.12859688 (+)    2.87140312 (=)    8.00000000
 
 ここで, スピン分極の定義
 :math:`\zeta = (n_{\uparrow} - n_{\downarrow})/(n_{\uparrow} + n_{\downarrow})`
-を使うと, これが :math:`\zeta = 0.2782`
+を使うと, これが :math:`\zeta = 0.2821`
 という値に収束していることが分かります.
-
-以下のように実行すると、更新の前後での電荷分布の変化が確認できます。
-
-.. code-block:: text
-
-  % grep charge output000 | more
-
-  F_CHGT     = ./nfcharge.data  opened = false
-  !** --- charge preconditioning ---
-  !** sw_charge_rspace   =      0
-  !** charge_filetype    =      1
-  !** charge_title    =
-  !** deviation( 1) of the Gauss. distrib. func. for the initial charge construction =    1.50000
-  F_CHGT     = ./nfcharge.data
-  F_CHGT     = ./nfcharge.data
-  !! total_charge =        8.000000 (m_CD_initial_CD_by_Gauss_func)
-  !OLD total charge (UP, DOWN, SUM) =     5.10000000 (+)    2.90000000 (=)    8.00000000
-  !NEW total charge (UP, DOWN, SUM) =     4.91749982 (+)    3.08250018 (=)    8.00000000
-  !OLD total charge (UP, DOWN, SUM) =     4.91749982 (+)    3.08250018 (=)    8.00000000
-  !NEW total charge (UP, DOWN, SUM) =     4.75677803 (+)    3.24322197 (=)    8.00000000
-  !OLD total charge (UP, DOWN, SUM) =     4.75677803 (+)    3.24322197 (=)    8.00000000
-  !NEW total charge (UP, DOWN, SUM) =     4.64472738 (+)    3.35527262 (=)    8.00000000
-    .................................................................
-    .................................................................
-    .................................................................
 
 反強磁性の計算
 ~~~~~~~~~~~~~~
@@ -946,9 +918,7 @@ Si2のバンド構造を、:numref:`basics_image6` に示します。
    }
  }
 
-Cr1 とCr2 という2 種の元素を定義し、初期スピン分極としてそれぞれ0.3,
--0.3
-という値を設定しています。原子座標は次のように設定します。これは初期値で、電子状態計算が進むに従いスピン分極の大きさはこの設定値から変化することに注意して下さい。
+Cr1 とCr2 という2 種の元素を定義し、初期スピン分極としてそれぞれ0.3, -0.3という値を設定しています。原子座標は次のように設定します。これは初期値で、電子状態計算が進むに従いスピン分極の大きさはこの設定値から変化することに注意して下さい。
 
 .. code-block:: text
 
@@ -974,12 +944,11 @@ file_names.dataファイルでは、擬ポテンシャルを次のように指�
 
  &fnames
   F_INP    = './nfinp.data'
-  F_POT(1) = '../../Cr_paw1.pp'
-  F_POT(2) = '../../Cr_paw2.pp'
+  F_POT(1) = '../../Cr_paw.pp'
+  F_POT(2) = '../../Cr_paw.pp'
  /
 
-Cr_paw1.ppとCr_paw2.ppは、内容としては同じ擬ポテンシャルファイルです。これによって、Cr1,
-Cr2とも同じ擬ポテンシャルが使用されることになります。
+Cr_paw.ppは、内容としてはCr元素の擬ポテンシャルファイルです。このような設定を施すことによって、Cr1, Cr2は別元素とみなされながら擬ポテンシャルは同じものが使用されることになります。
 
 この方法を利用することによって、より複雑な磁気構造を持つ系の計算を行うことも可能です。
 
@@ -1010,7 +979,7 @@ accuracy
 
 max_forceのデフォルト値は、\ :math:`10^{- 3}` hartree/bohrです。
 
-Structureブロックの原子の指定atom_listにmobile属性を定義し、最適化の対象となる原子に1という値を指定します。最適化の対象としない原子は0あるいは*とします。
+structureブロックの原子の指定atom_listにmobile属性を定義し、最適化の対象となる原子に1 (もしくはyesないしon)という値を指定します。最適化の対象としない原子は0あるいは* (もしくはnoないしoff)とします。
 
 .. code-block:: text
 
@@ -1076,13 +1045,14 @@ structure_evolution ブロックに、構造最適化の設定をします。
  |        | 構造緩和のオプションとして、quench                         |
  |        | (quenched MD法)、cg (CG法)、cg2法（改良CG法）gdiis         |
  |        | (GDIIS法), bfgs (BFGS法) , fire (FIRE法;                   |
- |        | バージョン                                                 |
- |        | 2020.01以降), lbfgs (LBFGS法；バージョン2021.01以降)       |
+ |        | バージョン\                                                |
+ |        | 2020.01以降), lbfgs (LBFGS法；バージョン2021.01以降)\      |
  |        | のいずれかが選べます。デフォルト値はbfgsです。             |
  +--------+------------------------------------------------------------+
- | dt     | 構造緩和を行う際の                                         |
- |        | 時間刻みです。大きい方が早く収束へいたりますが、大きすぎる |
- |        | と計算を正しく進行させることができなくなる場合があります。 |
+ | dt     | 構造緩和を行う際の\                                        |
+ |        | 時間刻みです。quench法とfire法で用いられます。\            |
+ |        | 大きい方が早く収束へいたりますが、大きすぎる\              |
+ |        | と計算を正しく進行させることができなくなる場合があります。\|
  |        | デフォルト値は原子単位で100です。                          |
  +--------+------------------------------------------------------------+
 
@@ -1176,6 +1146,12 @@ target_posy, target_poszによって原子中心でない場合の位置の\ *x*
 *z*\ 座標を指定します。デフォルト値はいずれも0です。distanceで、中心からの距離を指定します。この例の場合中心から5
 Å以内に存在する原子はmobile = on, その外の原子はmobile = offと設定されます。
 
+mobile属性値についての注意
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mobile属性は、その名称から原子座標を動かすか・動かさないかを指定するもののように思えますが、これは場合と考え方(座標系)によります。
+たとえば、格子を含む最適化を行う場合、mobile = offの原子も格子の変形にあわせてカルテシアン座標は変化します。
+この場合不変となるのは相対座標です。
+
 .. _計算結果の出力-2:
 
 計算結果の出力
@@ -1189,11 +1165,9 @@ target_posy, target_poszによって原子中心でない場合の位置の\ *x*
 シリコン結晶の構造最適化の計算例です。安定な原子配置から原子位置をずらして、そこからの緩和過程を計算する例題です。
 計算例題は、 :code:`samples/basic/Si2/relax` です。
 
-入力ファイル
+入力パラメーターファイル
 
-ファイル file_names.data の中では、入力ファイル input_relax_Si.data
-と、原子の位置座標と各原子に働く力の 計算結果の出力ファイル nfdynm.data
-が指定されています。
+ファイル file_names.data の中では、入力パラメーターファイル input_relax_Si.dataと、原子の位置座標と各原子に働く力の 計算結果の出力ファイル nfdynm.data が指定されています。
 
 .. code-block:: text
 
@@ -1202,7 +1176,7 @@ target_posy, target_poszによって原子中心でない場合の位置の\ *x*
   F_DYNM   = './nfdynm.data'
    ...
 
-入力ファイルinput_relax_Si.dataは、格子間隔を0.125ではなく0.130
+入力パラメーターファイルinput_relax_Si.dataは、格子間隔を0.125ではなく0.130
 とし、安定な原子配置から原子位置をずらしています。 また、mobile
 変数の値を yes にして、原子位置を可変にしています。
 
@@ -1235,44 +1209,35 @@ accuracyブロックで原子に働く力の収束条件を指定します。
 
 .. code-block:: text
 
- #
- #   a_vector =         0.0000000000        5.1300000000        5.1300000000
- #   b_vector =         5.1300000000        0.0000000000        5.1300000000
- #   c_vector =         5.1300000000        5.1300000000        0.0000000000
- #   ntyp =        1 natm =        2
- # (natm->type)     1    1
- # (speciesname)     1 :   Si
- #
-  cps and forc at (iter_ion, iter_total =     1      34 )
-     1    1.333800000    1.333800000    1.333800000   -0.010794   -0.010794   -0.010794
-     2   -1.333800000   -1.333800000   -1.333800000    0.010794    0.010794    0.010794
-  cps and forc at (iter_ion, iter_total =     2      53 )
-     1    1.331707297    1.331707297    1.331707297   -0.010402   -0.010402   -0.010402
-     2   -1.331707297   -1.331707297   -1.331707297    0.010402    0.010402    0.010402
-  cps and forc at (iter_ion, iter_total =     3      75 )
-     1    1.327597870    1.327597870    1.327597870   -0.009614   -0.009614   -0.009614
-     2   -1.327597870   -1.327597870   -1.327597870    0.009614    0.009614    0.009614
-  cps and forc at (iter_ion, iter_total =     4     100 )
-     1    1.321624355    1.321624355    1.321624355   -0.008433   -0.008433   -0.008433
-     2   -1.321624355   -1.321624355   -1.321624355    0.008433    0.008433    0.008433
-  cps and forc at (iter_ion, iter_total =     5     127 )
-     1    1.314015753    1.314015753    1.314015753   -0.006865   -0.006865   -0.006865
-     2   -1.314015753   -1.314015753   -1.314015753    0.006865    0.006865    0.006865
-  cps and forc at (iter_ion, iter_total =     6     155 )
-     1    1.305076108    1.305076108    1.305076108   -0.004930   -0.004930   -0.004930
-     2   -1.305076108   -1.305076108   -1.305076108    0.004930    0.004930    0.004930
-  cps and forc at (iter_ion, iter_total =     7     184 )
-     1    1.295180554    1.295180554    1.295180554   -0.002671   -0.002671   -0.002671
-     2   -1.295180554   -1.295180554   -1.295180554    0.002671    0.002671    0.002671
-  cps and forc at (iter_ion, iter_total =     8     213 )
-     1    1.284767108    1.284767108    1.284767108   -0.000159   -0.000159   -0.000159
-     2   -1.284767108   -1.284767108   -1.284767108    0.000159    0.000159    0.000159
+   #
+   #   a_vector =         0.0000000000        5.1300000000        5.1300000000
+   #   b_vector =         5.1300000000        0.0000000000        5.1300000000
+   #   c_vector =         5.1300000000        5.1300000000        0.0000000000
+   #   ntyp =        1 natm =        2
+   # (natm->type)     1    1
+   # (speciesname)     1 :   Si
+   #
+    cps and forc at (iter_ion, iter_total =     1      14 )
+       1    1.333800000    1.333800000    1.333800000   -0.011489   -0.011489   -0.011489
+       2   -1.333800000   -1.333800000   -1.333800000    0.011489    0.011489    0.011489
+    cps and forc at (iter_ion, iter_total =     2      21 )
+       1    1.322311395    1.322311395    1.322311395   -0.009145   -0.009145   -0.009145
+       2   -1.322311395   -1.322311395   -1.322311395    0.009145    0.009145    0.009145
+    cps and forc at (iter_ion, iter_total =     3      30 )
+       1    1.277473011    1.277473011    1.277473011    0.001802    0.001802    0.001802
+       2   -1.277473011   -1.277473011   -1.277473011   -0.001802   -0.001802   -0.001802
+    cps and forc at (iter_ion, iter_total =     4      36 )
+       1    1.279275408    1.279275408    1.279275408    0.001305    0.001305    0.001305
+       2   -1.279275408   -1.279275408   -1.279275408   -0.001305   -0.001305   -0.001305
+    cps and forc at (iter_ion, iter_total =     5      43 )
+       1    1.284010642    1.284010642    1.284010642    0.000017    0.000017    0.000017
+       2   -1.284010642   -1.284010642   -1.284010642   -0.000017   -0.000017   -0.000017
 
 このうち、#
 記号で始まる部分は入力データの一部を表していますが、その次の行は、
-イオンすなわちコア原子の位置座標を一回更新する間に、全更新回数が34回であったこと、
-すなわち、この間に波動関数が33回更新されたことを示しています。
-波動関数の更新に対する収束条件は、第 3節の例題と同様に、
+イオンすなわちコア原子の位置座標を一回更新する間に、全更新回数が14回であったこと、
+すなわち、この間に波動関数が13回更新されたことを示しています。
+波動関数の更新に対する収束条件は、これまでの例題と同様に、
 全エネルギーに対して課されています。
 
 また、その次の2行は、原子の番号、原子位置(x,y,z, bohr単位)、
@@ -1288,8 +1253,7 @@ accuracyブロックで原子に働く力の収束条件を指定します。
 表面の計算を実行するには
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-PHASEは系に周期境界条件を課す必要があるので、厳密な意味では表面などの有限系を扱うことはできません。しかし、充分な“真空層”を設けることにより、事実上表面と変わらない系を扱うことは可能です
-。真空層は、底面と表面が相互作用しない程度の大きさを取ります。通常、10Å以上の真空層を採用します。
+PHASEは系に周期境界条件を課す必要があるので、厳密な意味では表面などの有限系を扱うことはできません。しかし、充分な“真空層”を設けることにより、事実上表面と変わらない系を扱うことは可能です。真空層は、底面と表面が相互作用しない程度の大きさを取ります。通常、10Å以上の真空層を採用します。
 水素終端されたシリコン表面の計算を例とします。 入力ファイルは :code:`samples/surface/H_Si001_p2x1` 以下にあります。この構造の計算には、 :numref:`Si001_p2x1`
 に示されるようなスラブ模型を使います。スラブの下側のSi原子のボンドは、仮想的な水素原子で終端しています。
 
@@ -1304,8 +1268,8 @@ PHASEは系に周期境界条件を課す必要があるので、厳密な意味
 
  &fnames
   F_INP    = './input_SiH2x1.data'
-  F_POT(1) = '../pp/Si_ldapw91_nc_01.pp'
-  F_POT(2) = '../pp/H_ldapw91_nc_01.pp'
+  F_POT(1) = '../../pp/Si_ggapbe_paw_nc_01m.pp'
+  F_POT(2) = '../../pp/H_ggapbe_paw_nc_01m.pp'
    ................................
  /
 
@@ -1313,14 +1277,14 @@ F_POT(1) と F_POT(2) に、Si 原子と H原子の擬ポテンシャルを指�
 
 入力パラメータ例です。
 
-k点サンプリングの指定です。
+以下はカットオフエネルギーやk点サンプリングの指定です。
 
 .. code-block:: text
 
  accuracy{
-         cutoff_wf =  15.00  rydberg
-         cutoff_cd =  60.00  rydberg
-         num_bands =  25
+         cutoff_wf =  20.00  rydberg
+         cutoff_cd =  80.00  rydberg
+         num_bands =  28
          ksampling{
                  method = monk  ! {mesh|file|directin|gamma}
                  mesh{  nx = 2, ny =  4, nz =  1  }
@@ -1329,8 +1293,9 @@ k点サンプリングの指定です。
          ...........................
  }
 
-この例では、スラブ模型を用いているため、
-k点のサンプリングは、\ :math:`k_{z}` 方向には1点だけを取っています。
+この例では、スラブ模型を用いているため、k点のサンプリングは\ :math:`k_{z}` 方向には1点だけを取っています。
+
+以下は座標データの指定です。
 
 .. code-block:: text
 
@@ -1385,28 +1350,31 @@ grepコマンドを用いて全エネルギーの収束状況を確認すると�
 
 .. code-block:: text
 
-  % grep TOTAL output000
-
-   TOTAL ENERGY FOR     1 -TH ITER=    -41.206501960258  edel =  -0.412065D+02 : SOLVER = MATDIAGON
-   TOTAL ENERGY FOR     2 -TH ITER=    -42.928541839902  edel =  -0.172204D+01 : SOLVER = DAVIDSON
-   TOTAL ENERGY FOR     3 -TH ITER=    -42.956734520103  edel =  -0.281927D-01 : SOLVER = DAVIDSON
-   TOTAL ENERGY FOR     4 -TH ITER=    -42.960659333525  edel =  -0.392481D-02 : SOLVER = SUBMAT + RMM3
-   TOTAL ENERGY FOR     5 -TH ITER=    -42.961623666220  edel =  -0.964333D-03 : SOLVER = SUBMAT + RMM3
-   TOTAL ENERGY FOR     6 -TH ITER=    -42.962559338199  edel =  -0.935672D-03 : SOLVER = SUBMAT + RMM3
-   TOTAL ENERGY FOR     7 -TH ITER=    -42.964136746929  edel =  -0.157741D-02 : SOLVER = SUBMAT + RMM3
-   TOTAL ENERGY FOR     8 -TH ITER=    -42.964791285123  edel =  -0.654538D-03 : SOLVER = SUBMAT + RMM3
-   TOTAL ENERGY FOR     9 -TH ITER=    -42.964953052183  edel =  -0.161767D-03 : SOLVER = SUBMAT + RMM3
-   TOTAL ENERGY FOR    10 -TH ITER=    -42.965045860995  edel =  -0.928088D-04 : SOLVER = SUBMAT + RMM3
-   TOTAL ENERGY FOR    11 -TH ITER=    -42.965076083146  edel =  -0.302222D-04 : SOLVER = SUBMAT + RMM3
-   TOTAL ENERGY FOR    12 -TH ITER=    -42.965088896548  edel =  -0.128134D-04 : SOLVER = SUBMAT + RMM3
-   TOTAL ENERGY FOR    13 -TH ITER=    -42.965091550789  edel =  -0.265424D-05 : SOLVER = SUBMAT + RMM3
-   TOTAL ENERGY FOR    14 -TH ITER=    -42.965092402734  edel =  -0.851945D-06 : SOLVER = SUBMAT + RMM3
-   TOTAL ENERGY FOR    15 -TH ITER=    -42.965092972980  edel =  -0.570245D-06 : SOLVER = SUBMAT + RMM3
-   TOTAL ENERGY FOR    16 -TH ITER=    -42.965093291397  edel =  -0.318417D-06 : SOLVER = SUBMAT + RMM3
-   TOTAL ENERGY FOR    17 -TH ITER=    -42.965093454357  edel =  -0.162961D-06 : SOLVER = SUBMAT + RMM3
-   TOTAL ENERGY FOR    18 -TH ITER=    -42.965093580068  edel =  -0.125710D-06 : SOLVER = SUBMAT + RMM3
-   TOTAL ENERGY FOR    19 -TH ITER=    -42.965093601039  edel =  -0.209711D-07 : SOLVER = SUBMAT + RMM3
-   TOTAL ENERGY FOR    20 -TH ITER=    -42.965093604435  edel =  -0.339656D-08 : SOLVER = SUBMAT + RMM3
+  % grep TH output000
+   TOTAL ENERGY FOR     1 -TH ITER=    -40.800374098495 EDEL =  -0.408004D+02 : SOLVER = MATDIAGON : Charge-Mixing = PULAY
+   TOTAL ENERGY FOR     2 -TH ITER=    -42.619401425789 EDEL =  -0.181903D+01 : SOLVER = SUBMAT + PDAVIDSON : Charge-Mixing = PULAY
+   TOTAL ENERGY FOR     3 -TH ITER=    -42.771292215127 EDEL =  -0.151891D+00 : SOLVER = SUBMAT + PDAVIDSON : Charge-Mixing = PULAY
+   TOTAL ENERGY FOR     4 -TH ITER=    -42.778649035692 EDEL =  -0.735682D-02 : SOLVER = SUBMAT + PDAVIDSON : Charge-Mixing = PULAY
+   TOTAL ENERGY FOR     5 -TH ITER=    -42.781674463294 EDEL =  -0.302543D-02 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = PULAY
+   TOTAL ENERGY FOR     6 -TH ITER=    -42.787305265390 EDEL =  -0.563080D-02 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = PULAY
+   TOTAL ENERGY FOR     7 -TH ITER=    -42.790915993227 EDEL =  -0.361073D-02 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = PULAY
+   TOTAL ENERGY FOR     8 -TH ITER=    -42.792248833909 EDEL =  -0.133284D-02 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = PULAY
+   TOTAL ENERGY FOR     9 -TH ITER=    -42.791249566593 EDEL =   0.999267D-03 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = PULAY
+   TOTAL ENERGY FOR    10 -TH ITER=    -42.791828775520 EDEL =  -0.579209D-03 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = PULAY
+   TOTAL ENERGY FOR    11 -TH ITER=    -42.792299736444 EDEL =  -0.470961D-03 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = PULAY
+   TOTAL ENERGY FOR    12 -TH ITER=    -42.792825149910 EDEL =  -0.525413D-03 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = PULAY
+   TOTAL ENERGY FOR    13 -TH ITER=    -42.792904492271 EDEL =  -0.793424D-04 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = PULAY
+   TOTAL ENERGY FOR    14 -TH ITER=    -42.792903178943 EDEL =   0.131333D-05 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = PULAY
+   TOTAL ENERGY FOR    15 -TH ITER=    -42.792904585521 EDEL =  -0.140658D-05 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = PULAY
+   TOTAL ENERGY FOR    16 -TH ITER=    -42.792920290125 EDEL =  -0.157046D-04 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = PULAY
+   TOTAL ENERGY FOR    17 -TH ITER=    -42.792926361303 EDEL =  -0.607118D-05 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = PULAY
+   TOTAL ENERGY FOR    18 -TH ITER=    -42.792927175935 EDEL =  -0.814632D-06 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = PULAY
+   TOTAL ENERGY FOR    19 -TH ITER=    -42.792927686841 EDEL =  -0.510906D-06 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = PULAY
+   TOTAL ENERGY FOR    20 -TH ITER=    -42.792927748178 EDEL =  -0.613377D-07 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = PULAY
+   TOTAL ENERGY FOR    21 -TH ITER=    -42.792928070956 EDEL =  -0.322778D-06 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = PULAY
+   TOTAL ENERGY FOR    22 -TH ITER=    -42.792928324357 EDEL =  -0.253400D-06 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = PULAY
+   TOTAL ENERGY FOR    23 -TH ITER=    -42.792928345097 EDEL =  -0.207401D-07 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = PULAY
+   TOTAL ENERGY FOR    24 -TH ITER=    -42.792928350400 EDEL =  -0.530343D-08 : SOLVER = SUBMAT + RMM3 : Charge-Mixing = PULAY
 
 この例題は、固体表面構造に対するエネルギー計算だけを目的にしていますが、もし原子位置の緩和過程の計算を行う場合は、以下のように、下端の仮想水素とそれらと結合した
 Si 原子を固定し、それら以外の原子を可動 (mobile = 1)
@@ -1539,7 +1507,7 @@ weight属性として2という値が振られた原子がありますが、こ�
  +-------------+-------------------------------------------------------+
  | Pt(111) 面  | 9層の(111)面, 計36原子。                              |
  |             |                                                       |
- |             | 格子定数は                                            |
+ |             | 格子定数は\                                           |
  |             | 、\ :math:`a = b = 5.657Å,c = 30Å                     |
  |             | ,\alpha = \beta = 90^{\circ},\gamma = 120^{\circ}`    |
  |             |                                                       |
@@ -1547,7 +1515,7 @@ weight属性として2という値が振られた原子がありますが、こ�
  +-------------+-------------------------------------------------------+
  | Pt(110)面MR | 15層のmissing-row (MR) (110)面, 計28原子              |
  |             |                                                       |
- |             | MR面とは、表面の“列                                   |
+ |             | MR面とは、表面の“列\                                  |
  |             | ”をなしている原子が1列おきに欠けている表面のモデル。  |
  |             |                                                       |
  |             | 格子定数は\ :math:`a=4Å,`                             |
@@ -1581,7 +1549,7 @@ weight属性として2という値が振られた原子がありますが、こ�
 
   Pt(110) 面missing-row 構造(スーパーセル表示)
 
-白金表面は、(111)面が最も安定で、(110)面についてはmissing-row再配列が成されるとされています。このようなことが、表面生成エネルギーの計算から再現できることを確認します。
+白金表面は、(111)面が最も安定で、(110)面についてはmissing-row (MR) 再配列が成されるとされています。このようなことが、表面生成エネルギーの計算から再現できることを確認します。
 
 主な計算条件です。
 
@@ -1600,7 +1568,6 @@ weight属性として2という値が振られた原子がありますが、こ�
 このようにして得られた表面生成エネルギーの計算結果を、 :numref:`basics_table_surface_energy`
 にまとめました。(111)面の生成エネルギーが小さく、次に(110) MR,
 最も生成エネルギーが大きいのが(110)面という結果が得られました。
-
 
 .. table:: 白金表面の生成エネルギー。(111), (110)MR, (110)の順で生成エネルギーが小さい。
  :widths: auto
@@ -1741,22 +1708,22 @@ chargeブロックの下では以下の変数の設定を行います。
  :class: longtable
 
  +------------------+--------------------------------------------------+
- | sw_charge_rspace | 電                                               |
+ | sw_charge_rspace | 電\                                              |
  |                  | 荷密度を実空間で出力するかどうかを指定する真偽値 |
  |                  | です。                                           |
  |                  |                                                  |
  |                  | onにすると実空間の電荷密度が出力されます。       |
  +------------------+--------------------------------------------------+
- | filetype         | 電荷密度データのデータフォー                     |
- |                  | マットを指定します。density_onlyとcubeが選べます |
- |                  | 。density_onlyの場合電荷密度のみが出力されます。 |
- |                  | デフ                                             |
+ | filetype         | 電荷密度データのデータフォー\                    |
+ |                  | マットを指定します。density_onlyとcubeが選べます\|
+ |                  | 。density_onlyの場合電荷密度のみが出力されます。\|
+ |                  | デフ\                                            |
  |                  | ォルト値はdensity_onlyです。cubeの場合、Gaussian |
- |                  | Cube形式で電荷密度が出力されます。この           |
+ |                  | Cube形式で電荷密度が出力されます。この\          |
  |                  | パラメーターは、cubeに設定することを推奨します。 |
  +------------------+--------------------------------------------------+
  | title            | Gaussian                                         |
- |                  | Cubeファイルの“見出し”を指定します。空白文字     |
+ |                  | Cubeファイルの“見出し”を指定します。空白文字\    |
  |                  | を含める場合、全体を半角の2重引用符で囲みます。  |
  +------------------+--------------------------------------------------+
 
@@ -1797,7 +1764,7 @@ chargeブロックの下では以下の変数の設定を行います。
     }
  }
 
-sw_wf_rspace= onとすることによってこの機能が有効になります。filetype = cubeとするとcube形式でファイルが出力されます。eigmin, eigmaxに出力する波動関数の固有値の範囲を指定します。これはフェルミエネルギーからみた相対値ではなく絶対値を用います。デフォルト値はeigmin = -100 Ha, eigmax = 100 Haで、事実上すべての準位が対象となります。
+sw_wf_rspace = onとすることによってこの機能が有効になります。filetype = cubeとするとcube形式でファイルが出力されます。eigmin, eigmaxに出力する波動関数の固有値の範囲を指定します。これはフェルミエネルギーからみた相対値ではなく絶対値を用います。デフォルト値はeigmin = -100 Ha, eigmax = 100 Haで、事実上すべての準位が対象となります。
 
 file_names.dataファイルには波動関数ファイルのファイル名を指定します。デフォルト値はnfwfk.dataですが、cube形式で出力する場合拡張子をcubeに変更することが推奨されます。以下のように記述します。
 
@@ -1852,15 +1819,15 @@ dos ブロックでは以下の設定を行うことができます。
  |            |                                                        |
  |            | 状態密度の計算を行う場合onとします。                   |
  +------------+--------------------------------------------------------+
- | method     | 状態密度の計算方法を指定                               |
- |            | します。gaussianとtetrahedralのいずれかを選択すること  |
- |            | ができます。gaussianを選択した場合、エネルギー準位をガ |
- |            | ウス関数によって幅を持たせた上で計算した状態密度が得ら |
- |            | れます。tetrahedralの場合四面体法による高精度な状態密  |
- |            | 度計算を行うことができます。ただしtetrahedralを利用す  |
+ | method     | 状態密度の計算方法を指定\                              |
+ |            | します。gaussianとtetrahedralのいずれかを選択すること\ |
+ |            | ができます。gaussianを選択した場合、エネルギー準位をガ\|
+ |            | ウス関数によって幅を持たせた上で計算した状態密度が得ら\|
+ |            | れます。tetrahedralの場合四面体法による高精度な状態密\ |
+ |            | 度計算を行うことができます。ただしtetrahedralを利用す\ |
  |            | る場合後述の四面体法が利用できる条件もご参照ください。 |
  +------------+--------------------------------------------------------+
- | deltaE_dos | 状態密度計算に利用されるエネルギ                       |
+ | deltaE_dos | 状態密度計算に利用されるエネルギ\                      |
  |            | ーの幅をハートリー単位で指定します。デフォルト値は1e-4 |
  |            | hartreeです。                                          |
  +------------+--------------------------------------------------------+
@@ -1892,7 +1859,7 @@ dos ブロックでは以下の設定を行うことができます。
 
 参考のため、gaussian 法とtetraheral
 法で計算した体心立方鉄の状態密度をそれぞれ :numref:`basics_bccdos_g` と :numref:`basics_bccdos_t` に示します。k
-点メッシュはそれぞれ10 × 10 × 10 を採用しました。図
+点メッシュはそれぞれ10 × 10 × 10 を採用しました。
 Tetrahedral法で計算状態密度の方がシャープで精度のよいものが得られていることが分かります。
 
 .. figure:: images/basics_image28.svg
@@ -1930,18 +1897,16 @@ k点のデータは、ツールband_kpoint.plを利用して作成します。�
  n1 n2 n3 nd # Symbol
  ...
 
-dkvが\ :math:`k`\ 点の間隔,
-b1x,b1y,b1zは逆格子ベクトル\ :math:`b_{1}`\ のx,y,z成分です。
+dkvが\ :math:`k`\ 点の間隔, b1x,b1y,b1zは逆格子ベクトル\ :math:`b_{1}`\ のx,y,z成分です。
 逆格子ベクトル\ :math:`b_{2}`,\ :math:`b_{3}`\ についても同様です。
 五行目以降に特殊\ :math:`k`\ 点とそのシンボルの指定をします。
-シンボルの指定は必須ではありませんが, 指定がある場合,
-バンド構造図作成の際に利用されます。
+シンボルの指定は必須ではありませんが、指定がある場合バンド構造図作成の際に利用されます。
 整数\ :math:`n_{1},n_{2},n_{3},n_{d}`\ を用いて\ :math:`k`\ ベクトルを
 
 .. math:: k = \frac{n_{1}}{n_{d}}b_{1} + \frac{n_{2}}{n_{d}}b_{2} + \frac{n_{3}}{n_{d}}b_{3}
 
-のように指定します。シンボルは#の後に書いてください.
-面心立方格子の場合の例を示します.
+のように指定します。シンボルは#の後に書いてください。
+面心立方格子の場合の例を示します。
 
 .. code-block:: text
 
@@ -1996,9 +1961,7 @@ kpoint.dataは以下のような記述になっています。
 
 file_names.data
 
-file_names.dataは基本的にはSCF計算の場合と同様ですが, F_CHGT識別子でSCF計算によって得られた電荷密度ファイルを指す必要がある点が異なります.  このファイルはSCF計算で利用したfile_names.data中のF_CHGT識別子で指定されるファイルであり, 既定の名前はnfchgt.dataです。たとえば、SCF計算を行ったディレクトリ直下において固定電荷用の入力データを作成している場合、file_names.dataに以下を記述します。
-
-バンド分散を求めたいk 点のデータkpoint.data はfile_names.dataで指定できます。
+file_names.dataは基本的にはSCF計算の場合と同様ですが, F_CHGT識別子でSCF計算によって得られた電荷密度ファイルを指す必要がある点が異なります.  このファイルはSCF計算で利用したfile_names.data中のF_CHGT識別子で指定されるファイルであり、既定の名前はnfchgt.dataです。たとえば、SCF計算を行ったディレクトリーのすぐ下のディレクトリーにおいて固定電荷用の入力データを作成している場合、file_names.dataに以下を記述します。
 
 .. code-block:: text
 
@@ -2025,11 +1988,11 @@ file_names.dataは基本的にはSCF計算の場合と同様ですが, F_CHGT識
 
 入力パラメータファイル
 
-固定電荷計算用の入力ファイルを作成します.基本的にはSCF計算で利用した入力ファイルを元に作成するとよいでしょう。ただし次の点にご注意いただく必要があります
+固定電荷計算用の入力ファイルを作成します。基本的にはSCF計算で利用した入力ファイルを元に作成するとよいでしょう。ただし次の点にご注意いただく必要があります
 
 -  原子の座標の作成
 
-構造緩和を行った場合, 固定電荷の入力ではその緩和された構造を利用する必要があります. 従って, 構造緩和を行った場合はF_DYNMファイルに書かれている最後の構造を参考に原子の座標を設定してください。
+構造緩和を行った場合固定電荷の入力ではその緩和された構造を利用する必要があります。従って、構造緩和を行った場合はF_DYNMファイルに書かれている最後の構造を参考に原子の座標を設定してください。
 
 -  計算条件の変更
 
@@ -2089,19 +2052,19 @@ ek_convergenceブロックの各変数の意味は下記の通りです
  +-------------------+-------------------------------------------------+
  | delta_eigenvalue  | 収束判定を設定します。                          |
  |                   |                                                 |
- |                   | この値のデフォ                                  |
- |                   | ルト値は1e-5です。多くの場合このデフォルト値で  |
+ |                   | この値のデフォ\                                 |
+ |                   | ルト値は1e-5です。多くの場合このデフォルト値で\ |
  |                   | 問題はないと思われますが、目安としては、絶縁体, |
  |                   | 半導体の場合は1.e-4 rydberg程度,                |
  |                   | 金属の場合は1.e-6 rydberg程度がよいでしょう。   |
  +-------------------+-------------------------------------------------+
- | succession        | 全エネルギー                                    |
- |                   | の前ステップとの差がdelta_eigenvalue以下success |
+ | succession        | 全エネルギー\                                   |
+ |                   | の前ステップとの差がdelta_eigenvalue以下success\|
  |                   | ion回連続で収まった時点で収束したと見做します。 |
  +-------------------+-------------------------------------------------+
- | num_extra_bands   | 追加す                                          |
- |                   | るバンドの数です。この設定値のデフォルト値は2で |
- |                   | すが、増やすことによって収束性が向上する場合が  |
+ | num_extra_bands   | 追加す\                                         |
+ |                   | るバンドの数です。この設定値のデフォルト値は2で\|
+ |                   | すが、増やすことによって収束性が向上する場合が\ |
  |                   | あります。バンド数の一割程度が目安となります。  |
  +-------------------+-------------------------------------------------+
 
@@ -2149,21 +2112,21 @@ ek_convergenceブロックの各変数の意味は下記の通りです
  +-----+---------------------------------------------------------------+
  | (b) | バンド数。この例では8 です。                                  |
  +-----+---------------------------------------------------------------+
- | (c) | スピン自由度。1 か2 の値をとります。                          |
- |     | この例では1 であり,                                           |
+ | (c) | スピン自由度。1 か2 の値をとります。\                         |
+ |     | この例では1 であり、\                                         |
  |     | スピン分極を考慮しない計算に対応します。                      |
  +-----+---------------------------------------------------------------+
- | (d) | フェルミエネルギーの値。半導体/絶縁体の場合価電               |
+ | (d) | フェルミエネルギーの値。半導体/絶縁体の場合価電\              |
  |     | 子帯の上端のエネルギーが記述されます。単位はハートリーです。  |
  +-----+---------------------------------------------------------------+
  | (e) | 計算したk 点                                                  |
  +-----+---------------------------------------------------------------+
- | (f) | 固有値の情報が記述されます。まずこの行で, どのk               |
- |     | 点に対応する固有値データかが分かります。この例では, 1 番目のk |
- |     | で, その座標は逆格子ベクトルを基底として(0,0.5,0.5)           |
+ | (f) | 固有値の情報が記述されます。まずこの行で, どのk\              |
+ |     | 点に対応する固有値データかが分かります。この例では, 1 番目のk\|
+ |     | で, その座標は逆格子ベクトルを基底として(0,0.5,0.5)\          |
  |     | となります。                                                  |
  +-----+---------------------------------------------------------------+
- | (g) | 固有値のデータが,                                             |
+ | (g) | 固有値のデータが\                                             |
  |     | バンドの数だけ出力されます。単位はハートリーです。            |
  +-----+---------------------------------------------------------------+
 
@@ -2216,8 +2179,7 @@ band.plは、以下のように実行します。
 計算方法
 ~~~~~~~~
 
-格子定数は、複数の格子定数において全エネルギーを計算することによって計算することが可能です。特に、立方晶の場合は次のマーナハンの状態方程式にフィットすることによって
-格子定数だけではなく体積弾性率ももとめることが可能です。
+格子定数は、複数の格子定数において全エネルギーを計算することによって計算することが可能です。特に、立方晶の場合は次のマーナハンの状態方程式にフィットすることによって格子定数だけではなく体積弾性率ももとめることが可能です。
 
 .. math:: E_{\text{tot}}\left( V \right) = \frac{\text{BV}}{B^{'}\left( B^{'} - 1 \right)}\left\lbrack B^{'}\left( 1 - \frac{V_{0}}{V} \right) + \left( \frac{V_{0}}{V} \right)^{B^{'}} - 1 \right\rbrack + E_{\text{tot}}\left( V_{0} \right)
 
@@ -2227,9 +2189,7 @@ band.plは、以下のように実行します。
 計算例：Si 結晶
 ~~~~~~~~~~~~~~~
 
-Si結晶の格子定数の計算例です。この例題は、 :code:`samples/unitcell_optimization/murnaghan_Si` です。
-このディレクトリーの下には、さらにvolxxxというサブディレクトリが存在します。各々のサブディレクトリは、xxxという単位胞の体積に対応した入力データが格納されています。
-たとえば、vol1200というディレクトリにおける計算モデルの指定は以下のようになっています。
+Si結晶の格子定数の計算例です。この例題は、 :code:`samples/unitcell_optimization/murnaghan_Si` です。このディレクトリーの下には、さらにvolxxxというサブディレクトリが存在します。各々のサブディレクトリは、xxxという単位胞の体積に対応した入力データが格納されています。たとえば、vol1200というディレクトリにおける計算モデルの指定は以下のようになっています。
 
 .. code-block:: text
 
@@ -2262,13 +2222,12 @@ Si結晶の格子定数の計算例です。この例題は、 :code:`samples/un
    unit_cell_type = bravais
  }
 
-座標データは、フラクショナルな座標データで指定しています。カルテシアンでもよいのですが、格子定数を変えるたびに座標値も変えるのは手間がかかるので、
-格子定数の計算にはフラクショナル座標が適していると言えます。
+座標データは、フラクショナルな座標データで指定しています。カルテシアンでもよいのですが、格子定数を変えるたびに座標値も変えるのは手間がかかるので、格子定数の計算にはフラクショナル座標が適していると言えます。
 
-unit_cell_typeとしてbravaisを採用し、さらにlattice_systemにfacecenteredを指定しています。このようにすることによって、格子定数の指定がしやすいブラベー格子によって入力の格子を指定し、実際の計算はより負荷の少ない基本格子で行うことが可能となります。
+unit_cell_typeとしてbravaisを採用し、さらにtspaceの下のlattice_systemにfacecenteredを指定しています。このようにすることによって、格子定数の指定がしやすいブラベー格子によって入力の格子を指定し、実際の計算はより負荷の少ない基本格子で行うことが可能となります。
 
 実際の計算はブラベー格子ではなく基本格子で行われるので、体積としてブラベー格子の値を採用するのであれば必要に応じて結果を変換する必要があります。
-たとえば、この例の場合体積弾性率は4倍します（面心立方格子のブラベー格子の体積は基本格子の4倍のため）。
+たとえば、この例の場合体積弾性率は得られる値の4倍にします（面心立方格子のブラベー格子の体積は基本格子の4倍のため）。
 
 計算を行い、マーナハンの状態方程式にフィットした結果を :numref:`basics_image31` および :numref:`basics_si_ev_table` に示します。別途計算した原子の全エネルギーから、凝集エネルギーも示しています。
 原子あたりの凝集エネルギーは、原子の全エネルギーから最安定の格子定数における結晶の全エネルギーを原子数で割った値を引くことによって得ることができます。
