@@ -10,7 +10,7 @@ PHASE/0をインストールする方法を説明します。個別の環境に�
 
 PHASE/0は、PCから最先端のスーパーコンピュータの様々な計算機環境で動作します。
 
-PHASE/0プログラムはfortran（fortran90およびfortran77）とCで記述されています。これらのコンパイラが使える計算機システムが必要です。並列計算をする場合にはMPIライブラリがインストールされている必要があります。
+PHASE/0プログラムはFortran（Fortran90およびFORTRAN77）とCで記述されています。これらのコンパイラが使える計算機システムが必要です。並列計算をする場合にはMPIライブラリがインストールされている必要があります。
 
 必要（利用可能）なソフトウェア、ライブラリ
 
@@ -24,23 +24,20 @@ PHASE/0プログラムはfortran（fortran90およびfortran77）とCで記述�
 
 PHASEの動作確認を行っている計算機環境を以下に示します。
 
-PHASE/0が動作する計算機環境
+PHASE/0が動作する主な計算機環境
 
-=================== ================ =======================
-計算機環境          コンパイラー     利用可能ライブラリ
-=================== ================ =======================
-Linux               GNU Compiler     LAPACK, BLAS, ScaLAPACK
-                    Intel Compiler   MKL
-                                     FFTW3
-Intel版Mac OS X     GNU Compiler     MKL
-                    Intel Compiler   FFTW3
-NEC SX Series       Fortran90/SX     Mathkeisan(LAPACK)
-                                     ASL(FFT)
-Fujitsu FX10, FX100 Fujitsu Compiler
-=================== ================ =======================
+===================== ================ =======================
+計算機環境            コンパイラー     利用可能ライブラリ
+===================== ================ =======================
+Linux                 GNU Compiler     LAPACK, BLAS, ScaLAPACK,
+                      Intel Compiler   MKL, FFTW3
+macOS (Apple Silicon) GNU Compiler     LAPACK, BLAS, ScaLAPACK, FFTW3
+NEC SX Series         Fortran90/SX     Mathkeisan(LAPACK)
+                                       ASL(FFT)
+Fujitsu FX1000, FX700 Fujitsu Compiler
+===================== ================ =======================
 
 -  MPIライブラリは、OpenMPI, IntelMPI, SGI MPTなどに対応しています。
--  GNU Compiler（gfortran, gcc）は、バージョン4.4以降を使用してください。
 -  MKLのFFTW3ラッパーを介してMKLのFFTを利用することもできます。
 -  ASLのFFTW3ラッパーを介してASLのFFTを利用することもできます。
 

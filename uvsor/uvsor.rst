@@ -11,8 +11,7 @@ UVSORとは
 
 UVSOR(Universal Virtual Spectroscope for Optoelectronics Research)は第一原理擬ポテンシャル法に基づいて、物質の誘電・光学応答を原子レベルで計算する機能の総称です。２つのプログラムepsmainとtdlrmainが含まれます。またプログラムphaseおよびekcalにも誘電応答解析機能UVSORが含まれています。UVSORは、プログラムphaseでのSCF計算結果をもとに、物質の誘電関数を0Hz～紫外波長域の周波数で計算することができます。
 誘電関数は、物質の電気的・光学的性質を決定する重要な物理量で、その測定はエレクトロニクス及び光学における主要な課題です。誘電関数は分光器を用いて測定することができますが、現実の分光器は測定周波数域が限られているので、実験的に誘電関数を決定するには、いろいろな種類の分光器を使い分けます。たとえば、エレクトロニクス分野で興味がある10\ :sup:`6` (Mega) 10\ :sup:`9` (Giga)Hz域での誘電関数を測定するには、その周波数域の電磁波を発生させるRF(Radio Frequency)発振器を使用します。また、光学において興味がある赤外、可視、紫外波長域における誘電関数を測定するには、それぞれの波長域専用の分光器を使用します。
-
-しかし、発振器および分光器の調整はかならずしも容易ではなく、このことが誘電関数の測定を困難にしています。また、10\ :sup:`12` (Tera)Hz域の分光器は、現在良好に動作するものが存在しません。このため、この波長域での誘電関数測定は極めて困難であるのが現状です。
+しかし、発振器および分光器の調整はかならずしも容易ではなく、このことが誘電関数の測定を困難にしています。
 
 UVSORはこのような問題を解決する材料シミュレーション・ソフトウェアです。解析可能な波長域が、0Hz～紫外波長域の周波数と極めて広く、エレクトロニクス・光学の分野において興味あるほとんど全ての波長域における誘電関数を第一原理法に基づいて計算することができます。UVSORは、その名が示すように、一種の"万能仮想分光器"として作用し、電子・光学材料の開発に用いることができます。
 
@@ -63,7 +62,7 @@ UVSOR-Epsilon はプログラムPHASE
 
 5. 半導体・絶縁体のほか、金属、磁性材料の取り扱いができる
 
-   半導体・絶縁体のほか、金属、磁性材料に対応したリニアテトラへドロン法 [Lehmann72]_ 
+   半導体・絶縁体のほか、金属、磁性材料に対応したリニアテトラへドロン法 [Lehmann72]_
    及びgaussian/parabolic smearing法を実装している。磁性材料の場合、各スピン状態の誘電関数への寄与を解析できる。金属の場
 
    合、ドルーデ項を考慮した計算を行うことが可能である。リニアテトラへドロン計算は、UVSOR
@@ -273,7 +272,7 @@ smearing計算用、chi2_tは、リニアテトラヘドロン計算用である
 
 ここで、\ :math:`\mathbf{E} = - \partial\mathbf{A}/\partial t = E_{0}\mathbf{u}{\exp\ }\left\lbrack i\left( \mathbf{k} \cdot \mathbf{r} - \omega t \right) \right\rbrack`\ 及び\ :math:`\mathbf{p} = \frac{\hbar}{i}\nabla`\ の関係式を用いた。\ :math:`\omega_{c,v}`\ 及び\ :math:`\mathbf{u} \cdot \mathbf{M}_{\text{vc}}`\ は、それぞれ :eq:`eq:uvsor7` 及び :eq:`eq:uvsor7p` 式で計算される量である。
 
- .. math:: \omega_{c,v} = \frac{1}{\hbar}\left( E_{c}\left( \mathbf{k}_{c} \right) - E_{v}\left( \mathbf{k}_{v} \right) \right) 
+ .. math:: \omega_{c,v} = \frac{1}{\hbar}\left( E_{c}\left( \mathbf{k}_{c} \right) - E_{v}\left( \mathbf{k}_{v} \right) \right)
    :label: eq:uvsor7
 
  .. math:: \mathbf{u} \cdot M_{\text{vc}} = \int_{V}^{}d\mathbf{r}{\exp\ }\left\lbrack - (\mathbf{k}_{c} - \mathbf{k} \cdot \mathbf{r} \right\rbrack u_{c}^{*}\mathbf{u} \cdot \nabla{\exp\ }(i\mathbf{k}_{v} \cdot \mathbf{r})u_{v}
@@ -453,7 +452,7 @@ r表示の計算式は、\ :eq:`eq:uvsor21` 式において、
 
 ローカル項は、\ :math:`\Psi_{c}`\ 及び\ :math:`\Psi_{v}`\ より直接計算できる。
 
- .. math:: \frac{1}{i\omega_{\text{cv}}m} < \Psi_{c}(\mathbf{k}_{a})|\mathbf{p}|\Psi_{v}(\mathbf{k}_{a}) > = \frac{1}{i\omega_{\text{cv}}m} < \Psi_{c}(\mathbf{k}_{a})|\frac{\hbar}{i}\nabla|\Psi_{v}(\mathbf{k}_{a}) 
+ .. math:: \frac{1}{i\omega_{\text{cv}}m} < \Psi_{c}(\mathbf{k}_{a})|\mathbf{p}|\Psi_{v}(\mathbf{k}_{a}) > = \frac{1}{i\omega_{\text{cv}}m} < \Psi_{c}(\mathbf{k}_{a})|\frac{\hbar}{i}\nabla|\Psi_{v}(\mathbf{k}_{a})
    :label: eq:uvsor35
 
  .. math:: \Psi_{c}(\mathbf{k}_{a},r) = \frac{1}{\sqrt{V_{u}}}\sum_{\mathbf{G}}^{}\phi_{c,\mathbf{k}_{a} + \mathbf{G}}{\exp\ }(i(\mathbf{k}_{a} + \mathbf{G}) \cdot \mathbf{r})
@@ -979,7 +978,7 @@ UVSOR-Epsilon
 
 Epsilonは、PHASE/EKCALと同様に、ファイル設定をfile_names.dataで行う。以下にEpsilonのfile_names.dataの例を示す。
 
-.. code-block:: 
+.. code-block::
 
  &fnames
  F_INP    = './nfinput.data'
@@ -1010,7 +1009,7 @@ controlブロックにおいて、condition =
 2あるいはcondition=fixed_chargeとする。局所ポテンシャルが軌道ポテンシャルであるTM型擬ポテンシャルを用いる場合、use_additional_projector
 = onとする必要がある。Controlブロックの設定例を以下に示す。
 
-.. code-block:: 
+.. code-block::
 
  Control{
      condition=fixed_charge
@@ -1042,7 +1041,7 @@ ek_convergenceでは、delta_eigenvalue及びsuccessionの設定を行う。delt
 
 epsilonブロックにおいて、誘電関数の計算方法を指定する。以下にepsilonタグの例及びその設定方法を示す。
 
-.. code-block:: 
+.. code-block::
 
  epsilon {
     sw_epsilon = on ! {on|off}
@@ -1091,7 +1090,7 @@ epsilonブロックにおいて、誘電関数の計算方法を指定する。�
       band = all
       term = all
       double_resonance{
-        method = damping 
+        method = damping
         cut_off = 10.0d-3 hartree
       }
     }
@@ -1157,11 +1156,11 @@ epsilonブロックにおいて、誘電関数の計算方法を指定する。�
 | 機能：遷移モーメント計算オプションの指定
 | 　パラメータ type : 遷移モーメント補正方法の指定
 | 　　　　　　 オプション=   l  ：local型遷移モーメント（補正なし）（デフォルト）
-| 　　　　　　　　　　   =  rn ：Read and Needs型遷移モーメント補正 [Starace72]_ , [Read91]_ 
+| 　　　　　　　　　　   =  rn ：Read and Needs型遷移モーメント補正 [Starace72]_ , [Read91]_
 | 　　　　　　　　　　　　　　（ノルム保存型擬ポテンシャル対応）
-| 　　　　　　　　　　　 =  ks ：Kageshima-Shiraishi(KS)型遷移モーメント補正 [Kageshima97]_ 
+| 　　　　　　　　　　　 =  ks ：Kageshima-Shiraishi(KS)型遷移モーメント補正 [Kageshima97]_
 | 　　　　　　　　　　　　　　（ノルム保存及びウルトラソフト擬ポテンシャル対応）
-| 　　　　　 　delq  =   ：Read and Needs(RN)型遷移モーメント補正のパラメータ [Read91]_ 
+| 　　　　　 　delq  =   ：Read and Needs(RN)型遷移モーメント補正のパラメータ [Read91]_
 | 　　　　　　　　　　　　　　（デフォルト値0.001）
 | 　　　　　　 symmetry ：遷移モーメントの対称化オプションの指定
 | 　　　　　　 オプション = on ：対称化を行う
@@ -1258,7 +1257,7 @@ epsilonブロックにおいて、誘電関数の計算方法を指定する。�
 | 注意：i) 金属の場合にのみ有効である
 | 　　 ii) damping_factor、conductivity、及びplasma_frequencyはいずれかひとつを
 | 　　　　 指定できる。
-|  　 iii) damping_factorパラメータを指定しない場合、デフォルト値(0.0036749 
+|  　 iii) damping_factorパラメータを指定しない場合、デフォルト値(0.0036749
 |          Hartree)が適用される。
 
 **nonlinear_optics**
@@ -1315,7 +1314,7 @@ Epsilon計算はEKCALと同様固定電荷の計算を行うので、電子密�
 
 Epsilon計算を行うためには、電子密度ファイルを指定する必要である。この指定は、file_names.dataにおいてF_CHGT識別子を利用して行う。たとえば、電子密度ファイルが一階層上のディレクトリーにおいて行われていた場合file_names.dataは次のように記述すればよい。
 
-.. code-block:: 
+.. code-block::
 
  &fnames
  F_POT(1) = …
@@ -1326,13 +1325,13 @@ Epsilon計算を行うためには、電子密度ファイルを指定する必�
 
 以下のコマンドを実行することにより、Epsilonが実行される。
 
-.. code-block:: 
+.. code-block::
 
  % mpirun  -np  1  PATH_TO_PHASE0/bin/epsmain >& log &
 
 並列計算を行う場合には、以下のコマンドを実行する。プロセッサーの数をnprocで指定する。並列計算を行うにはあらかじめMPIをインストールしておくことが必要である。
 
-.. code-block:: 
+.. code-block::
 
  % mpirun -np  nproc  PATH_TO_PHASE0/bin/epsmain >& log &
 
@@ -1342,7 +1341,7 @@ Epsilon計算を行うディレクトリに電子密度ファイルをコピー�
 
 入力例１：価電子帯端での電子有効質量テンソルの計算
 
-.. code-block:: 
+.. code-block::
 
          mass{
               sw_mass = on     ! {on|off}
@@ -1353,7 +1352,7 @@ Epsilon計算を行うディレクトリに電子密度ファイルをコピー�
 
 入力例２：伝導帯端での正孔有効質量([100]方向)の計算
 
-.. code-block:: 
+.. code-block::
 
          mass{
               sw_mass = on     ! {on|off}
@@ -1364,7 +1363,7 @@ Epsilon計算を行うディレクトリに電子密度ファイルをコピー�
 
 以下のコマンドを実行することにより、Epsilonが実行される。
 
-.. code-block:: 
+.. code-block::
 
  % mpirun -np 1 PATH_TO_PHASE0/bin/epsmain >& log &
 
@@ -1374,7 +1373,7 @@ Epsilon計算を行うディレクトリに電子密度ファイルをコピー�
 
 以下のコマンドを実行することにより、Epsilonが実行される。
 
-.. code-block:: 
+.. code-block::
 
  % mpirun -np 1 PATH_TO_PHASE0/bin/epsmain >& log &
 
@@ -1387,7 +1386,7 @@ Epsilon計算を行うディレクトリに電子密度ファイルをコピー�
 
 標準出力がoutput000である場合、以下のコマンドを実行することにより、遷移モーメントの計算状況を確認できる。全てのk点において遷移モーメントが計算されているかどうか確認することが必要である。
 
-.. code-block:: 
+.. code-block::
 
  % grep  transition output000
 
@@ -1432,7 +1431,7 @@ Epsilon計算を行うディレクトリに電子密度ファイルをコピー�
 
 各k点での遷移モーメントが計算された後、電子状態に関する状況が出力される
 
-.. code-block:: 
+.. code-block::
 
    --------- list of band type and occupation ----------
    ispin    band      type       occupation
@@ -1475,7 +1474,7 @@ ruleは計算がどの程度現実の状況を反映しているかを表す指�
 
 標準出力ファイルがoutput000である場合、以下のコマンドを実行すると、振動子強度の総和値が画面に出力される。
 
-.. code-block:: 
+.. code-block::
 
  % grep   oscillator output000
 
@@ -1490,7 +1489,7 @@ num-bandsの値を増やすことにより振動子強度の総和は１に近�
 
 計算により得られた計算結果は、file_names.dataにおいてEPS_OUTPUTに指定したファイルに出力される。以下の結果は、バルクSi誘電関数の計算例である。
 
-.. code-block:: 
+.. code-block::
 
                Dielectric Function                                    Optical Properties
          (1)            (2)           (3)              (4)            (5)            (6)            (7)　
@@ -1504,12 +1503,12 @@ num-bandsの値を増やすことにより振動子強度の総和は１に近�
                                                      (以下略)
 
 | 各カラムの意味は以下の通り。
-| (1)電磁波のエネルギー (2)誘電関数(実部) (3)誘電関数(虚部) 
+| (1)電磁波のエネルギー (2)誘電関数(実部) (3)誘電関数(虚部)
 | (4)屈折率(実部) (5)屈折率(虚部)　(6)吸収係数　(7)反射スペクトル
 
 電磁波の分極ベクトル及びポインティングベクトルの成分を全て０として、誘電テンソルを出力した場合には、以下の出力が得られる。
 
-.. code-block:: 
+.. code-block::
 
       　Dielectric Tensor Component(Imaginary part is in parenthesis)
   Photon Energy(eV)     xx             yy             zz             xy             xz             yz
@@ -1532,7 +1531,7 @@ num-bandsの値を増やすことにより振動子強度の総和は１に近�
 
 以下は、バルクSiの伝導帯端での電子有効質量テンソルを計算した例の出力である。
 
-.. code-block:: 
+.. code-block::
 
  ---------- effective mass calculation ----------
   !* effective mass at valence band top: ik =    1
@@ -1577,7 +1576,7 @@ num-bandsの値を増やすことにより振動子強度の総和は１に近�
 
 以下は、正孔有効質量（(100)方向）計算を行った例の出力である。
 
-.. code-block:: 
+.. code-block::
 
  ---------- effective mass calculation ----------
   !* effective mass at valence band top: ik =    1
@@ -1610,7 +1609,7 @@ num-bandsの値を増やすことにより振動子強度の総和は１に近�
 誘電関数の結果は、バンドギャップを補正しなかった場合あるいはブリルアンゾーン
 積分にlinear tetrahedron法を用いた場合の結果と異なる。
 
-.. code-block:: 
+.. code-block::
 
    Static SHG Susceptibility Tensor (10-8 esu)
     SHG prrocess = all type excitation (1)
@@ -1618,7 +1617,7 @@ num-bandsの値を増やすことにより振動子強度の総和は１に近�
     xxx =    0.00000  xxy =    0.00000  xxz =   -0.04514
     xyy =    0.00000  xyz =    0.00000  xzz =    0.00000
     yxx =    0.00000  yxy =    0.00000  yxz =    0.00000    (3)
-    yyy =    0.00000  yyz =   -0.04514  yzz =    0.00000 
+    yyy =    0.00000  yyz =   -0.04514  yzz =    0.00000
     zxx =    0.08732  zxy =    0.00000  zxz =    0.00000
     zyy =    0.08732  zyz =    0.00000  zzz =   -0.92412
 
@@ -1630,7 +1629,7 @@ num-bandsの値を増やすことにより振動子強度の総和は１に近�
 
 F_NLOに指定したファイルには、波長依存の\ :math:`\chi^{(2)}( - 2\omega;\omega,\omega)`\ テンソル各成分の実部、虚部及び絶対値がカラム状に出力される。以下は以下は、Wurzite型AlNの計算結果例である。
 
-.. code-block:: 
+.. code-block::
 
     SHG susceptibility Tensor (10d-8 esu)
   xxx(1)  (2)             (3)             (4)             (5)
@@ -1664,7 +1663,7 @@ F_NLOに指定したファイルには、波長依存の\ :math:`\chi^{(2)}( - 2
 operatorを用いてバンドギャップの補正を行い、ブリルアン・ゾーン積分にparabolic
 smearing法を用いている
 
-.. code-block:: 
+.. code-block::
 
    Static THG Susceptibility Tensor (10-12 esu)
     THG prrocess = all type excitation　(1)
@@ -1676,7 +1675,7 @@ smearing法を用いている
     xzzz =    0.00000   yxxx =    0.00000   yxxy =   24.15228
     yxxz =    0.00000   yxyy =    0.00000   yxyz =    0.00000     (4)
     yxzz =    0.00000   yyyy =   59.19956   yyyz =    0.00000
-    yyzz =   24.15228   yzzz =    0.00000   zxxx =    0.00000    
+    yyzz =   24.15228   yzzz =    0.00000   zxxx =    0.00000
     zxxy =    0.00000   zxxz =   24.15228   zxyy =    0.00000
     zxyz =    0.00000   zxzz =    0.00000   zyyy =    0.00000
     zyyz =   24.15228   zyzz =    0.00000   zzzz =   59.19956
@@ -1691,7 +1690,7 @@ smearing法を用いている
 
 F_NLOに指定したファイルには、波長依存の\ :math:`\chi^{(3)}\left( - 3\omega;\omega,\omega,\omega \right)`\ テンソル各成分の実部、虚部及び絶対値がカラム状に出力される。以下は、Siの\ :math:`\chi^{(3)}`\ 計算結果である。
 
-.. code-block:: 
+.. code-block::
 
     THG susceptibility Tensor (10d-12 esu)
   Xxxx(1)
@@ -1722,7 +1721,7 @@ eps及びPPという名称のディレクトリがあります。scfはphaseに�
 |   nfinput.data
 | file_names.dataはPHASEの入出力ファイルを指定するファイルです。この入力例では、電荷密度を./nfchgt.dataに出力する設定になっています。
 
-.. code-block:: 
+.. code-block::
 
  &fnames
  F_INP    = './nfinput.data'
@@ -1762,7 +1761,7 @@ SCF収束条件：scf_convergence = 10\ :sup:`-12` Hartree; succession = 3
 |   nfinput.data
 | file_names.dataはUVSORの入出力ファイル設定を行うファイル、nfinput.dataはUVSORの入力ファイルです。file_names.dataは以下のように設定されています。
 
-.. code-block:: 
+.. code-block::
 
  &fnames
  F_INP    = './nfinput.data'                     ←(1)入力データファイルの設定
@@ -1780,7 +1779,7 @@ SCF収束条件：scf_convergence = 10\ :sup:`-12` Hartree; succession = 3
 
 nfinput.dataは、以下内容となっています。
 
-.. code-block:: 
+.. code-block::
 
  Control{
          condition = 2  (1) !      {0|1|2|3}|{initial|continuation|fixed_charge|fixed_charge_continuation}
@@ -1913,7 +1912,7 @@ epsディレクトリで以下のコマンドを実行してみてください�
 
 eps.dataを見てみましょう。以下のような出力が得られているはずです。
 
-.. code-block:: 
+.. code-block::
 
                Dielectric Function                                    Optical Properties
          (1)            (2)           (3)              (4)            (5)            (6)            (7)　
@@ -1927,7 +1926,7 @@ eps.dataを見てみましょう。以下のような出力が得られている
                                                      (以下略)
 
 | 各カラムの意味は以下の通りです。
-| (1)電磁波のエネルギー (2)誘電関数(実部)  (3)誘電関数(虚部) 
+| (1)電磁波のエネルギー (2)誘電関数(実部)  (3)誘電関数(虚部)
 | (4)屈折率(実部)  (5)屈折率(虚部)　(6)吸収係数　(7)反射率
 | 電磁波のエネルギー＝0における誘電率が静的誘電率です。計算により得られた静的誘電率は13.90で、実測(11.7)よりも大きな値となります。これは、LDA法がSiのバンドギャップを過少評価することに起因しています。
 
@@ -1957,13 +1956,13 @@ electronの値は１に近づいていきますが、実際の計算では、こ
 Needs(RN)方式で、遷移モーメント補正を行い、Siの誘電率を計算してみましょう。epsilonタグのfの部分を
 type = rnとして、同様に計算を行ってみます。計算を行うとeps.dataが上書きされるので、コピーをとっておきます。
 
-.. code-block:: 
+.. code-block::
 
  % cp eps.data  eps.data-ks
 
 同様に計算を行うと、以下のような結果がeps.dataに出力されます。
 
-.. code-block:: 
+.. code-block::
 
                Dielectric Function                                    Optical Properties
   Photon Energy(eV)   Real Part   Imaginary Part          n              k      abs(in 10**8 m-1)      R
@@ -1993,7 +1992,7 @@ UVSOR-Berry-Phonon
 PHASEと同様に入力および出力ファイルはfile_names.dataに記述して指定する。
 たとえば、以下のように記述する。
 
-.. code-block:: 
+.. code-block::
 
   &fnames
   F_INP    = './nfinput.data'
@@ -2054,7 +2053,7 @@ F_BERRYはベリー位相計算の出力である。F_EFFCHGは通常は使用�
 
 Berry_phaseブロックの形式は次のようになっている。
 
-.. code-block:: 
+.. code-block::
 
  Berry_phase{
    sw_berry_phase = <ON_OFF>
@@ -2087,7 +2086,7 @@ BerryPhase計算に関係する変数の説明
 
 ベリー位相計算を行うために原子を変位させる必要があり、そのための機能がBerry-Phononには備わっている。それは、次のようにdisplacementブロックを原子座標を指定するatom_list内に記述することでできる。
 
-.. code-block:: 
+.. code-block::
 
  atom_list{
    coordinate_system = cartesian
@@ -2134,7 +2133,7 @@ BerryPhase計算に関係する変数の説明
 Postprocessingブロック内にPolarizationブロックを加えて制御する。入力形式は
 次のようになっている。
 
-.. code-block:: 
+.. code-block::
 
  Postprocessing{
     Polarization{
@@ -2168,7 +2167,7 @@ Postprocessingブロック内にPolarizationブロックを加えて制御する
 
 Phononブロックの形式は次のようになっている。
 
-.. code-block:: 
+.. code-block::
 
  Phonon{
     sw_phonon = <ON_OFF>
@@ -2286,7 +2285,7 @@ Phononブロックの形式は次のようになっている。
 
 変数point_groupで指定可能なシェンフリース記号を以下にあげる。
 
-.. code-block:: 
+.. code-block::
 
  Oh, O, Td, Th, T, D4h, D4, D2d, C4v, C4h, S4, C4, D2h, D2, C2v, D6h, D6,
  D3h, C6v, C6h, C3h, C6, D3d, D3, C3v, S6, C3, C2h, Cs, C2, Ci, C1
@@ -2355,7 +2354,7 @@ num_force_dataは力を計算する配置の数であり、displaced_atomは変�
 まず最初に基本並進ベクトル\ :math:`\mathbf{a}_{i} = (a_{\text{ix}},a_{\text{iy}},a_{\text{iz}})`\ が次の形式で
 記述される。
 
-.. code-block:: 
+.. code-block::
 
   --- primitive lattice vectors ---
     a_1x a_1y a_1z
@@ -2410,7 +2409,7 @@ omega_evは電子ボルト単位での振動数であり、omega_nuは波数で�
 
 そして、最後に誘電率が次の形式で出力される。
 
-.. code-block:: 
+.. code-block::
 
   --- Lattice and static dielectric tensors ---
   [   elat_xx   elat_xy   elat_xz ]  [   e0_xx   e0_xy   e0_xz ]
@@ -2560,7 +2559,7 @@ zeff_xx(i),zeff_xy(i)などは原子iの補正されたボルン有効電荷の
 ベリー位相の計算はekcalを用いて行うので、ekcalに入力する自己無頓着な電子密度が必要であるので、その計算の入力テンプレートを示す。
 水晶はシリコン原子と酸素原子からなるので、自己無頓着場計算のfile_names.dataには、シリコンのポテンシャルpotentail.Siと酸素のポテンシャルpotential.Oの指定がある。これらのポテンシャルは二階層上に置かれていなければならない。
 
-.. code-block:: 
+.. code-block::
 
   &fnames
   F_INP    = './nfinput.data'
@@ -2571,7 +2570,7 @@ zeff_xx(i),zeff_xy(i)などは原子iの補正されたボルン有効電荷の
 
 ベリー位相の計算では、各原子を平衡位置からX,Y,Z方向にわずかに変位させたときの電子密度が必要である。その入力"F_INP"のテンプレートを以下に示す。Accuracy{}ブロック中のforce_convergence{}ブロックに含まれるmax_force=0.1e+3は、原子を平衡位置から微小量ずらしたときに発生する力がある程度大きくてもそのまま原子を止めておくための予防的な設定である。
 
-.. code-block:: 
+.. code-block::
 
  Control{
    condition = 0 ! {0|1|2|3}|{initial|continuation|fixed_charge|fixed_charge_continuation}
@@ -2611,7 +2610,7 @@ zeff_xx(i),zeff_xy(i)などは原子iの補正されたボルン有効電荷の
    }
    symmetry{
      tspace{
-       system = h 
+       system = h
        generators {
         !#tag rotation tx  ty  tz
               E        0   0   0
@@ -2677,7 +2676,7 @@ zeff_xx(i),zeff_xy(i)などは原子iの補正されたボルン有効電荷の
 Berry位相計算のときには、generatorsには単位元のみを指定する。
 atomsブロックの後にあるdiplacementブロックで原子変位の指定をする。
 
-.. code-block:: 
+.. code-block::
 
    displacement{
      sw_displace_atom = on
@@ -2691,7 +2690,7 @@ sw_displace_atomがONに設定されていると、displaced_atomで指定した
 
 ベリー位相計算のfile_names.dataのテンプレートを以下に示す。
 
-.. code-block:: 
+.. code-block::
 
   &fnames
   F_INP    = './nfinput.data'
@@ -2704,7 +2703,7 @@ sw_displace_atomがONに設定されていると、displaced_atomで指定した
 
 ベリー位相計算の入力"F_INP"の例を以下に示す。
 
-.. code-block:: 
+.. code-block::
 
  Control{
    condition = 2 ! {0|1|2|3}|{initial|continuation|fixed_charge|fixed_charge_continuation}
@@ -2742,7 +2741,7 @@ sw_displace_atomがONに設定されていると、displaced_atomで指定した
    }
    symmetry{
      tspace{
-       system = h 
+       system = h
        generators {
        !#tag rotation tx  ty  tz
              C3+  0   0   2/3
@@ -2809,14 +2808,14 @@ displacementブロックは自己無頓着場計算の入力テンプレート�
 
 有効電荷を求めるためのベリー位相を計算する入力は、計算入力自動生成Perlスクリプトprep_zeff.plによって生成される。prep_zeff.plを引数を付けずに実行すると、以下のように、実行するときに付加する引数のリストが表示される。
 
-.. code-block:: 
+.. code-block::
 
  prep_zeff.pl DISPLACEMENT ATOM_LIST MESH1 MESH2 MESH3
 
 DISPLACEMENTには原子変位量をBohr単位で指定する。ここでは、0.05とする。ATOM_LISTにはダブルクオーテーションで、有効電荷を計算したい原子の番号のリストを指定する。等価な原子の有効電荷は対称性で結び付けられるので、二番目のシリコン原子と4番目の酸素原子の有効電荷を計算すればいい。この場合は、ATOM_LISTを"2 4"とする。MESH1,MESAH2,MESH3には、k空間メッシュのパラメーターn1,n2,Jを’n1
 n2 J’の並びで入力する。ここでは、"2 2 10"とする。ここで説明した引数の値で、prep_zeff.plを実行する。
 
-.. code-block:: 
+.. code-block::
 
  $ $PATH_TO_PHASE0/bin/prep_zeff.pl "0.05" "2 4" "2 2 10" "2 2 10" "2 2 10"
 
@@ -2834,13 +2833,13 @@ n2 J’の並びで入力する。ここでは、"2 2 10"とする。ここで�
 
 Perlスクリプトexec_zeff.plはこの手続きを自動で行ってくれる。exec_zeff.plを引数を付けずに実行すると、以下のように実行するときに付加する引数のリストが表示される。
 
-.. code-block:: 
+.. code-block::
 
  $ ./exec_zeff.pl PHASE EKCAL PARALLEL {-vpp|-primepower|-sr} |
 
 ’PHASE’にPHASEのバイナリPATH_TO_PHASE0/bin/phaseを指定し、’EKCAL’にEKCALのバイナリPATH_TO_PHASE0/bin/ekcalを指定する。berryディレクトリの下のディレクトリでphaseとekcalが実行されることを考慮して、実行環境に合うように設定する。’PARALLEL’には同時実行するプログラム(PHASEまたはEKCAL)の数を指定する。exec_zeff.plを以下のように実行し、ベリー位相計算がすべて終了するとberryディレクトリにberry.dataが生成される。
 
-.. code-block:: 
+.. code-block::
 
  $ ./exec_zeff.pl PATH_TO_PHASE0/bin/phase PATH_TO_PHASE0/bin/ekcal 1
 
@@ -2848,7 +2847,7 @@ MPIプログラム実行時にオプション-machinefileで利用可能なホ�
 
 VPP,PRIMEPOWER,SR8000,SR11000といた大型計算機ではMPIプログラムの実行方法が特殊であるので、MPIプログラムの実行方法を変更するオプション-archがある。計算機と-archオプションの値の対応を表8に示す。このオプションは
 
-.. code-block:: 
+.. code-block::
 
  ./exec_zeff.pl
   PATH_TO_PHASE0/bin/phase PATH_TO_PHASE0/bin/ekcal 1 -arch=primpower
@@ -2868,7 +2867,7 @@ SR11000           sr
 バッチ処理システムによっては、使用するCPUリソースを制御することがある。exe_zeff.plは最初とは異なる並列度でmpirunを実行することがある。このときにCPUリソースを制御されると正常に計算できない。このような場合に対応するために、-loadlevelerというオプションがある。
 たとえば、SR11000で4並列で実行するならば、以下のようにする。
 
-.. code-block:: 
+.. code-block::
 
  ./exec_zeff.pl PATH_TO_PHASE0/bin/phase PATH_TO_PHASE0/bin/ekcal 4 -arch=sr -loadleveler
 
@@ -2886,7 +2885,7 @@ berry.dataを結合したファイルを作成する。このファイルの先�
 
 ベリー位相計算の出力"F_BERRY"はたとえば以下のようになる。
 
-.. code-block::   
+.. code-block::
 
  4     1     2      0.0                      0.0                       0.50000000000000D-01
  1      0.63456226917922D+00     -0.20888574273791D-02     -0.32917965405901D-02      0.25000000000000D+00
@@ -2904,7 +2903,7 @@ berry.dataは出力された"F_BERRY"を結合したファイルで、ファイ�
 
 phononディレクトリの上にシリコン原子のポテンシャルpotential.Siと酸素原子のポテンシャルpotential.Oがあるので、格子振動解析を行う時のfile_names.dataは以下のようになる。
 
-.. code-block::   
+.. code-block::
 
   &fnames
   F_INP    = './nfinput.data'
@@ -2914,7 +2913,7 @@ phononディレクトリの上にシリコン原子のポテンシャルpotentia
 
 格子振動解析を行う時の入力"F_INP"をつぎに示す。
 
-.. code-block::   
+.. code-block::
 
  Control{
    condition = 0 ! {0|1|2|3}|{initial|continuation|fixed_charge|fixed_charge_continuation}
@@ -2951,7 +2950,7 @@ phononディレクトリの上にシリコン原子のポテンシャルpotentia
    }
    symmetry{
      tspace{
-       system = h 
+       system = h
        generators {
          !#tag rotation tx  ty  tz
                C3+      0   0   2/3
@@ -3053,7 +3052,7 @@ atomic_mass」をelement_listの先頭に記述し、原子質量単位で質量
 
 output001に出力される有効電荷計算の結果を以下に示す。
 
-.. code-block::   
+.. code-block::
 
    --- Calculated electronic effective charges ---
              [   -1.00158    0.00284   -0.00266 ]
@@ -3066,7 +3065,7 @@ output001に出力される有効電荷計算の結果を以下に示す。
 タイトル”Calculated electronic effective
 charges”の後には、ベリー位相から計算した電子からの有効電荷への寄与が3x3の行列として出力されている。’Zel’の後の括弧の中の数字は、原子の番号である。ボルン有効電荷を計算する原子を2番目と4番目の原子に指定した通りになっている。
 
-.. code-block::   
+.. code-block::
 
    --- Calculated effective charges ---
              [    2.99842    0.00284   -0.00266 ]
@@ -3079,7 +3078,7 @@ charges”の後には、ベリー位相から計算した電子からの有効�
 タイトル”Calculated effective
 charges”の後には、イオンの電荷を加え、ボルン有効電荷が出力されている。Zeffの後の括弧の中の数字はZelと同じ意味である。
 
-.. code-block::   
+.. code-block::
 
    --- Symmetrized effective charges ---
              [    2.99842    0.00000    0.00000 ]
@@ -3092,7 +3091,7 @@ charges”の後には、イオンの電荷を加え、ボルン有効電荷が�
 タイトル”Symmetrized effective
 charges”の後には、原子サイトの対称性を満たすようにしたボルン有効電荷が出力されている。
 
-.. code-block::   
+.. code-block::
 
    --- Effective charges of all atoms ---
              [    3.48362   -0.28013   -0.28041 ]
@@ -3126,7 +3125,7 @@ charges”の後には、原子サイトの対称性を満たすようにした�
 タイトル”Effective charges of all
 atoms”の後には、計算しなかった等価原子のボルン有効電荷が結晶の対称性を用いて構成され、すべての原子のボルン有効電荷が出力されている。
 
-.. code-block::   
+.. code-block::
 
    --- Averaged effective charges ---
         [    0.00055    0.00000    0.00000 ]
@@ -3137,7 +3136,7 @@ atoms”の後には、計算しなかった等価原子のボルン有効電荷
 charges”の後には、ボルン有効電荷の平均値が出力されている。結晶を構成する原子のボルン有効電荷を足し合わせると、ゼロにならなければならない。ボルン有効電荷の平均値を各原子のボルン有効電荷から引くことによりその性質を満たすように修正することができる。修正されたボルン有効電荷はタイトル”Corrected
 effective charges”以下に出力されている。
 
-.. code-block::   
+.. code-block::
 
    --- Corrected effective charges ---
              [    3.48307   -0.28013   -0.28041 ]
@@ -3172,7 +3171,7 @@ effective charges”以下に出力されている。
 
 出力ファイル"F_MODE"を次に示す。
 
-.. code-block::   
+.. code-block::
 
   --- primitive lattice vectors ---
     9.2000000000   0.0000000000   0.0000000000
@@ -3204,7 +3203,7 @@ effective charges”以下に出力されている。
       8   0.0266667309 -0.2719065770 -0.0591536503
       9  -0.3853480076  0.0172331772  0.3358772209
     Mode effective charge and its norm:
-  
+
    Z=  0.0000000000   0.0159080661   0.0000020096 Norm=  0.0159080663
   n=     5 E   IR&R     hbarW =  0.58285208E-03 Ha =  0.15860211E-01 eV; nu=  0.12792125E+03 cm^-1
       1   0.0750340743 -0.1076820548  0.0502260531
@@ -3217,7 +3216,7 @@ effective charges”以下に出力されている。
       8   0.2551052896  0.2184164186  0.3536922309
       9  -0.0340512205 -0.1936020463 -0.1256104979
     Mode effective charge and its norm:
-  
+
    Z=  0.0159051835   0.0000000000   0.0000000000 Norm=  0.0159051835
   ...
   --- Lattice and static dielectric tensors ---
@@ -3277,13 +3276,13 @@ AlNの圧電定数の計算を例として、圧電定数の計算の仕方を�
 入力例がディレクトリ :code:`samples/dielectric/lattice/AlN/berry` にあります。
 AlNの場合、prep_zeff.plは次のように実行すれば、正しい結果が得られる入力が作成できます。
 
-.. code-block::   
+.. code-block::
 
  prep_zeff.pl 0.1 '1 3' '6 6 15' '6 6 15' '6 6 15'
 
 原子変位を0.1 a.u.とし、１番目と３番目の原子のボルン有効電荷を実際に計算するように指定しています。n1xn2xJはすべての方向で6x6x15としています。あとは、作成されたexec_zeff.plを次のように実行してください。
 
-.. code-block::   
+.. code-block::
 
  exec_zeff.pl phase ekcal 1
 
@@ -3304,7 +3303,7 @@ AlNの場合、prep_zeff.plは次のように実行すれば、正しい結果�
 
 ディレクトリberryに作成した入力テンプレートに類似したものをディレクトリpiezo/clampedに作成します。 原子の座標は内部座標で入力します。\ :numref:`uvsor_fig6` に示す構造のAlNの場合、次のようになります。
 
-.. code-block::   
+.. code-block::
 
          atom_list{
               coordinate_system = internal ! {cartesian|internal}
@@ -3318,7 +3317,7 @@ AlNの場合、prep_zeff.plは次のように実行すれば、正しい結果�
 
 ボルン有効電荷の計算ではないので、原子を変位させる入力は必要ありません。圧電定数を計算する場合は、結晶を歪ませるための以下に示す入力が必要になります。
 
-.. code-block::   
+.. code-block::
 
          strain{
            sw_strained_cell = ON
@@ -3330,7 +3329,7 @@ AlNの場合、prep_zeff.plは次のように実行すれば、正しい結果�
 
 :math:`<`\ E11\ :math:`>`\ などはprep_piezo.plによって置き換えられて、実際に使用される入力が作成されます。ベリー位相計算の入力はボルン有効電荷の計算の場合と同じです。
 
-.. code-block::   
+.. code-block::
 
  Berry_phase{
    sw_berry_phase = on
@@ -3341,21 +3340,21 @@ AlNの場合、prep_zeff.plは次のように実行すれば、正しい結果�
 prep_piezo.plが読み込む入力テンプレートが作成したら、prep_piezo.plを実行します。
 引数を付けずにprep_piezo.plを実行すると、引数の情報が得られます。
 
-.. code-block::   
+.. code-block::
 
  % prep_piezo.pl STRAIN INDEX_LIST MESH1 MESH2 MESH3
 
 STRAINはひずみの大きさで、INDEX_LISTは零でないひずみ成分の縮約表示の指数のリストです。MESH1などはprep_zeff.plと同じです。
 AlNの場合、次のようにすれば圧電定数の零でないすべての成分\ :math:`e_{31},e_{33},e_{15}`\ を計算できます。
 
-.. code-block::   
+.. code-block::
 
  % prep_piezo.pl 0.01 '1 3 5' '6 6 15' '6 6 15' '6 6 15'
 
 ひずみの大きさを0.01として、零でないひずみ成分を\ :math:`\epsilon_{1},\epsilon_{3},\epsilon_{5}`\ としています。
 生成されたexec_piezo.plを次のように実行します。
 
-.. code-block::   
+.. code-block::
 
  % exec_piezo.pl phase ekcal 1
 
@@ -3363,7 +3362,7 @@ AlNの場合、次のようにすれば圧電定数の零でないすべての�
 
 計算が完了するとberry.dataがpiezo/clampledディレクトリに作成されます。それをscf_e0ディレクトリにコピーして、入力nfinput.dataに
 
-.. code-block::   
+.. code-block::
 
  Postprocessing{
     polarization{
@@ -3374,7 +3373,7 @@ AlNの場合、次のようにすれば圧電定数の零でないすべての�
 
 を書き加えます。conditionを以下のように書き変えて、継続計算を行います。
 
-.. code-block::   
+.. code-block::
 
  Control{
          condition = continuation
@@ -3382,7 +3381,7 @@ AlNの場合、次のようにすれば圧電定数の零でないすべての�
 
 出力output001に次のような圧電定数のイオン固定項の値が出力されます。
 
-.. code-block::   
+.. code-block::
 
   === Piezoelectric constant (C/m^2) ===
      1      -0.0000488692       0.0000008508       0.2508631403
@@ -3418,7 +3417,7 @@ prep_strfrc.plを引数を付けずに実行すると、引数の情報が得ら
 .. code-block:: text
 
  % prep_strfrc.pl 0.02 '1 3 5'
- 
+
 ひずみ-力結合定数を差分で計算するときに、大きさの同じ正と負のひずみで、結晶を変形させます。
 そのひずみの大きさを0.02にしています。
 生成されたexec_strfrc.plを次のように実行します。
@@ -3433,7 +3432,7 @@ prep_strfrc.plを引数を付けずに実行すると、引数の情報が得ら
 計算が完了すると、ディレクトリpiezo/internalにstrfrc.dataが作成されます。これをディレクトリphononにコピーします。
 ディレクトリphononに移り、入力nfinput.dataを次のように書き換えます。
 
-.. code-block::   
+.. code-block::
 
  Phonon{
     sw_phonon = on
@@ -3452,7 +3451,7 @@ prep_strfrc.plを引数を付けずに実行すると、引数の情報が得ら
 sw_calc_forceをoffとし、sw_internal_strain_piezoelectric_tensorをonとし、sw_bp_propertyをonとします。
 phaseを実行して得られる出力output001に次のような圧電定数の内部ひずみ項の値が出力されます。
 
-.. code-block::   
+.. code-block::
 
   === Internal-strain piezoelectric tensor (C/m^2) ===
      1       0.0000000000      -0.0001106316      -0.9017585866
@@ -3491,13 +3490,13 @@ AlNの圧電定数(:math:`\mathbf{C/}\mathbf{m}^{\mathbf{2}}`)
 
 まず、GaAs結晶のボルン有効電荷計算を求めるのに必要とされるベリー位相の計算を行うために、 :code:`samples/dielectric/lattice/GaAs/berry` というディレクトリに移ります。
 
-.. code-block::   
+.. code-block::
 
  cd PATH_TO_PHASE0/samples/dielectric/lattice/GaAs/berry
 
 ここには、ベリー位相計算の入力テンプレートが収められているtemplate_berryとベリー位相計算の入力として与える電子密度を計算するSCF計算の入力テンプレートがtemplate_scfに収められています。これらのファイルは実際に使用する入力を作成するPerlスクリプトprep_zeff.plが参照します。まず、template_scfにあるnfinput.dataには通常のSCF計算の入力と違い、原子をX,Y,Z方向に変位させるための、記述があります。それは、atomsブロックの次に書かれています。
 
-.. code-block::   
+.. code-block::
 
       displacement{
          sw_displace_atom = on
@@ -3511,7 +3510,7 @@ displaced_atomには変位させる原子を指定し、原子の変位ベクト
 
 template_berryに収められているnfinput.dataを見ると、ベリー位相計算を行うときに必要となるタグが見つかります。
 
-.. code-block::   
+.. code-block::
 
  Berry_phase{
    sw_berry_phase = on
@@ -3523,19 +3522,19 @@ g_indexには逆格子ベクトルのインデックス(1、2、または3)を�
 
 ディレクトリにPATH_TO_PHASE0/binあるprep_zeff.plを以下のように実行します。
 
-.. code-block::   
+.. code-block::
 
  $ PATH_TO_PHASE0/bin/prep_zeff.pl 0.05 '1 2' '4 4 20' '4 4 20' '4 4 20'
 
 一番目の引数が原子変位量であり、二番目の引数がボルン有効電荷を計算する原子の番号のリストです。最後の三つの引数では、’n1 n2 J’の様にメッシュパラメータ(n1,n2,J)を指定します。最初のメッシュパラメーターは一番目の逆格子ベクトルに対して適用されます。つぎは二番目、その次は三番目というように対応付けられています。上記の様に実行すると、原子変位量は0.05 bohrになり、1番目の原子(Ga)と２番目の原子(As)のボルン有効電荷を計算します。どの逆格子ベクトルに対しても(4,4,20)メッシュパラメーターが適用されます。このPerlスクリプトはtemplate_scfとtemplate_berryを参照して、実際に使用する入力を生成します。実際に使用する入力はscf_a0,...,berry_a0_g1,...といったディレクトリに置かれます。これらのディレクトリでphaseまたはekcalを実行しなければなりませんが、それを行うPerlスクリプトexec_zeff.plが生成されていますので、それを以下のようにして実行します。
 
-.. code-block::   
+.. code-block::
 
  $ ./exec_zeff.pl " PATH_TO_PHASE0/bin/phase"  " PATH_TO_PHASE0/bin/ekcal" "1"
 
 このスクリプトの実行が終了すると、berry.dataというファイルが生成されます。これには、ボルン有効電荷を計算するためのベリー位相のデータが収められています。これをphononディレクトリにコピーします。
 
-.. code-block::   
+.. code-block::
 
  $ cp berry.data ../phonon
 
@@ -3543,13 +3542,13 @@ g_indexには逆格子ベクトルのインデックス(1、2、または3)を�
 
 次に、振動解析を行うディレクトリphononに移ります。
 
-.. code-block::   
+.. code-block::
 
  $ cd ../phonon
 
 このディレクトリのPHASEの入力nfinput.dataには振動解析を制御するPhononブロックがあります。
 
-.. code-block::   
+.. code-block::
 
  Phonon{
     sw_phonon = on
@@ -3573,7 +3572,7 @@ SCF計算行ったときと同じ様にして、PHASEを実行してください
 先の入力でsw_calc_forceをOFFにし、sw_lattice_dielectric_tensorをONにして、格子誘電率を計算します。
 berry.dataを読み込み有効電荷を計算するために、下記の様にsw_effective_chargeをONにしなければいけません。
 
-.. code-block::   
+.. code-block::
 
  Postprocessing{
    Polarization{
@@ -3584,13 +3583,13 @@ berry.dataを読み込み有効電荷を計算するために、下記の様にs
 
 先ほどと同様にPHASEを実行します。
 
-.. code-block::   
+.. code-block::
 
  % mpirun -np 1 PATH_TO_PHASE0/bin/phase
 
 この計算が終わると、出力ファイルmode.dataに振動解析の結果、モード有効電荷、格子誘電率が出力されます。
 
-.. code-block::   
+.. code-block::
 
   n=     6 T2  IR&R
       hbarW =  0.12314123E-02 Ha =  0.33508432E-01 eV; nu=  0.27026376E+03 cm^-1
@@ -3607,7 +3606,7 @@ berry.dataを読み込み有効電荷を計算するために、下記の様にs
 
 ボルン有効電荷はoutput001に出力されています。
 
-.. code-block::   
+.. code-block::
 
    --- Corrected effective charges ---
              [    2.06653    0.00000    0.00000 ]
@@ -3633,23 +3632,23 @@ prep_zeff.pl, prep_piezo.plなどのPerlスクリプトを利用して、格子�
 使用方法
 ^^^^^^^^^
 
-berry.plスクリプトの利用方法を説明します。基本的な使い方（テンプレート入力データの準備の仕方など）は以前のスクリプトと同様ですが，より柔軟な制御が可能となっています。
+berry.plスクリプトの利用方法を説明します。基本的な使い方（テンプレート入力データの準備の仕方など）は以前のスクリプトと同様ですが、より柔軟な制御が可能となっています。
 
 **準備**
 
-berry.plによる計算を行う前に，「テンプレート入力ファイル」を格納したディレクトリを，実行したい計算に
+berry.plによる計算を行う前に、「テンプレート入力ファイル」を格納したディレクトリを、実行したい計算に
 
-応じて作成する必要があります。以下，ケースごとにテンプレート入力ファイルの作成方法を説明します。
+応じて作成する必要があります。以下、ケースごとにテンプレート入力ファイルの作成方法を説明します。
 
 ボルン有効電荷に必要なベリー位相の計算を行う場合
 
-ボルン有効電荷を計算するために必要なベリー位相は，格子誘電率および圧電定数の内部ひずみ項の計算に必要です。対称性から等価でないすべての原子をx,y,zの3方向に変位させ，さらに各々のケースで3つの逆格子ベクトルに対応するベリー位相を計算する必要があります。変位をさせないケースも必要なので，原子数×3×3＋3種類のベリー位相を評価する計算を行います。
+ボルン有効電荷を計算するために必要なベリー位相は、格子誘電率および圧電定数の内部ひずみ項の計算に必要です。対称性から等価でないすべての原子をx,y,zの3方向に変位させ、さらに各々のケースで3つの逆格子ベクトルに対応するベリー位相を計算する必要があります。変位をさせないケースも必要なので、原子数×3×3＋3種類のベリー位相を評価する計算を行います。
 
 -  SCF計算のテンプレートディレクトリ
 
-まず，通常のPHASEのSCF計算用の入力データを用意します。原子座標は，構造最適化が施されているものを指定します。また，上述のように原子を変位させるので，対称性の指定は行わないようにします。この入力データを，任意のディレクトリ（たとえばtemplate_scf）に置きます。file_names.dataファイルも通常通り置きます。この入力パラメーターファイルに，以下を加えます。
+まず、通常のPHASEのSCF計算用の入力データを用意します。原子座標は、構造最適化が施されているものを指定します。また、上述のように原子を変位させるので、対称性の指定は行わないようにします。この入力データを、任意のディレクトリ（たとえばtemplate_scf）に置きます。file_names.dataファイルも通常通り置きます。この入力パラメーターファイルに、以下を加えます。
 
-.. code-block:: 
+.. code-block::
 
  structure{
    atom_list{
@@ -3666,9 +3665,9 @@ berry.plによる計算を行う前に，「テンプレート入力ファイル
 
 -  ベリー位相計算のテンプレートディレクトリ
 
-つぎに，ベリー位相計算用のテンプレートディレクトリ（たとえばtemplate_berry）を，SCFテンプレートディレクトリーと同じ階層に作成します。このテンプレートディレクトリの下に，ekcal用の入力データを作成します。通常のekcal入力に，以下を加えます。
+つぎに、ベリー位相計算用のテンプレートディレクトリ（たとえばtemplate_berry）を、SCFテンプレートディレクトリーと同じ階層に作成します。このテンプレートディレクトリの下に、ekcal用の入力データを作成します。通常のekcal入力に、以下を加えます。
 
-.. code-block:: 
+.. code-block::
 
  structure{
    atom_list{
@@ -3696,9 +3695,9 @@ berry.plによる計算を行う前に，「テンプレート入力ファイル
 
 大文字、小文字の違いも含め、この通りに記述する必要があります。
 
-また，file_names.dataは以下のように記述する必要があります。
+また、file_names.dataは以下のように記述する必要があります。
 
-.. code-block:: 
+.. code-block::
 
  &fnames
  F_INP = ‘./nfinp.data’
@@ -3706,13 +3705,13 @@ berry.plによる計算を行う前に，「テンプレート入力ファイル
  F_CHGT = ‘../<SCF_DIR>/nfchgt.data’
  /
 
-<SCF_DIR>は，計算実行時に対応するSCF計算ディレクトリ名に置き換わるプレースホルダーです。大文字、小文字の違いも含め、この通りに記述する必要があります。
+<SCF_DIR>は、計算実行時に対応するSCF計算ディレクトリ名に置き換わるプレースホルダーです。大文字、小文字の違いも含め、この通りに記述する必要があります。
 
 ※ 3D版の場合の注意点
 
-ベリー位相計算は，ekcalではなくphaseを用いて行ってください。この際，以下の要領で“\ **k**\ 点を一点ずつ処理する”モードにしてください。
+ベリー位相計算は、ekcalではなくphaseを用いて行ってください。この際、以下の要領で“\ **k**\ 点を一点ずつ処理する”モードにしてください。
 
-.. code-block:: 
+.. code-block::
 
  control{
    fixed_charge_option{
@@ -3722,13 +3721,13 @@ berry.plによる計算を行う前に，「テンプレート入力ファイル
 
 圧電定数のイオン固定項の計算に必要なベリー位相を計算する場合
 
-圧電定数のイオン固定項を計算する場合，ひずみ下でのベリー位相が必要となります。対称性から0にならないひずみ成分を指定し，各ひずみ成分に対して3つの逆格子ベクトルにそったベリー位相を計算します。必要なベリー位相の数は，参照データとしてひずんでいない系のベリー位相も計算するので，“0にならない成分の数×3+3”です。この計算の場合も，ボルン電荷の場合と同様にSCF計算用およびベリー位相計算用のテンプレートディレクトリーを作成します。
+圧電定数のイオン固定項を計算する場合、ひずみ下でのベリー位相が必要となります。対称性から0にならないひずみ成分を指定し、各ひずみ成分に対して3つの逆格子ベクトルにそったベリー位相を計算します。必要なベリー位相の数は、参照データとしてひずんでいない系のベリー位相も計算するので、“0にならない成分の数×3+3”です。この計算の場合も、ボルン電荷の場合と同様にSCF計算用およびベリー位相計算用のテンプレートディレクトリーを作成します。
 
 -  SCF計算用のテンプレートディレクトリ
 
-ボルン電荷の場合は原子を変位させた計算を行いますが，圧電定数のイオン固定項の場合は単位胞をひずませた計算を行います。ボルン有効電荷の場合と同じように，SCF計算用の入力パラメーターファイルをテンプレートディレクトリの下に置き，以下のような設定を施します。
+ボルン電荷の場合は原子を変位させた計算を行いますが、圧電定数のイオン固定項の場合は単位胞をひずませた計算を行います。ボルン有効電荷の場合と同じように、SCF計算用の入力パラメーターファイルをテンプレートディレクトリの下に置き、以下のような設定を施します。
 
-.. code-block:: 
+.. code-block::
 
  structure{
    strain{
@@ -3749,9 +3748,9 @@ berry.plによる計算を行う前に，「テンプレート入力ファイル
 
 -  ベリー位相計算のテンプレートディレクトリ
 
-ボルン有効電荷の場合と同じように，ekcal用の入力パラメーターファイルをベリー位相計算用に作成したテンプレートディレクトリの下に置き，以下のように編集します。
+ボルン有効電荷の場合と同じように、ekcal用の入力パラメーターファイルをベリー位相計算用に作成したテンプレートディレクトリの下に置き、以下のように編集します。
 
-.. code-block:: 
+.. code-block::
 
  structure{
    strain{
@@ -3778,10 +3777,10 @@ berry.plによる計算を行う前に，「テンプレート入力ファイル
    }
  }
 
-<E11>,...はSCF計算の場合と同様です。また，<MESH_N1>, <MESH_N2>,
-<MESH_J>はボルン電荷の場合と同様，計算実行時にベリー位相計算のメッシュパラメーターに置き換わります。また，ボルン電荷計算の場合と同様file_names.dataは以下のように作成する必要があります。
+<E11>,...はSCF計算の場合と同様です。また、<MESH_N1>, <MESH_N2>,
+<MESH_J>はボルン電荷の場合と同様、計算実行時にベリー位相計算のメッシュパラメーターに置き換わります。また、ボルン電荷計算の場合と同様file_names.dataは以下のように作成する必要があります。
 
-.. code-block:: 
+.. code-block::
 
  &fnames
  F_INP = ‘./nfinp.data’
@@ -3789,11 +3788,11 @@ berry.plによる計算を行う前に，「テンプレート入力ファイル
  F_CHGT = ‘../<SCF_DIR>/nfchgt.data’
  /
 
-圧電定数の内部ひずみ項を計算するために必要な，ひずみ下での原子間力を計算する場合
+圧電定数の内部ひずみ項を計算するために必要な、ひずみ下での原子間力を計算する場合
 
-この場合，作成する必要があるのはSCF計算用のテンプレートディレクトリのみです。テンプレートディレクトリを作成し，その下に通常のSCF計算用の入力パラメーターファイルとfile_names.dataファイルを置きます。SCF計算用の入力パラメータファイルには以下の内容を追加します。
+この場合、作成する必要があるのはSCF計算用のテンプレートディレクトリのみです。テンプレートディレクトリを作成し、その下に通常のSCF計算用の入力パラメーターファイルとfile_names.dataファイルを置きます。SCF計算用の入力パラメータファイルには以下の内容を追加します。
 
-.. code-block:: 
+.. code-block::
 
  structure{
    strain{
@@ -3812,9 +3811,9 @@ berry.plによる計算を行う前に，「テンプレート入力ファイル
 
 **コントロールファイルの記述**
 
-berry.plの振る舞いは，コントロールファイルを介して指定します。たとえば，以下のような内容になります（#で始まる文はコメント文）。
+berry.plの振る舞いは、コントロールファイルを介して指定します。たとえば、以下のような内容になります（#で始まる文はコメント文）。
 
-.. code-block:: 
+.. code-block::
 
  #overall control
  property = zeff
@@ -3830,7 +3829,7 @@ berry.plの振る舞いは，コントロールファイルを介して指定し
  mesh1 = 6 6 15
  mesh2 = 6 6 15
  mesh3 = 6 6 15
- 
+
  #execution control
  np = 4
  ndir = 2
@@ -3840,13 +3839,13 @@ berry.plの振る舞いは，コントロールファイルを介して指定し
 
  scf_command = mpiexec –np NP phase ne=NE nk=NK
  berry_command = mpiexec –np NP ekcal ne=NE_B
- 
+
  #unit cell info, optional
  a_vector = 5.01 0.0 0.0
  b_vector = 0.0 5.01 0.0
  c_vector = 0.0 0.0 5.01
 
-この例からわかるように，パラメータ1つにつき1行を利用し，“キーワード=値”という形式でパラメータを指定します。利用できるキーワードとそのデフォルト値は下記の通り。
+この例からわかるように、パラメータ1つにつき1行を利用し、“キーワード=値”という形式でパラメータを指定します。利用できるキーワードとそのデフォルト値は下記の通り。
 
 .. table::
  :widths: auto
@@ -3857,15 +3856,15 @@ berry.plの振る舞いは，コントロールファイルを介して指定し
  +================+====================================================+
  | property       | どのような計算を行うかを指定します。zeff, piezo,   |
  |                | strfrcのいずれかです。zeffを指定                   |
- |                | するとボルン有効電荷用のベリー位相計算，piezoを選  |
+ |                | するとボルン有効電荷用のベリー位相計算、piezoを選  |
  |                | ぶと圧電定数のイオン固定項の計算に必要なひずみ下で |
- |                | のベリー位相計算，strfrcを選ぶと圧電定数の内部ひず |
+ |                | のベリー位相計算、strfrcを選ぶと圧電定数の内部ひず |
  |                | み項の計算に必要なひずみ下での原子間力の計算を行う |
  |                | ことを指定することになります。デフォルト値はzeff。 |
  +----------------+----------------------------------------------------+
  | cpumax         | 計算の最大時間を秒の単位で指定しま                 |
- |                | す。ここで指定した時間よりも経過時間が長い場合，計 |
- |                | 算はすみやかに終了します。0以下の値を指定すると，  |
+ |                | す。ここで指定した時間よりも経過時間が長い場合、計 |
+ |                | 算はすみやかに終了します。0以下の値を指定すると、  |
  |                | この条件では計算は終了しません。デフォルト値は-1。 |
  +----------------+----------------------------------------------------+
  | stopcheck      | 計算停止条件を満たしているかどうかをチェック       |
@@ -3883,11 +3882,11 @@ berry.plの振る舞いは，コントロールファイルを介して指定し
  |                | リー位相計算用のテンプレートディレクトリのディレク |
  |                | トリ名を指定します。デフォルト値はtemplate_berry。 |
  +----------------+----------------------------------------------------+
- | atom_list      | 変位させる原子のIDを，空白区切り                   |
+ | atom_list      | 変位させる原子のIDを、空白区切り                   |
  |                | で指定します。property=zeffの場合必須の指定です。  |
  +----------------+----------------------------------------------------+
  | strain_list    | ひずみ成                                           |
- |                | 分を空白区切りで指定します。対応は，次の通りです。 |
+ |                | 分を空白区切りで指定します。対応は、次の通りです。 |
  |                |                                                    |
  |                | 1 :math:`\rightarrow` 11 成分                      |
  |                |                                                    |
@@ -3945,7 +3944,7 @@ berry.plの振る舞いは，コントロールファイルを介して指定し
  | ng_b           | （三次元版のみ）ベリー位相計算時にお               |
  |                | ける\ **G**\ 並列数を指定します。デフォルト値は1。 |
  +----------------+----------------------------------------------------+
- | scf_command    | SCF計算の実行方法を指定します。たとえば，          |
+ | scf_command    | SCF計算の実行方法を指定します。たとえば、          |
  |                |                                                    |
  |                | scf_command = mpirun –np NP phase ne=NE nk=NK      |
  |                | (2D版)                                             |
@@ -3954,18 +3953,18 @@ berry.plの振る舞いは，コントロールファイルを介して指定し
  |                | ng=NG (3D版)                                       |
  |                |                                                    |
  |                | などと指定します。NP, NE, NK,                      |
- |                | NGは，計算実行時に上述のnp, ne, nk,                |
+ |                | NGは、計算実行時に上述のnp, ne, nk,                |
  |                | ngに                                               |
- |                | 置き換わります。ただし，ディレクトリ並列の数によっ |
- |                | ては"あまり"が発生することがあり，その場合はne=NE  |
+ |                | 置き換わります。ただし、ディレクトリ並列の数によっ |
+ |                | ては"あまり"が発生することがあり、その場合はne=NE  |
  |                | nk=NK                                              |
  |                | ng=NGは                                            |
  |                | 省略されて計算が投入されます。デフォルト値はmpirun |
  |                | phase                                              |
- |                | ですが，利用して                                   |
+ |                | ですが、利用して                                   |
  |                | いる環境に合わせて適切な指定をする必要があります。 |
  +----------------+----------------------------------------------------+
- | berry_command  | ベリー位相計算の実行方法を指定します。たとえば，   |
+ | berry_command  | ベリー位相計算の実行方法を指定します。たとえば、   |
  |                |                                                    |
  |                | berry_command = mpirun –np NP ekcal ne=NE_B (2D版) |
  |                |                                                    |
@@ -3973,55 +3972,55 @@ berry.plの振る舞いは，コントロールファイルを介して指定し
  |                | (3D版)                                             |
  |                |                                                    |
  |                | などと指定します。NE_Bは上述のne_bに               |
- |                | ，NG_Bはng_bに置き換わります。デフォルト値はmpirun |
- |                | ekcalです，利用して                                |
+ |                | 、NG_Bはng_bに置き換わります。デフォルト値はmpirun |
+ |                | ekcalです、利用して                                |
  |                | いる環境に合わせて適切な指定をする必要があります。 |
  +----------------+----------------------------------------------------+
  | a_vector       | *a*\ 軸の三成分を空白区切りで指定し                |
- |                | ます。必須ではありませんが，指定しておくとベリー位 |
+ |                | ます。必須ではありませんが、指定しておくとベリー位 |
  |                | 相計算のメッシュパラメーターの参照値を算出します。 |
  +----------------+----------------------------------------------------+
  | b_vector       | *b*\ 軸の三成分を空白区切りで指定し                |
- |                | ます。必須ではありませんが，指定しておくとベリー位 |
+ |                | ます。必須ではありませんが、指定しておくとベリー位 |
  |                | 相計算のメッシュパラメーターの参照値を算出します。 |
  +----------------+----------------------------------------------------+
  | c_vector       | *c*\ 軸の三成分を空白区切りで指定し                |
- |                | ます。必須ではありませんが，指定しておくとベリー位 |
+ |                | ます。必須ではありませんが、指定しておくとベリー位 |
  |                | 相計算のメッシュパラメーターの参照値を算出します。 |
  +----------------+----------------------------------------------------+
 
-※ 3D版の場合，ベリー位相計算にはphaseを使うようにしてください。
+※ 3D版の場合、ベリー位相計算にはphaseを使うようにしてください。
 
 **並列計算について**
 
-並列計算の設定について注意すべき点を挙げます。berry.plによる計算は，通常のバンド，\ **k**\ 点による並列に加え，複数のディレクトリにまたがって並列計算を行う“ディレクトリ並列”によって行われます。したがって，ディレクトリ並列数（パラメーターndir）を2以上にする場合，SCF計算の場合はnp=ne×nkではなくnp=ndir×ne×nkとなるように，ベリー位相計算の場合はnp=ne_bではなくnp=ne_b×ndirとなるように並列数を調整してください。また，SCF計算とベリー位相計算とでバンド並列数が異なるのは，ベリー位相計算は\ **k**\ 点並列に未対応のためです。
+並列計算の設定について注意すべき点を挙げます。berry.plによる計算は、通常のバンド、\ **k**\ 点による並列に加え、複数のディレクトリにまたがって並列計算を行う“ディレクトリ並列”によって行われます。したがって、ディレクトリ並列数（パラメーターndir）を2以上にする場合、SCF計算の場合はnp=ne×nkではなくnp=ndir×ne×nkとなるように、ベリー位相計算の場合はnp=ne_bではなくnp=ne_b×ndirとなるように並列数を調整してください。また、SCF計算とベリー位相計算とでバンド並列数が異なるのは、ベリー位相計算は\ **k**\ 点並列に未対応のためです。
 
 **スクリプトの実行**
 
-berry.plを引数なしで実行すると，以下のようなメッセージが得られます。
+berry.plを引数なしで実行すると、以下のようなメッセージが得られます。
 
-.. code-block:: 
+.. code-block::
 
  % berry.pl
  Usage : berry.pl control [OPTIONS]
 
-第一引数にコントロールファイルのファイル名を指定し，さらに必要に応じてオプションを指定して制御する仕組みになっています。
+第一引数にコントロールファイルのファイル名を指定し、さらに必要に応じてオプションを指定して制御する仕組みになっています。
 
-以下のようなコマンドを実行すると，コントロールファイルの解釈と解析のみ行います。
+以下のようなコマンドを実行すると、コントロールファイルの解釈と解析のみ行います。
 
-.. code-block:: 
+.. code-block::
 
  % berry.pl control –-mode=analyze
 
-以下のようなコマンドを実行すると，コントロールファイルの解釈と解析のあと，計算用のディレクトリを作成します。
+以下のようなコマンドを実行すると、コントロールファイルの解釈と解析のあと、計算用のディレクトリを作成します。
 
-.. code-block:: 
+.. code-block::
 
  % berry.pl control --mode=gendir
 
-以下のようなコマンドを実行すると，コントロールファイルの解釈と解析のあと，計算用のディレクトリを作成し，さらに計算を実行します。
+以下のようなコマンドを実行すると、コントロールファイルの解釈と解析のあと、計算用のディレクトリを作成し、さらに計算を実行します。
 
-.. code-block:: 
+.. code-block::
 
  % berry.pl control --mode=exec
 
@@ -4029,7 +4028,7 @@ berry.plを引数なしで実行すると，以下のようなメッセージが
 
 **計算のストップ/リスタート**
 
-計算は，以下の条件のいずれかが満たされれば終了します。
+計算は、以下の条件のいずれかが満たされれば終了します。
 
 -  すべての計算が終了した。
 
@@ -4037,9 +4036,9 @@ berry.plを引数なしで実行すると，以下のようなメッセージが
 
 -  作業ディレクトリにstopという名前のファイルが作成された。
 
-一方，リスタートは特に設定を行わずとも実行されます。計算を最初からやり直したい場合は，まず以下のコマンドによって計算用ディレクトリを削除します。
+一方、リスタートは特に設定を行わずとも実行されます。計算を最初からやり直したい場合は、まず以下のコマンドによって計算用ディレクトリを削除します。
 
-.. code-block:: 
+.. code-block::
 
  % berry.pl --clean
 
@@ -4047,7 +4046,7 @@ berry.plを引数なしで実行すると，以下のようなメッセージが
 
 SCF計算の場合：
 
-.. code-block:: 
+.. code-block::
 
  control{
    condition = automatic
@@ -4055,7 +4054,7 @@ SCF計算の場合：
 
 ベリー位相計算の場合：
 
-.. code-block:: 
+.. code-block::
 
  control{
    condition = fixed_charge_automatic
@@ -4067,12 +4066,12 @@ SCF計算の場合：
 
 ベリー位相計算用のメッシュ
 
-ベリー位相の計算においては，対象としたい逆格子ベクトルに垂直な面の面積分とに沿った線積分が実行されます。面積分のメッシュをn1
-n2で，線積分のメッシュをJで指定します。以外の2つの逆格子ベクトルをとするとをに垂直な面に射影したベクトル，，が面積分のメッシュの見積もりの基準となるのでその長さから決めます。線積分のパラメータは，の長さをもとに決定します。コントロールファイルにa_vector,
+ベリー位相の計算においては、対象としたい逆格子ベクトルに垂直な面の面積分とに沿った線積分が実行されます。面積分のメッシュをn1
+n2で、線積分のメッシュをJで指定します。以外の2つの逆格子ベクトルをとするとをに垂直な面に射影したベクトル、、が面積分のメッシュの見積もりの基準となるのでその長さから決めます。線積分のパラメータは、の長さをもとに決定します。コントロールファイルにa_vector,
 b_vector,
-c_vectorの指定を行っておくと，この長さの計算（bohr\ :sup:`-1`\ 単位）とそこから見積もられる参考のメッシュパラメーターが以下のように標準出力に出力されます（あくまで参照値であり，得られる結果の妥当性を保証するものではありません）。
+c_vectorの指定を行っておくと、この長さの計算（bohr\ :sup:`-1`\ 単位）とそこから見積もられる参考のメッシュパラメーターが以下のように標準出力に出力されます（あくまで参照値であり、得られる結果の妥当性を保証するものではありません）。
 
-.. code-block:: 
+.. code-block::
 
  |b_para1|, |b_para2| and |b_perp| (in bohr^-1 units)
  for reciprocal vector no. 1 : 0.172224346323159, 0.107572987734313, 0.198867545420854
@@ -4085,24 +4084,24 @@ c_vectorの指定を行っておくと，この長さの計算（bohr\ :sup:`-1`
 
 ボルン電荷を計算するときに指定する原子
 
-ボルン電荷の計算を行う際に指定する原子は，対称性から等価でない原子のみを指定します（等価な原子を指定しても結果は正しくでますが，不要な計算を実行することになります）。たとえば，SiO\ :sub:`2`\ の場合SiとOをどれか1つずつ選びます。
+ボルン電荷の計算を行う際に指定する原子は、対称性から等価でない原子のみを指定します（等価な原子を指定しても結果は正しくでますが、不要な計算を実行することになります）。たとえば、SiO\ :sub:`2`\ の場合SiとOをどれか1つずつ選びます。
 
 並列数の指定
 
-並列の指定は，以下が満たされるように行ってください。
+並列の指定は、以下が満たされるように行ってください。
 
 SCF計算の場合：np = ndir × ne × nk
 
 ベリー位相計算の場合：np = ndir × ne_b
 
-ここでndirは並列に扱いたいディレクトリの数，ne,
-nkはそれぞれSCF計算のバンド並列および\ **k**\ 点並列数，ne_bはベリー位相計算時のバンド並列数です。SCF計算とベリー位相計算でバンド並列数が異なるのは，ベリー位相計算は\ **k**\ 点並列に未対応のためです。この関係が成立しない場合，berry.plはその旨を出力し終了します。
+ここでndirは並列に扱いたいディレクトリの数、ne,
+nkはそれぞれSCF計算のバンド並列および\ **k**\ 点並列数、ne_bはベリー位相計算時のバンド並列数です。SCF計算とベリー位相計算でバンド並列数が異なるのは、ベリー位相計算は\ **k**\ 点並列に未対応のためです。この関係が成立しない場合、berry.plはその旨を出力し終了します。
 
-計算例題：AlNの格子誘電率，圧電定数
+計算例題：AlNの格子誘電率、圧電定数
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-例題として，AlNを取り上げます。格子誘電率，圧電定数のイオン固定項，圧電定数の内部ひずみ項の計算例を紹介します。各計算は，成すべき手続きが多いので，1ステップずつ解説していきます。なお，ここで利用するサンプルデータは :code:`samples/dielectric/lattice/AlN` 
-以下にあります。以降の説明は，このディレクトリにいるものとして行います。
+例題として、AlNを取り上げます。格子誘電率、圧電定数のイオン固定項、圧電定数の内部ひずみ項の計算例を紹介します。各計算は、成すべき手続きが多いので、1ステップずつ解説していきます。なお、ここで利用するサンプルデータは :code:`samples/dielectric/lattice/AlN`
+以下にあります。以降の説明は、このディレクトリにいるものとして行います。
 
 **AlNの格子誘電率**
 
@@ -4110,24 +4109,24 @@ nkはそれぞれSCF計算のバンド並列および\ **k**\ 点並列数，ne_
 
 格子振動解析
 
-まずは，格子振動解析を行います。phononの下に格子振動解析を行うための入力データがおかれています。この計算は，通常のPHASEの計算と同じように実行します。
+まずは、格子振動解析を行います。phononの下に格子振動解析を行うための入力データがおかれています。この計算は、通常のPHASEの計算と同じように実行します。
 
 ベリー位相の計算
 
-ついで，ベリー位相の計算を行います。利用する入力テンプレートディレクトリは，berry以下にあります。
+ついで、ベリー位相の計算を行います。利用する入力テンプレートディレクトリは、berry以下にあります。
 
-.. code-block:: 
+.. code-block::
 
  % cd berry
  % ls
  control template_berry template_scf
 
 control がberry.plのコントロールファイルです。template_berry,
-template_scfはそれぞれベリー位相およびSCF計算用の入力テンプレートディレクトリです。その内容をみると，入力パラメータファイルには<ATOM_ID>,
+template_scfはそれぞれベリー位相およびSCF計算用の入力テンプレートディレクトリです。その内容をみると、入力パラメータファイルには<ATOM_ID>,
 <Ux>
-など，通常のPHASEの計算では利用しない文字列が確認できます。これらの文字列は，berry.pl実行時に適切な値に置き換わる仕組みになっています。
+など、通常のPHASEの計算では利用しない文字列が確認できます。これらの文字列は、berry.pl実行時に適切な値に置き換わる仕組みになっています。
 
-controlファイルは，以下のような内容です。
+controlファイルは、以下のような内容です。
 
 .. parsed-literal::
 
@@ -4148,40 +4147,40 @@ controlファイルは，以下のような内容です。
  scf_command = mpiexec –n NP $HOME|PHASE020XX.YY|/bin/phase ne=NE nk=NK
  berry_command = mpiexec –n NP $HOME|PHASE020XX.YY|/bin/ekcal ne=NE_B
 
-このうち，変更する必要があるのは実行制御部分です。np, ndir, ne, nk,
-ne_bを利用したいMPIプロセス数に合わせて編集します。また，scf_commandにPHASEの実行方法を，berry_commandにekcalの実行方法を指定します。コントロールファイルの実行制御部分を適切に編集したら，以下の要領でberry.plを実行します。
+このうち、変更する必要があるのは実行制御部分です。np, ndir, ne, nk,
+ne_bを利用したいMPIプロセス数に合わせて編集します。また、scf_commandにPHASEの実行方法を、berry_commandにekcalの実行方法を指定します。コントロールファイルの実行制御部分を適切に編集したら、以下の要領でberry.plを実行します。
 
-.. code-block:: 
+.. code-block::
 
  % berry.pl control --mode=exec
 
-この例では，1番目と3番目の原子（AlとN）を変位させてベリー位相の計算を行うので，合計で7のSCF計算と21のベリー位相の計算が行われます。
+この例では、1番目と3番目の原子（AlとN）を変位させてベリー位相の計算を行うので、合計で7のSCF計算と21のベリー位相の計算が行われます。
 
-計算がすべて終了すると，作業ディレクトリにberry.dataというファイルが作成されますが，これを格子振動解析を行ったディレクトリ（この例ではphonon）にコピーします。
+計算がすべて終了すると、作業ディレクトリにberry.dataというファイルが作成されますが、これを格子振動解析を行ったディレクトリ（この例ではphonon）にコピーします。
 
-.. code-block:: 
+.. code-block::
 
  % cp berry.data ../phonon
 
 格子誘電率の計算
 
-格子振動解析とベリー位相の計算が終了すれば，格子誘電率を計算するための準備はできています。まず，格子振動解析のディレクトリへ移ります。
+格子振動解析とベリー位相の計算が終了すれば、格子誘電率を計算するための準備はできています。まず、格子振動解析のディレクトリへ移ります。
 
-.. code-block:: 
+.. code-block::
 
  % cd ../phonon
 
-格子振動解析の入力パラメーターファイルに，以下の変更を施します。
+格子振動解析の入力パラメーターファイルに、以下の変更を施します。
 
 -  phononブロックのsw_calc_forceをoffとする。
 
 -  sw_lattice_dielectric_tensorをonとする。
 
--  postprocessingブロックの下のpolarizationブロックの下で，sw_bp_propertyをonとし，propertyをeffective_chargeとする。
+-  postprocessingブロックの下のpolarizationブロックの下で、sw_bp_propertyをonとし、propertyをeffective_chargeとする。
 
-以下に，具体的な変更箇所を示しました。
+以下に、具体的な変更箇所を示しました。
 
-.. code-block:: 
+.. code-block::
 
  Phonon{
    sw_phonon = on
@@ -4196,13 +4195,13 @@ ne_bを利用したいMPIプロセス数に合わせて編集します。また�
    }
  }
 
-この状態でPHASEを実行します。この計算の負荷は非常に軽いので，通常並列で実行する必要はありません。
+この状態でPHASEを実行します。この計算の負荷は非常に軽いので、通常並列で実行する必要はありません。
 
-計算結果は，outputxxxファイルとmode.dataファイルに記録されます。outputxxxファイルには，ボルン有効電荷の計算結果が記録されます。最終結果は，---
+計算結果は、outputxxxファイルとmode.dataファイルに記録されます。outputxxxファイルには、ボルン有効電荷の計算結果が記録されます。最終結果は、---
 Corrected effective charges
----のあとに記録されます。今の例の場合，以下のようにすれば計算されたボルン有効電荷を抽出することができます（格子誘電率計算のログファイルをoutput001とします）。
+---のあとに記録されます。今の例の場合、以下のようにすれば計算されたボルン有効電荷を抽出することができます（格子誘電率計算のログファイルをoutput001とします）。
 
-.. code-block:: 
+.. code-block::
 
  % grep –A16 ‘Corrected effective’ output001
  --- Corrected effective charges ---
@@ -4219,16 +4218,16 @@ Corrected effective charges
  Zeff( 4) = [ 0.00000 -2.50954 0.00000 ]
             [ 0.00000 0.00000 -2.64146 ]
 
-格子誘電率は，mode.dataファイルの最後に，以下のような形式で記録されます。
+格子誘電率は、mode.dataファイルの最後に、以下のような形式で記録されます。
 
-.. code-block:: 
+.. code-block::
 
  --- Lattice and static dielectric tensors ---
  [ 3.7058 0.0000 0.0000 ] [ 3.7058 0.0000 0.0000 ]
  [ 0.0000 3.7058 0.0000 ] [ 0.0000 3.7058 0.0000 ]
  [ 0.0000 0.0000 4.9314 ] [ 0.0000 0.0000 4.9314 ]
 
-結果が2組記録されます。1つめが格子誘電率の計算結果ですが，2つめは電子系誘電率の記述が入力パラメーターファイルにあった場合それを加えた結果が出力されます。記述がない場合，1つめと同じ結果が出力されます。
+結果が2組記録されます。1つめが格子誘電率の計算結果ですが、2つめは電子系誘電率の記述が入力パラメーターファイルにあった場合それを加えた結果が出力されます。記述がない場合、1つめと同じ結果が出力されます。
 
 **AlNの圧電定数のイオン固定項**
 
@@ -4236,22 +4235,22 @@ Corrected effective charges
 
 ベリー位相の計算
 
-圧電定数のイオン固定項を計算するためには，ひずみ下でのベリー位相が必要です。そのような計算を行うための入力テンプレートディレクトリがpiezo/clamped
+圧電定数のイオン固定項を計算するためには、ひずみ下でのベリー位相が必要です。そのような計算を行うための入力テンプレートディレクトリがpiezo/clamped
 以下にあります。
 
-.. code-block:: 
+.. code-block::
 
  % cd piezo/clamped
  % ls
  control template_berry template_scf
 
-controlがberry.pl用のコントロールファイル，template_berryとtemplate_scfがそれぞれベリー位相計算およびSCF計算用の入力テンプレートディレクトリです。その内容をみると，入力パラメータファイルには<E11>,
+controlがberry.pl用のコントロールファイル、template_berryとtemplate_scfがそれぞれベリー位相計算およびSCF計算用の入力テンプレートディレクトリです。その内容をみると、入力パラメータファイルには<E11>,
 <E22>
-など，通常のPHASEの計算では利用しない文字列が確認できます。これらの文字列は，berry.pl実行時に適切な値に置き換わる仕組みになっています。
+など、通常のPHASEの計算では利用しない文字列が確認できます。これらの文字列は、berry.pl実行時に適切な値に置き換わる仕組みになっています。
 
-controlファイルの内容は11.5.3.1の場合とほぼ同じですが，以下に示すようにstrain_listとstrainの設定がなされている点が異なります。また，atom_listとdisplacementは不要なので消してあります（指定があっても問題はありません）。
+controlファイルの内容は格子誘電率の場合とほぼ同じですが、以下に示すようにstrain_listとstrainの設定がなされている点が異なります。また、atom_listとdisplacementは不要なので消してあります（指定があっても問題はありません）。
 
-.. code-block:: 
+.. code-block::
 
  property=zeff
  cpumax=10000
@@ -4265,21 +4264,21 @@ controlファイルの内容は11.5.3.1の場合とほぼ同じですが，以�
  ...
  ...
 
-実行制御部分の変更は，11.5.3.1の場合と同じように行います。
+実行制御部分の変更は、格子誘電率の場合と同じように行います。
 
-コントロールファイルの実行制御部分を適切に編集したら，以下の要領でberry.plを実行します。
+コントロールファイルの実行制御部分を適切に編集したら、以下の要領でberry.plを実行します。
 
-.. code-block:: 
+.. code-block::
 
  % berry.pl control --mode=exec
 
-この例では，1, 3,
-5成分のひずみを与えてベリー位相の計算を行うので，ひずみのない場合もいれて合計で4のSCF計算と12のベリー位相の計算が行われます。
+この例では、1, 3,
+5成分のひずみを与えてベリー位相の計算を行うので、ひずみのない場合もいれて合計で4のSCF計算と12のベリー位相の計算が行われます。
 
-計算がすべて終了すると，作業ディレクトリにberry.dataというファイルが作成されますが，これをscf_e0
+計算がすべて終了すると、作業ディレクトリにberry.dataというファイルが作成されますが、これをscf_e0
 ディレクトリ　(berry.plによって作成されたディレクトリの1つ)にコピーします。
 
-.. code-block:: 
+.. code-block::
 
  % cp berry.data scf_e0/
 
@@ -4287,21 +4286,21 @@ controlファイルの内容は11.5.3.1の場合とほぼ同じですが，以�
 
 圧電定数のイオン固定項の計算
 
-圧電定数のイオン固定項は，scf_e0ディレクトリにおいて行います。
+圧電定数のイオン固定項は、scf_e0ディレクトリにおいて行います。
 
-.. code-block:: 
+.. code-block::
 
  % cd scf_e0
 
-このディレクトリにある入力パラメータファイルに，以下の変更を施します。
+このディレクトリにある入力パラメータファイルに、以下の変更を施します。
 
 -  conditionをcontinuationとする。
 
--  postprocessingブロックの下のpolarizationブロックにおいて，変数sw_bp_propertyをonとし，propertyにpiezoelectric_constを指定する。
+-  postprocessingブロックの下のpolarizationブロックにおいて、変数sw_bp_propertyをonとし、propertyにpiezoelectric_constを指定する。
 
-以下に，具体的な変更箇所を示します。赤字で示した部分が変更を要する部分です。
+以下に、具体的な変更箇所を示します。赤字で示した部分が変更を要する部分です。
 
-.. code-block:: 
+.. code-block::
 
  Control{
    condition = continuation
@@ -4315,12 +4314,12 @@ controlファイルの内容は11.5.3.1の場合とほぼ同じですが，以�
    }
  }
 
-この状態でPHASEを実行します。この計算の負荷は非常に軽いので，通常並列で実行する必要はありません。
+この状態でPHASEを実行します。この計算の負荷は非常に軽いので、通常並列で実行する必要はありません。
 
-結果は，outputxxxファイルに，Piezoelectric
+結果は、outputxxxファイルに、Piezoelectric
 constantのあとに原子単位およびC/m\ :sup:`2`\ 単位で記録されます。以下の要領でこの情報を抽出することができます。
 
-.. code-block:: 
+.. code-block::
 
  % grep –A6 ‘Piezoelectric’ output001
  === Piezoelectric constant (a.u.) ===
@@ -4338,36 +4337,36 @@ constantのあとに原子単位およびC/m\ :sup:`2`\ 単位で記録されま
  5 0.3321143610 -0.0000005530 0.0030084060
  6 0.0000000000 0.0000000000 0.0000000000
 
-0になるべき項が0になっていないのは，数値誤差によるものです。
+0になるべき項が0になっていないのは、数値誤差によるものです。
 
 **AlNの圧電定数の内部ひずみ項**
 
 ひずみ下における原子間力の計算
 
-圧電定数の内部ひずみ項を計算するためには，ひずみ下における原子間力が必要です。この計算を行うための例題がpiezo/internal
+圧電定数の内部ひずみ項を計算するためには、ひずみ下における原子間力が必要です。この計算を行うための例題がpiezo/internal
 以下にあります。
 
-.. code-block:: 
+.. code-block::
 
  % cd piezo/internal
  % ls
  control template_scf
 
-このケースではベリー位相の計算は不要なので，テンプレート入力ディレクトリはSCF計算用のもののみとなっています。
+このケースではベリー位相の計算は不要なので、テンプレート入力ディレクトリはSCF計算用のもののみとなっています。
 
-template_scfの内容は，11.5.3.2の同名のディレクトリと全く同じ内容です。ひずみを与える計算を行うため，入力パラメータファイルにプレースホルダーが記述されています。controlファイルの内容もほぼ同じですが，property変数にはstrfrcが指定されています。また，実行制御部分を環境に合わせて書き換える必要がある点もこれまでと同様です。
+template_scfの内容は、イオン固定項の同名のディレクトリと全く同じ内容です。ひずみを与える計算を行うため、入力パラメータファイルにプレースホルダーが記述されています。controlファイルの内容もほぼ同じですが、property変数にはstrfrcが指定されています。また、実行制御部分を環境に合わせて書き換える必要がある点もこれまでと同様です。
 
-実行制御部分を書き換えたら，berry.plを実行します。
+実行制御部分を書き換えたら、berry.plを実行します。
 
-.. code-block:: 
+.. code-block::
 
  % berry.pl control --mode=exec
 
-3つのひずみ成分に対して，正と負のひずみを与えた計算を実行するので，計6つのSCF計算を実行することになります。
+3つのひずみ成分に対して、正と負のひずみを与えた計算を実行するので、計6つのSCF計算を実行することになります。
 
-計算が終了したら，strfrc.dataというファイルが作成されます。このデータと格子振動解析の結果を利用して内部ひずみ項を計算します。格子振動解析は，11.5.3.1で実行した結果を再度利用するので，この格子振動解析を行ったディレクトリにstrfrc.dataファイルをコピーします。
+計算が終了したら、strfrc.dataというファイルが作成されます。このデータと格子振動解析の結果を利用して内部ひずみ項を計算します。格子振動解析は、講師誘電率計算の際に実行した結果を再度利用するので、この格子振動解析を行ったディレクトリにstrfrc.dataファイルをコピーします。
 
-.. code-block:: 
+.. code-block::
 
  % cp strfrc.data ../../phonon
 
@@ -4375,15 +4374,15 @@ template_scfの内容は，11.5.3.2の同名のディレクトリと全く同じ
 
 圧電定数の内部ひずみ項の計算
 
-圧電定数の内部ひずみ項は，上述のphononディレクトリにおいて行います。
+圧電定数の内部ひずみ項は、上述のphononディレクトリにおいて行います。
 
-.. code-block:: 
+.. code-block::
 
  % cd ../.../phonon
 
-内部ひずみ項の計算にはここで計算したstrfrc.dataのほかに原子を変位させたときのベリー位相も必要であるが，ベリー位相の計算は11.5.3.1において実行済みなのでこれを再利用します。
+内部ひずみ項の計算にはここで計算したstrfrc.dataのほかに原子を変位させたときのベリー位相も必要であるが、ベリー位相の計算は格子誘電率計算において実行済みなのでこれを再利用します。
 
-phononディレクトリの入力パラメータファイルに，以下の変更を施します（大体の変更は，11.5.3.1において施したもの）。
+phononディレクトリの入力パラメータファイルに、以下の変更を施します（大体の変更は、格子誘電率計算において施したもの）。
 
 -  phononブロックのsw_calc_forceをoffとする。
 
@@ -4391,11 +4390,11 @@ phononディレクトリの入力パラメータファイルに，以下の変�
 
 -  sw_lattice_dielectric_tensorをoffとする。
 
--  postprocessingブロックの下のpolarizationブロックの下で，sw_bp_propertyをonとし，propertyをeffective_chargeとする。
+-  postprocessingブロックの下のpolarizationブロックの下で、sw_bp_propertyをonとし、propertyをeffective_chargeとする。
 
-以下に，具体的な変更箇所を示します。赤字で示した部分が変更を要する部分です。
+以下に、具体的な変更箇所を示します。赤字で示した部分が変更を要する部分です。
 
-.. code-block:: 
+.. code-block::
 
  Phonon{
    sw_phonon = on
@@ -4411,12 +4410,12 @@ phononディレクトリの入力パラメータファイルに，以下の変�
    }
  }
 
-この状態でPHASEを実行します。この計算の負荷は非常に軽いので，通常並列で実行する必要はありません。
+この状態でPHASEを実行します。この計算の負荷は非常に軽いので、通常並列で実行する必要はありません。
 
-結果は，outputxxxファイルに，Internal-strain piezoelectric
+結果は、outputxxxファイルに、Internal-strain piezoelectric
 tensorのあとに原子単位およびC/m\ :sup:`2`\ 単位で記録されます。以下の要領でこの情報を抽出することができます。
 
-.. code-block:: 
+.. code-block::
 
  % grep –A6 ‘Internal-strain’ outputxxx
  === Internal-strain piezoelectric tensor (a.u.) ===
@@ -4434,7 +4433,7 @@ tensorのあとに原子単位およびC/m\ :sup:`2`\ 単位で記録されま�
  5 -0.6755569503 0.0000000000 0.0000000000
  6 0.0000000000 0.0000000000 0.0000000000
 
-最後に，\ :numref:`uvsor_AlN_berrypl_table1` に圧電定数の計算結果をまとめます。
+最後に、\ :numref:`uvsor_AlN_berrypl_table1` に圧電定数の計算結果をまとめます。
 
 .. table:: AlNの圧電定数；単位はC/m\ :sup:`2`
  :name: uvsor_AlN_berrypl_table1
@@ -4449,7 +4448,7 @@ tensorのあとに原子単位およびC/m\ :sup:`2`\ 単位で記録されま�
 
 **使用上の注意点**
 
-ベリー位相計算は\ **k**\ 点並列には対応していません。したがって，controlファイルのne_b(三次元版の場合ne_b×ne_g)の値はnpと等しくなるように設定してください。
+ベリー位相計算は\ **k**\ 点並列には対応していません。したがって、controlファイルのne_b(三次元版の場合ne_b×ne_g)の値はnpと等しくなるように設定してください。
 
 .. _uvsor_lrtddft_section:
 
@@ -4582,7 +4581,7 @@ LR-TDDFT法解析プログラムを利用するためには、次の設定が必
 型擬ポテンシャルを用いる場合、 use_additional_projector = on
 として下さい。
 
-.. code-block:: 
+.. code-block::
 
  control{
     condition = fixed_charge
@@ -4598,7 +4597,7 @@ LR-TDDFT法解析プログラムを利用するためには、次の設定が必
 accucuracy
 ブロック内では、UVSORと同様に、固有値計算のためのパラメータ設定を行います。
 
-.. code-block:: 
+.. code-block::
 
  accuracy{
      ...
@@ -4616,7 +4615,7 @@ accucuracy
 
 k点に関する和を、ブリルアンゾーン内の、既約化されていない全てのk点を用いて行うため、E以外の対称性をオフにします。
 
-.. code-block:: 
+.. code-block::
 
  structure{
    symmetry{
@@ -4695,7 +4694,7 @@ LR-TDDFT
  |                                  | の                               |
  |                                  | タイプ及び関連変数を設定します。 |
  +----------------------------------+----------------------------------+
- | kernel_type 変数 [RPA]           | RPA、LRC，ALDA-Rが指定可能で     |
+ | kernel_type 変数 [RPA]           | RPA、LRC、ALDA-Rが指定可能で     |
  |                                  | す。RPAは、exchange-correlation  |
  |                                  | kernel                           |
  |                                  | を考慮しないモデルで             |
@@ -4752,7 +4751,7 @@ LR-TDDFT
 
 以下は記入例です。
 
-.. code-block:: 
+.. code-block::
 
  spectrum{
      type = optics
@@ -4795,13 +4794,13 @@ LR-TDDFT
 
 phaseを用いて事前にSCF計算を行い、系の電荷密度を計算します。
 
-.. code-block:: 
+.. code-block::
 
  mpirun -np NP phase
 
 LR-TDDFTの計算を行うには、以下のコマンドを使用します。
 
-.. code-block:: 
+.. code-block::
 
  mpirun -np NP tdlrmain
 
@@ -4815,14 +4814,14 @@ LR-TDDFTの計算を行うには、以下のコマンドを使用します。
 
 A. type変数でOPTICSを指定した場合
 
-.. code-block:: 
+.. code-block::
 
  #                 Optical spectrum
  #              NonInteracting               Interacting
  #      Energy[eV]        Real        Imaginary         Real        Imaginary
  0.000000       8.626260       0.252860       9.678273       0.327540
  0.050000       8.627214       0.252961       9.679507       0.327682
-      
+
  ....................................................................
 
 第1カラムはエネルギー値です。第2、3カラムは独立粒子近似における誘電関数を出力しています。なお、Real
@@ -4832,7 +4831,7 @@ exchange-correlation kernel を取り入れた誘電関数です。
 
 B. type変数でOPTICSを指定した場合
 
-.. code-block:: 
+.. code-block::
 
  #                 Photo Absorption Cross Section
  #      Energy[eV]   NonInteracting   Interacting

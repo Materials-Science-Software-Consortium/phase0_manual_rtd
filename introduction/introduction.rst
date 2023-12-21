@@ -19,9 +19,9 @@ PHASEシステムは、電子状態計算計算プログラム（第一原理分
  | ログラム・パッケージ |                     |                      |
  +======================+=====================+======================+
  | PHASE/0              | phase, ekcal        | 密度汎関数理論に基づ\|
- |                      | (旧PHASE            | く擬ポテンシャル法に\|
- | （第一原理電子\      |                     | よる平面波基底の第一\|
- | 状態計算プログラム） | パッケージ)         | 原理電子状態計算プロ\|
+ |                      |                     | く擬ポテンシャル法に\|
+ | （第一原理電子\      | (旧PHASEパッケージ) | よる平面波基底の第一\|
+ | 状態計算プログラム   |                     | 原理電子状態計算プロ\|
  |                      |                     | グラムです。これらを\|
  |                      |                     | 使って、全エネルギー\|
  |                      |                     | 、電荷密度分布、電子\|
@@ -29,10 +29,10 @@ PHASEシステムは、電子状態計算計算プログラム（第一原理分
  |                      |                     | 造、安定な原子構造な\|
  |                      |                     | どの計算ができます。 |
  +----------------------+---------------------+----------------------+
- |                      |   epsmain, tdlrmain | Phaseの計算結果を用\ |
- |                      |   (旧UVSOR          | いて、固体誘電体の誘\|
- |                      |                     | 電率を計算するプログ\|
- |                      | パッケージ)         | ラムです。これらのプ\|
+ |                      | epsmain, tdlrmain   | Phaseの計算結果を用\ |
+ |                      |                     | いて、固体誘電体の誘\|
+ |                      | (旧UVSORパッケージ) | 電率を計算するプログ\|
+ |                      |                     | ラムです。これらのプ\|
  |                      |                     | ログラムは、材料の電\|
  |                      |                     | 子系及び格子系の誘電\|
  |                      |                     | 率を計算できます。ゲ\|
@@ -238,7 +238,7 @@ PHASE/0のプログラム構成
 利用可能な動作環境（計算機環境要件）
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-PHASE/0プログラムはfortran90とCで記述されています。これらのコンパイラが使える計算機システムが必要です。大学の計算機センターなどの一般利用可能なシステムでは通常使用することが可能です。並列計算をする場合にはMPIライブラリがインストールされている必要があります。
+PHASE/0プログラムはFortran90とCで記述されています。これらのコンパイラが使える計算機システムが必要です。大学の計算機センターなどの一般利用可能なシステムでは通常使用することが可能です。並列計算をする場合にはMPIライブラリがインストールされている必要があります。
 
 必要（利用可能）なソフトウェア、ライブラリ
 
@@ -248,8 +248,6 @@ PHASE/0プログラムはfortran90とCで記述されています。これらの
 -  FFTライブラリFFTW（オプション）
 -  Perl（オプション）・・・・PHASEツールで必要
 -  Gnuplot（オプション）・・・・PHASEツールで必要
-
-PHASE/0が手軽に利用出来るように、Windows用の実行ファイルも配布しています。但し、非並列版のため、規模の大きな計算には難があります（実行出来ない、時間が膨大にかかる、など）。
 
 本マニュアルで記述する操作についてはLinux（Unix）を使用しているものとしています。お使いのシステムが異なる場合には、適宜読み替えてください。
 
@@ -315,8 +313,7 @@ PAW法                    ✔        ✔
  :class: longtable
 
  +--------------------------------+-----------------------------+
- | :ref:`introduction_chapter`    | PHASEシステム、プログラム   |
- |                                |                             |
+ | :ref:`introduction_chapter`    | PHASEシステムプログラム\    |
  |                                | パッケージPHASE/0の\        |
  |                                | 概要について説明しています。|
  +--------------------------------+-----------------------------+
@@ -349,8 +346,8 @@ PAW法                    ✔        ✔
  | :ref:`estructure_chapter`      | 状態密度計算やバンド構造\   |
  |                                | 計算機能を説明しています。  |
  +--------------------------------+-----------------------------+
- | :ref:`advestructure_chapter`   | GGA/LDAを超える高度な\      |
- |                                | について説明します。        |
+ | :ref:`advestructure_chapter`   | GGA/LDAを超える高度な電子\  |
+ |                                | 状態計算について説明します。|
  +--------------------------------+-----------------------------+
  | :ref:`analysis_chapter`        | 様々な解析機能について\     |
  |                                | 説明します。                |
@@ -363,6 +360,87 @@ PAW法                    ✔        ✔
  +--------------------------------+-----------------------------+
 
 初めて本マニュアルを読む方は、\ :ref:`first_step_chapter` に続けて :ref:`basics_chapter` を読むことを推奨します。\ :ref:`basics_chapter` を読む際に出てきた入力パラメータについては :ref:`input_parameters` を参照してください。その後、\ :ref:`estructure_chapter` 以降については必要に応じて読むことを推奨します。
+
+PHASE/0の入手方法
+------------------
+PHASE/0のソースコード、サンプル、マニュアルなどは `ダウンロードサイト <https://azuma.nims.go.jp/cms1/downloads/software>`_ から無償でダウンロードすることができます。ダウンロードするにはユーザー登録が必要です。ダウンロード用のユーザーIDをお持ちでない場合は、 `登録フォーム <https://azuma.nims.go.jp/cms1/downloads/software/reg>`_ に進んでください。
+
+PHASE/0のライセンス
+-------------------
+
+PHASEシステム・ソフトウェア使用許諾条件
+
+PHASEシステム研究会は、次の条件や制限のもとで、PHASEシステム・ソフトウェアを無償で使用することを許諾する。なお、利用者がPHASEシステム・ソフトウェアをダウンロードした時点で、利用者は本使用許諾条件の各条項に同意したものとみなす。
+
+1. PHASEシステム・ソフトウェアの定義
+
+ PHASEシステム・ソフトウェア（「PHASEシステム　プログラムパッケージ」と同義）とは、東京大学生産技術研究所 革新的シミュレーション研究センター（以下 革新センター）で管理・公開している平成24年度までの「イノベーション基盤シミュレーションソフトウェアの研究開発プロジェクト」の成果物を基に開発し、現在PHASEシステム研究会が管理しているソフトウェアである。
+ PHASEシステム・ソフトウェアは、ソースプログラム、オブジェクトプログラム、仕様書、設計書、データ、実行結果、マニュアルなど、原則として、PHASEシステム研究会から公開するもの全てを含む。ただし、利用者の便宜のために配布プログラムパッケージに同包したサードパーティ製ソフトウェアBLAS、LAPACK、ScaLAPACK、EigenK、EigenExa、およびEsmPackなどは除く。
+
+2. 使用許諾の範囲
+
+ 利用者がPHASEシステム・ソフトウェアを無償で使用できる行為には、自己のためにPHASEシステム・ソフトウェアを、翻訳（コンパイル）することによりバイナリを作成する行為、任意のデータを用いて実行する行為、その結果を利用者の自己のために使用および公表する行為、および自己のために改変したソフトウェアを翻訳してこれを実行する行為が含まれる。ただし、自己のために当該ソフトウェアを改変しそれを実行し、その結果を公表する場合には、次項に従うこととする。これら以外の行為（複製・頒布など）は７項で示す場合を除き禁止する。利用者の便宜のために配布プログラムパッケージに同包したサードパーティ製ソフトウェアBLAS、LAPACK、ScaLAPACK、EigenK、EigenExaおよびEsmPackなどを使用する場合は、それぞれのソフトウェアの使用許諾条件に従うこととする。これらサードパーティ製ソフトウェアの使用許諾条件は、対応するソフトウェアのサイト、BLAS、LAPACK、ScaLAPACK、libEigen、およびEsmPackディレクトリ内のlicense.txt、ソースファイル、あるいはマニュアルに記述されている。
+
+3. 改変における遵守事項
+
+ 利用者が改変したソフトウェアを使用して得た結果を公表する場合には、改変内容を特定できる説明を添付して公表するとともに、PHASEシステム研究会に改変部分を含むソースプログラムを提出する義務がある。提出されたソースプログラムは、PHASEシステム・ソフトウェアとしてPHASEシステム研究会から公開される可能性がある。公開時期については、提出者とPHASEシステム研究会の間で協議して決定する。公開の際には、本規約第２項に則り、他の利用者に使用を許諾しなければならない。改変した部分の著作権は改変者が保持することができる。
+ 目的の如何を問わず、PHASEシステム・ソフトウェア内部コードの『著作権表示』記載部分を修正する行為は、改変者氏名や改変日時などの改変記録を追加する場合を除き、禁止する。
+
+4. 利用者義務
+
+ PHASEシステム・ソフトウェアを利用した結果を公表する場合には、使用したPHASEシステム・ソフトウェアの名前、バージョンを明示するとともに、適切な論文またはURLを引用しなれければならない。
+ 利用者がPHASEシステム・ソフトウェアのバグや不具合を発見した場合、PHASEシステム研究会に報告すること。利用者が発見したバグや不具合をPHASEシステム研究会の許可なく公表すること、及び第三者に知らせることは禁止する。
+
+5. 無保証
+
+ PHASEシステム・ソフトウェアは、その品質や性能あるいは実行結果について、利用者に対してはいかなる保証もしない。利用者は自己の責任において使用することに同意することとし、もし使用することにより損害が生じた場合には、第三者への損害や被害の修復も含みその結果責任は全て利用者に帰することとする。
+
+6. 利用者が本使用許諾条件に違反した場合
+
+ 利用者が本使用許諾条件に違反した場合には、利用者は、PHASEシステム研究会がその状態を是正するために必要と認めて行う措置に無条件に従わなくてはならない。
+
+7. 公的機関および事業者が普及促進のために使用する場合
+
+ 公的機関および事業者がPHASEシステム・ソフトウェアの普及促進のために、第三者へのバイナリの頒布およびバイナリの使用を許諾する権利を得たい場合は、PHASEシステム研究会に申請することとする。PHASEシステム研究会はその頒布及び使用の可否を判断し、特定非営利活動法人物質材料科学ソフトウェア研究会へ答申する。特定非営利活動法人物質材料科学ソフトウェア研究会も可と判断し、契約が必要な場合、申請者は特定非営利活動法人物質材料科学ソフトウェア研究会との間で契約を締結する。PHASEシステム研究会は、PHASEシステム・ソフトウェアのバイナリを作成しこれを提供するか、あるいは申請者がバイナリを作成するのに必要なソフトウェアと情報の提供を行う。
+
+－ 以上 －
+
+License to Use PHASE System Software
+Terms and Conditions of the PHASE System Software License
+
+PHASE System consortium gives explicit permission for anyone to use any or all of the software contained in the PHASE System program package that is maintained and made publicly available at the Phase System consortium site free of charge, subject to the terms and conditions detailed below.
+
+1. Definition of PHASE System Software
+
+ PHASE System Software, which is same with “the PHASE system program packages”, is any software maintained by PHASE System consortium and developed based on the software products which had been maintained by the Center for Research on Innovative Simulation Software (CISS) at the Institute of Industrial Science, the University of Tokyo and made publicly available at the CISS site until the end of 2012 fiscal year.
+ The PHASE System Software contains all of source programs, object programs, specifications, design specifications, data, implementation results, and instruction manuals, except for third-party software contents contained in the PHASE distribute packages for user convenience, e.g., BLAS, LAPACK, ScaLAPACK, EigenK, EigenExa, and EsmPack, etc.
+
+2. Extent of Free Use
+
+ Users may use PHASE System Software free of charge to run their own data, and use any results obtained for their own personal use. Users also have the rights to copy, to modify PHASE System Software, to compile and run the modified software, and to use and make public their obtained results. However, users need to obey the described rule in the following item 3 of this document when to use and make public their results by using their modified PHASE System software. Other conducts, e. g., making a copy (copies) of the PHASE System Software and distributing it (them) to other users, etc., are not allowed except for the cases described in the item 7 of this document. For the other third-party software contents, e.g., BLAS, LAPACK, ScaLAPACK, EigenK, EigenExa and EsmPack, etc, which are contained in the PHASE distribute packages for user convenience, users must obey to the license descriptions in the corresponding software URL sites or manuals, “license.txt”s or the source files in directories of BLAS, LAPACK, ScaLAPACK, ligEigen, and EsmPack, or the instruction manuals of the PHASE System Software.
+
+3. Rules for Modification
+
+ If the user creates a modified version of PHASE System Software by modifying the software itself, by incorporating it into other software, or any other means; then uses it and makes public his or her obtained results, the user is obligated to make public with an explanation detailing how the software was modified, and the user is obligated to transfer the software which contains the modified part(s) to PHASE System consortium. The transferred software may be disclosed by the PHASE System consortium as a part of the PHASE System Software. A date of disclosing the transferred software is decided through a consultation between the transferred user and the PHASE System consortium. When the transferred software is disclosed, the user who transferred the software gives the rights that are given to users of the PHASE System Software to any users according to the description written in the item 2 of this document. The user who transferred the software can hold a copyright of the modified part.
+ Modification of the “copyright notice” of a source file contained in the PHASE System Software is prohibited in any reason except to update or add to modification records such as altering the name of the program modifier or the date of modification.
+
+4. User Obligations
+
+ To publicly acknowledge that results have been achieved using PHASE System Software, users are obligated to clearly display the name, and version, show an appropriate reference or the download URL site.
+ We request that users report any bugs or problems they discover in using the PHASE System Software to PHASE System consortium. Users may not publicly announce or disclose bugs or problems they discover in the PHASE System Software without permission.
+
+5. No Warranty
+
+ CISS, PHASE System consortium, and other concerned parties disclaim all warranties with respect to the quality, the performance, or the results of PHASE System Software, either expressed or implied. The user assumes sole responsibility for the use of the PHASE System Software including any damages or losses arising out of the use of the PHASE System software.
+
+6. Violations of Terms and Conditions
+
+ If a user is found to be in violation of these Terms and Conditions, he or she agrees to immediately pursue any and all steps required by PHASE System consortium to get back into compliance.
+
+7. Use for Promoting Popularization by Public Organizations and Companies
+
+ If a public organization or a company intends to have rights to distribute PHASE System Software and to give permissions to use the software to third users for promoting popularization of the PHASE System Software, the public organization or the company must file an application with PHASE System consortium before using the PHASE System software. The PHASE System consortium decides if the public organization or the company could have rights to distribute and to give permissions to use, then submits a report of the decision to “non-profit-organization of materials science software consortium (NPOMSSC)”. If both the decisions by the PHASE System consortium and by NPOMSSC are positive, NPOMSSC concludes a contract of license agreement with the applied public organization or the applied company, if NPOMSSC decides to have the contract. The PHASE System consortium compiles and gives executable binary programs of the PHASE System software, or helps with giving information to make executable binary programs to the public organization or the company, after the positive decisions by the PHASE System consortium and NPOMSSC.
+
 
 PHASE/0の更新履歴
 ------------------
@@ -604,8 +682,15 @@ The names of the contributors to the original version are Hideki Katagiri, Koich
 
 These contributors has agreed with that the Institute of Industrial Science (IIS), the University of Tokyo, distributes this program as a free software.
 
-Since 2002, this program set had been intensively developed as a part of the following national projects supported by the Ministry of Education, Culture, Sports, Science and Technology (MEXT) of Japan;
-"Frontier Simulation Software for Industrial Science (FSIS)" from 2002 to 2005, "Revolutionary Simulation Software (RSS21)" from 2006 to 2008. "Research and Development of Innovative Simulation Software (RISS)" from 2008 to 2013. These projects is lead by the Center for Research on Innovative Simulation Software (CISS), the Institute of Industrial Science (IIS), the University of Tokyo.
+Since 2002, this set has been tuned and new functions have been added to it as a part of the national project ”Frontier Simulation Software for Industrial Science (FSIS)”, which is supported by the IT program of the Ministry of Education, Culture, Sports, Science and Technology (MEXT) of Japan.
+The program was developed further mainly by T. Yamasaki. T. Uda, Takenori Yamamoto, Hideaki Tsukioka, Masakuni Okamoto, Hideo Mizouchi, Kiyoshi Betsuyaku, and Kazuki Mae contributed to the improvement of the code.
+The tetrahedron interpolation codes developed by Noriaki Hamada, Akira Yanase, and Kiyoyuki Terakura was included.
+The symmetrization code developed by A. Yanase and N. Hamada was also included.
+The manual and tutorial were written by Makoto Itoh with the cooperation by Mineo Saito, H. Tsukioka, T. Yamamoto, and T. Yamasaki.
+The sample calculations were prepared by T. Yamamoto, H. Tsukioka, and Hiroyoshi Momida.
+
+Since 2006, this program set has been developed as a part of the national project ”Revolutionary Simulation Software (RSS21)”, which is supported by the next-generation IT program of MEXT of Japan.
+Since 2008, this program set has been developed as a part of the national project ”Research and Development of Innovative Simulation Software”, which is supported by the next-generation IT program of MEXT of Japan.
 
 Since 2013, this program set has been further developed centering on PHASE System Consortium.
 
