@@ -128,7 +128,7 @@ UVSOR-Epsilon はプログラムPHASE
 バージョン3.20 PHASE ver 8.00 に対応
 
 2009/06 公開
-============== ==================================
+
 バージョン3.21 PHASE ver 8.01 に対応
 
 2010/03 公開
@@ -150,7 +150,7 @@ UVSOR-Epsilon はプログラムPHASE
 パッケージの構成
 ^^^^^^^^^^^^^^^^^^^^
 
-本プログラムは、プログラムパッケージPHASE/0に統合されている。
+本プログラムは、プログラムパッケージPHASE/0に統合されています。
 
 .. table::
  :widths: auto
@@ -160,10 +160,10 @@ UVSOR-Epsilon はプログラムPHASE
  | ディレクトリ |              |              |        |              |
  +==============+==============+==============+========+==============+
  | ph\          | bin          | epsmain,     |        |              |
- | ase0_2021.01 |              | tdlrmain     |        |              |
+ | ase0_2023.01 |              | tdlrmain     |        |              |
  +--------------+--------------+--------------+--------+--------------+
- |              | sa\          |              |        | 本プログ     |
- |              | mples/uvsol/ |              |        | ラムの入力例 |
+ |              | samples\     |              |        | 本プログラム\|
+ |              | /dielectric  |              |        | の入力例     |
  +--------------+--------------+--------------+--------+--------------+
  |              |              | electron     | Si     | UVSOR-Eps\   |
  |              |              |              |        | ilonの入力例 |
@@ -181,24 +181,23 @@ UVSOR-Epsilon はプログラムPHASE
  |              |              |              |        | して誘電関数 |
  |              |              |              |        | を計算する例 |
  +--------------+--------------+--------------+--------+--------------+
- |              |              | lattice      | GaAs   | UV\          |
- |              |              |              |        | SOR-Berry-Ph |
- |              |              |              | AlN    | ononの入力例 |
+ |              |              | lattice      | GaAs   | UVSOR-Berry\ |
+ |              |              |              |        | -Phononの\   |
+ |              |              |              | AlN    | 入力例       |
  |              |              |              |        |              |
  |              |              |              | Quartz | GaAs         |
  |              |              |              |        | 結晶の入力例 |
  |              |              |              |        |              |
- |              |              |              |        | 窒化アルミニ |
+ |              |              |              |        | 窒化アルミニ\|
  |              |              |              |        | ウムの入力例 |
  |              |              |              |        |              |
  |              |              |              |        | 水晶の入力例 |
  +--------------+--------------+--------------+--------+--------------+
- |              |              | lr-tddft     | C6H6   | T\           |
- |              |              |              |        | DDFTの入力例 |
+ |              |              | lr-tddft     | C6H6   | TDDFT\       |
+ |              |              |              |        | の入力例     |
  |              |              |              | SiBulk |              |
- |              |              |              |        | C :sub:`6`   |
- |              |              |              |        | H :sub:`6`   |
- |              |              |              |        |              |
+ |              |              |              |        | C\ :sub:`6`\ |
+ |              |              |              |        | H\ :sub:`6`  |
  |              |              |              |        | 分子の計算例 |
  |              |              |              |        |              |
  |              |              |              |        | Si           |
@@ -229,7 +228,7 @@ smearing計算用、chi2_tは、リニアテトラヘドロン計算用である
 電子系
 ^^^^^^^^^^^^
 
-** 計算手法 ** [Gunther72]_
+**計算手法** [Gunther72]_
 
 電子系誘電率は、誘電体の電子が入射電磁波の電磁場と相互作用し、価電子帯から伝導帯に遷移することに起因する。電子系誘電率は、電磁波が引き起こす電子の遷移確率より求めることができる。本節では、以下電子の遷移確率を求め、電子系誘電率を計算する方法を説明する。
 
@@ -4885,21 +4884,21 @@ C\ :sub:`6`\ H\ :sub:`6`\ 分子の光吸収断面積計算の計算例題です
 
 
 .. [Gunther72]  Gunther Harbeke, "Optical Properties of Semiconductors" in Optical Properties of Solids; F. Abeles(Ed.), North-Holland, Amsterdam (1972):Chapter 2.
-.. [Starace72]  A. F. Starace, "Length and Velocity Formulas in Approximate Oscillator-Strength Calculations", Phys. Rev.　A , pp. 1242-1245 (1972).
-.. [Read91]  A. J. Read and Needs, "Calculation of Optical Matrix Elements with Nonlocal Pseudopotentials", Phys. Rev. B , pp13071-13073 (1991).
-.. [Kageshima97]  H. Kageshima and K. Shiraishi, "Momentum-matrix-element Calculation using Pseudopotentials", Phys. Rev. B , pp14985-14992 (1997).
-.. [Lehmann72]  G. Lehmann and M. Taut, "On the Numerical Calculation of the Density of States and Related Properties", phys. stat. sol. (b) , pp469-477 (1972).
-.. [Adolf97]  B. Adolf, K. Tenelsen, V. I. Gavrilenko, and F. Bechstedt, "Optical Properties and Loss Spectra of SiC polytypes from Ab Initio Calculation", Phys. Rev. B , pp1422-1429 (1997).
-.. [Pickard00]  C. J. Pickard and M. C. Payne, "Second-order k・p Perturbation Theory with Vanderbilt Pseudopotentials and Plane Waves", Phys. Rev. B , pp4383-4388 (2000).
-.. [Shen03]  Y. R. Shen, "Principles of Nonlinear Optics (Wiley Classics Library)", John Wiley and Sons, Inc.Hoboken, NJ, USA(2003).
-.. [Ghahmani91]  E. Ghahramani, D. J. Moss, and J. E. Sipe, " Full-band-structure Calculation of Second-harminc Generation in Odd-period Strained (Si)n/(Ge)n Superlattices", Phys. Rev. B , pp8990-9002 (1991).
-.. [Rashkeev98]  S. N. Rashkeev, W. R. L. Lambrecht, and B. Segall "Efficient Ab initio Method for the Calculation of Frequency-dependent Second-order Optical Response in Semiconductors", Phys. Rev. B , pp3905-3919 (1998).
-.. [King-Smith93]  R.D. King-Smith and David Vanderbilt, Phys. Rev. B , 1651 (1993).
-.. [Resta94]  R. Resta, Rev. Mod. Phys. , 899 (1994).
-.. [Resta92]  R. Resta, Ferroelectrics , 51 (1992).
-.. [Pick70]  R. M. Pick, M. H. Cohen, and R. M. Martin, Phys. Rev. B , 910 (1970).
+.. [Starace72]  A\. F\. Starace, "Length and Velocity Formulas in Approximate Oscillator-Strength Calculations", Phys. Rev.　A , pp. 1242-1245 (1972).
+.. [Read91]  A\. J\. Read and Needs, "Calculation of Optical Matrix Elements with Nonlocal Pseudopotentials", Phys. Rev. B , pp13071-13073 (1991).
+.. [Kageshima97]  H\. Kageshima and K. Shiraishi, "Momentum-matrix-element Calculation using Pseudopotentials", Phys. Rev. B , pp14985-14992 (1997).
+.. [Lehmann72]  G\. Lehmann and M. Taut, "On the Numerical Calculation of the Density of States and Related Properties", phys. stat. sol. (b) , pp469-477 (1972).
+.. [Adolf97]  B\. Adolf, K. Tenelsen, V. I. Gavrilenko, and F. Bechstedt, "Optical Properties and Loss Spectra of SiC polytypes from Ab Initio Calculation", Phys. Rev. B , pp1422-1429 (1997).
+.. [Pickard00]  C\. J. Pickard and M. C. Payne, "Second-order k・p Perturbation Theory with Vanderbilt Pseudopotentials and Plane Waves", Phys. Rev. B , pp4383-4388 (2000).
+.. [Shen03]  Y\. R. Shen, "Principles of Nonlinear Optics (Wiley Classics Library)", John Wiley and Sons, Inc.Hoboken, NJ, USA(2003).
+.. [Ghahmani91]  E\. Ghahramani, D. J. Moss, and J. E. Sipe, " Full-band-structure Calculation of Second-harminc Generation in Odd-period Strained (Si)n/(Ge)n Superlattices", Phys. Rev. B , pp8990-9002 (1991).
+.. [Rashkeev98]  S\. N. Rashkeev, W. R. L. Lambrecht, and B. Segall "Efficient Ab initio Method for the Calculation of Frequency-dependent Second-order Optical Response in Semiconductors", Phys. Rev. B , pp3905-3919 (1998).
+.. [King-Smith93]  R\. D. King-Smith and David Vanderbilt, Phys. Rev. B , 1651 (1993).
+.. [Resta94]  R\. Resta, Rev. Mod. Phys. , 899 (1994).
+.. [Resta92]  R\. Resta, Ferroelectrics , 51 (1992).
+.. [Pick70]  R\. M. Pick, M. H. Cohen, and R. M. Martin, Phys. Rev. B , 910 (1970).
 .. [物理学辞典]  物理学辞典（縮刷版）、物理学辞典編集委員会（培風館、東京1992）, p.988.
-.. [Moss90]  D. J. Moss, E. Ghahramani, J. E. Sipe, and H. M. van Driel, “Band-structure Calculation of dispersion and anisotropy in :math:`\chi^{(3)}` for third-harmonic generation in Si, Ge, and GaAs”, Phys. Rev. B, , pp1542-1560 (1990).
-.. [Vanderbilt00]  D. Vanderbilt, J. Phys. Chem. Solids (2000) 147-151.
-.. [Bernardini97]  F. Bernardini et al., Phys. Rev. B 56 (1997) R10024.
+.. [Moss90]  D\. J. Moss, E. Ghahramani, J. E. Sipe, and H. M. van Driel, “Band-structure Calculation of dispersion and anisotropy in \ :math:`\chi^{(3)}` for third-harmonic generation in Si, Ge, and GaAs”, Phys. Rev. B, , pp1542-1560 (1990).
+.. [Vanderbilt00]  D\. Vanderbilt, J. Phys. Chem. Solids (2000) 147-151.
+.. [Bernardini97]  F\. Bernardini et al., Phys. Rev. B 56 (1997) R10024.
 

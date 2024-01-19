@@ -696,7 +696,7 @@ structure_evolutionの下にstressブロックを作成し、設定を行いま�
 
 方法１．２．とも改善しています。特に、方法２．を使うとEV曲線からもとめた格子定数とほぼ同じ格子定数が得られています。
 
-.. [Bernasconi95] M.Bernasconi, G.L.Chiarotti, P.Focher,S.Scandolo,E.Tosatti,M.Parrinello Journal of Physics and Chemistry of Solids, **56** 501-505 (1995).
+.. [Bernasconi95] M\. Bernasconi, G.L.Chiarotti, P.Focher,S.Scandolo,E.Tosatti,M.Parrinello Journal of Physics and Chemistry of Solids, **56** 501-505 (1995).
 
 .. _section_workfunc:
 
@@ -3649,7 +3649,7 @@ AlP結晶の計算を有限電場法および従来法で行いました。そ�
  **参考文献**
 
 
-.. [Souza02] I. Souza, J. Íñiguez and D. Vanderbilt, “First-Principles Approach to Insulators in Finite Electric Fields” Physical Review Letters vol. 89 (2002) pp. 117602 1-4.
+.. [Souza02] I\. Souza, J. Íñiguez and D. Vanderbilt, “First-Principles Approach to Insulators in Finite Electric Fields” Physical Review Letters vol. 89 (2002) pp. 117602 1-4.
 
 陽電子寿命解析
 ------------------
@@ -3923,9 +3923,9 @@ Si結晶のバンド計算において、電子波動関数、電荷密度、陽
  **参考文献**
 
 
-.. [Puska95] M. J. Puska, A. P. Seitsonen, and R. M. Nieminen, \``Electron-positron Car-Parrinello Methods: Self-consistent Treatment of Charge Densities and Ionic Rel axations'', Phys. Rev. B **52** (1995) p. 10947.
+.. [Puska95] M\. J. Puska, A. P. Seitsonen, and R. M. Nieminen, \``Electron-positron Car-Parrinello Methods: Self-consistent Treatment of Charge Densities and Ionic Rel axations'', Phys. Rev. B **52** (1995) p. 10947.
 .. [Puska91] M. J. Puska, \``Ab-initio Calculations of Positron Annihilation Rates in Solids'', J. Phys. Condens. Matter **3** (1991) p. 3455.
-.. [Nakamoto08] A. Nakamoto, M. Saito, T. Yamasaki, M. Okamoto, T. Hamada, and T. Ohno, \``Two-Component Density Functional Calculations on Positron Lifetimes for Band-Gap Crystals'', Jpn. J. Appl. Phys. **47** (2008) p. 2213.
+.. [Nakamoto08] A\. Nakamoto, M. Saito, T. Yamasaki, M. Okamoto, T. Hamada, and T. Ohno, \``Two-Component Density Functional Calculations on Positron Lifetimes for Band-Gap Crystals'', Jpn. J. Appl. Phys. **47** (2008) p. 2213.
 
 .. _section_wannier:
 

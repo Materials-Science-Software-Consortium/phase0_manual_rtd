@@ -1099,7 +1099,7 @@ P. Gumbsch, Physical Review Letters, **97** (2006) 170201)
 
 4. *P*\ が0以下の場合、タイムステップをファクター :math:`f_{\rm dec}`
    をかけることによって小さくする。また、速度を0とし、
-   :math:`\alpha` を規定値 :math:`\alpha_{\rm start}` に設定する。
+   :math:`\alpha` を既定値 :math:`\alpha_{\rm start}` に設定する。
 
 定性的に説明すると、「正しい方向(*P* >
 0)に進んでいる限り時間刻みを増やし、勾配よりも速度を優先する」アルゴリズムです。FIRE法のパラメーターは、:math:`\alpha_{\rm start}, N_{\rm min}, f_{\rm inc}, \Delta t_{\rm max}, f_{\alpha}, f_{\rm dec}` です。入力パラメーターファイルにおいて、以下の要領で設定できます。
