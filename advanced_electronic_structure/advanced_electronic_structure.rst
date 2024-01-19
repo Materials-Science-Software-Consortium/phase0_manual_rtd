@@ -506,9 +506,9 @@ FLLでは磁気モーメントが単調に増加するが、AMFではU=5.0 eV程
  6.0       0.0      0.0                  2.865 0.486
  ========= ======== ==================== ===== =====
 
-.. [Liechtenstein95] A. I. Liechtenstein, V. I. Anisimov, and J. Zaanen Phys. Rev. B 52 R5467 (1995).
-.. [Petukhov03] A. G. Petukhov, I. I. Mazin, L. Chioncel, and A. I. Lichtenstein, Phys. Rev. B **65**, 153106 (2003).
-.. [Makhlouf94] S. A. Makhlouf, T. Nakamura, and M. Shiga, J. Magn. Magn. Mater. **135**, 257 (1994).
+.. [Liechtenstein95] A\. I. Liechtenstein, V. I. Anisimov, and J. Zaanen Phys. Rev. B 52 R5467 (1995).
+.. [Petukhov03] A\. G. Petukhov, I. I. Mazin, L. Chioncel, and A. I. Lichtenstein, Phys. Rev. B **65**, 153106 (2003).
+.. [Makhlouf94] S\. A. Makhlouf, T. Nakamura, and M. Shiga, J. Magn. Magn. Mater. **135**, 257 (1994).
 
 .. _advanced_hybrid_section:
 
@@ -817,13 +817,13 @@ SCF計算はハイブリッド計算でも通常のPBE計算でもよいです�
 
  **参考文献**
 
-.. [Emzerhof97] M. Emzerhof, J. P. Perdew, and K. Burke, Int J. Quantum Chem. **64** (1997) 285.
-.. [Emzerhof99] M. Emzerhof and G. E. Scuseria, J. Chem. Phys. **110** (1999) 5029.
-.. [Adamo99] C. Adamo and V. Barone, J. Chem. Phys. **110** (1999) 6158.
-.. [Heyd03] J. Heyd, G. E. Scuseria, and M. Ernzerhof, J. Chem. Phys. **118** (2003) 8207.
-.. [Heyd04a] J. Heyd and G. E. Scuseria, J. Chem. Phys. **120** (2004) 7274.
-.. [Heyd04b] J. Heyd and G. E. Scuseria, J. Chem. Phys. **121** (2004) 1187.
-.. [Heyd06] J. Heyd, G. E. Scuseria and M. Ernzerhof, J. Chem. Phys. **124** (2006) 219906.
+.. [Emzerhof97] M\. Emzerhof, J. P. Perdew, and K. Burke, Int J. Quantum Chem. **64** (1997) 285.
+.. [Emzerhof99] M\. Emzerhof and G. E. Scuseria, J. Chem. Phys. **110** (1999) 5029.
+.. [Adamo99] C\. Adamo and V. Barone, J. Chem. Phys. **110** (1999) 6158.
+.. [Heyd03] J\. Heyd, G. E. Scuseria, and M. Ernzerhof, J. Chem. Phys. **118** (2003) 8207.
+.. [Heyd04a] J\. Heyd and G. E. Scuseria, J. Chem. Phys. **120** (2004) 7274.
+.. [Heyd04b] J\. Heyd and G. E. Scuseria, J. Chem. Phys. **121** (2004) 1187.
+.. [Heyd06] J\. Heyd, G. E. Scuseria and M. Ernzerhof, J. Chem. Phys. **124** (2006) 219906.
 
 .. _advanced_scdft_section:
 
@@ -1225,12 +1225,12 @@ vdwdf よりも vdwdf2-c09x の方が、実験の格子長 12.2985 Åに近い c
 
  **参考文献**
 
-.. [Dion06] M. Dion, H. Rydberg, E. Schröder, D. C. Langreth, and B. I.  Lundqvist: Phys. Rev. Lett. **92** (2004) 246401: Erratum, ibid, **95** (2005) 109902.
-.. [Gunnarsson76] O. Gunnarsson and B. I. Lundqvist: Phys. Rev. B **13** (1976) 4274.
+.. [Dion06] M\. Dion, H. Rydberg, E. Schröder, D. C. Langreth, and B. I.  Lundqvist: Phys. Rev. Lett. **92** (2004) 246401: Erratum, ibid, **95** (2005) 109902.
+.. [Gunnarsson76] O\. Gunnarsson and B. I. Lundqvist: Phys. Rev. B **13** (1976) 4274.
 .. [Roman09]  Guillermo Román-Pérez and José M. Soler, Phys. Rev. Lett. 103 0 (2009).
-.. [Benedict98] L. X. Benedict, N. G. Chopra, M. L. Cohen, A. Zettl, S. G. Louie, and V. H. Crespi: Chem. Phys. Lett. **286** (1998) 490.
-.. [Baskin55] Y. Baskin and L. Mayer: Phys. Rev. **100**, (1955) 544.
-.. [Rydberg03] H. Rydberg, M. Dion, N. Jacobson, E. Schröder, P. Hyldgaard, S. I.  Simak, D. C. Langreth, and B. I. Lundqvist: Phys. Rev. Lett. **91** (2003) 126402.
+.. [Benedict98] L\. X. Benedict, N. G. Chopra, M. L. Cohen, A. Zettl, S. G. Louie, and V. H. Crespi: Chem. Phys. Lett. **286** (1998) 490.
+.. [Baskin55] Y\. Baskin and L. Mayer: Phys. Rev. **100**, (1955) 544.
+.. [Rydberg03] H\. Rydberg, M. Dion, N. Jacobson, E. Schröder, P. Hyldgaard, S. I.  Simak, D. C. Langreth, and B. I. Lundqvist: Phys. Rev. Lett. **91** (2003) 126402.
 .. [Thonhauser07] T. Thonhauser, Valentino R. Cooper, Shen Li, Aaron Puzder, Per Hyldgaard, and David C. Langreth: Phys. Rev. B **76**, 125112 (2007).
 
 .. _advanced_vdwcorr_section:
@@ -1533,8 +1533,8 @@ Methane Dimer Grimme(DFT-D2)法
  **参考文献**
 
 
-.. [Williams06] R.W. Williams, et al.: Chemical Physics 327 (2006) 54-62
-.. [Grimme06] S. Grimme, J. Comp. Chem. 27, 1787 (2006).
+.. [Williams06] R\.W. Williams, et al.: Chemical Physics 327 (2006) 54-62
+.. [Grimme06] S\. Grimme, J. Comp. Chem. 27, 1787 (2006).
 .. [Grimme10] Stefan Grimme, Jens Antony, Stephan Ehrlich, and Helge Krieg, “A consistent and accurate ab initio parametrization of density functional dispersion correction (DFT-D) for the 94 elements H-Pu” The Journal of Chemical Physics, **132**, 154104 (2010).
 .. _advanced_section_esm:
 
@@ -1727,7 +1727,7 @@ ESM法を利用すると、\ *c*\ 軸方向に電場を印加した計算を実�
 
  **参考文献**
 
-.. [Otani06] M. Otani and O. Sugino, “First-principles calculations of charged surfaces and interfaces: A plane-wave nonrepeated slab approach”, Physical Review B **73**, 115407 (2006).
+.. [Otani06] M\. Otani and O. Sugino, “First-principles calculations of charged surfaces and interfaces: A plane-wave nonrepeated slab approach”, Physical Review B **73**, 115407 (2006).
 .. [Hamada09] Hamada, M. Otani, O. Sugino and Y. Morikawa, “Green’s function method for elimination of the spurious multipole interaction in the surface/interface slab model”, Physical Review B **80**, 165411 (2009).
 
 ライセンス
@@ -2188,11 +2188,11 @@ a) ref.  [Oadri83]_ , b) ref. [Tran09]_
 
  **参考文献**
 
-.. [Tran09] F. Tran and P. Blaha, Phys. Rev. Lett. **102** (2009) 226401, and references therein.
-.. [Koller12] D. Koller, F. Tran, and P. Blaha, Phys. Rev. B **85** (2012) 155109, and references therein.
-.. [Proynov08] E. Proynov, Z. Gan, and J. Kong, Chem. Phys. Lett. **455** (2008) 103.
-.. [Atdaev87] B. S. Atdaev, V. F. Grin, E. A. Salkov, and V. G. Chalaya, Inorg.  Mater. **23** (1987) 1835.
-.. [Oadri83] S. B. Oadri, E. F. Skelton, A. W. Webb, J. Appl. Phys. **64** (1983) 3609.
+.. [Tran09] F\. Tran and P. Blaha, Phys. Rev. Lett. **102** (2009) 226401, and references therein.
+.. [Koller12] D\. Koller, F. Tran, and P. Blaha, Phys. Rev. B **85** (2012) 155109, and references therein.
+.. [Proynov08] E\. Proynov, Z. Gan, and J. Kong, Chem. Phys. Lett. **455** (2008) 103.
+.. [Atdaev87] B\. S. Atdaev, V. F. Grin, E. A. Salkov, and V. G. Chalaya, Inorg.  Mater. **23** (1987) 1835.
+.. [Oadri83] S\. B. Oadri, E. F. Skelton, A. W. Webb, J. Appl. Phys. **64** (1983) 3609.
 
 .. _advanced_libxc_section:
 
@@ -2450,8 +2450,8 @@ eVと極めて近い結果が得られています。
 
  **参考文献**
 
-.. [Miyake14] T. Miyake, K. Terakura, Y. Harashima, H. Kino, and S. Ishibashi, J. Phys. Soc. Jpn. **83** (2014) 043702.
-.. [Fukazawa17] T. Fukazawa, H. Akai, Y. Harashima, and T. Miyake, J. Appl. Phys.  **12** (2017) 053901.
+.. [Miyake14] T\. Miyake, K. Terakura, Y. Harashima, H. Kino, and S. Ishibashi, J. Phys. Soc. Jpn. **83** (2014) 043702.
+.. [Fukazawa17] T\. Fukazawa, H. Akai, Y. Harashima, and T. Miyake, J. Appl. Phys.  **12** (2017) 053901.
 
 .. _advanced_noncollinear_section:
 

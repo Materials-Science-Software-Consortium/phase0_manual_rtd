@@ -1833,7 +1833,7 @@ nonlocal_potentialブロックでは以下のような設定を施すことが�
  |                        | するかを指定する実数。デフォルト値は1.9。  |
  +------------------------+--------------------------------------------+
 
-.. [King-Smith91] R. D. King-Smith, M. C. Payne, and J. S. Lin, “Real-space implementation of nonlocal pseudopotentials for first-principles total-energy calculations”, Physical Review B **44** 13063 (1991).
+.. [King-Smith91] R\. D. King-Smith, M. C. Payne, and J. S. Lin, “Real-space implementation of nonlocal pseudopotentials for first-principles total-energy calculations”, Physical Review B **44** 13063 (1991).
 .. [Wang01] Lin-Wang Wang, “Mask-function real-space implementations of nonlocal pseudopotentials”, Physical Review B **64** 201107 (2001).
 
 原子構造（Structure）

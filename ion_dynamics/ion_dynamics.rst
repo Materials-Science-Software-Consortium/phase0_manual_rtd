@@ -2645,20 +2645,20 @@ NPTシミュレーション結果で得られる主な出力ファイルは、�
 
 nfefn.dataファイル
 
-エネルギーなどの履歴を記録したファイルであり、構造最適化やNVTのMDシミュレーションの場合も得られます。NPTシミュレーションの場合、以下のような出力が得られます。なお、紙幅の都合で1行を改行して表示しています。
+エネルギーなどの履歴を記録したファイルであり、構造最適化やNVTのMDシミュレーションの場合も得られます。NPTシミュレーションの場合、以下のような出力が得られます。
 
 .. code-block:: text
 
  iter_ion, iter_total, etotal, ekina, econst, pressure
- 1 13 -31.8045273788 300.0000000000 0.0000000000 0.0209863336 -0.0000504658
- 2 25 -31.8045248143 301.4440100456 0.0000586853 0.0211839341 -0.0000573770
- 3 37 -31.8043935680 299.1271868912 0.0001085792 0.0214781523 -0.0000574428
- 4 49 -31.8041402859 293.2700519011 0.0001476826 0.0218951630 -0.0000570036
- 5 61 -31.8037768714 284.3267516440 0.0001733906 0.0224437768 -0.0000560637
- 6 73 -31.8033194235 272.9264725662 0.0001832795 0.0231125156 -0.0000546420
- 7 85 -31.8027870051 259.8057152864 0.0001752150 0.0238698884 -0.0000527691
- 8 97 -31.8022003504 245.7426304561 0.0001475268 0.0246685850 -0.0000504870
- 9 109 -31.8015806171 231.5028071591 0.0000992076 0.0270606007 -0.0000478460
+  1  13 -31.8045273788 300.0000000000 0.0000000000 0.0209863336 -0.0000504658
+  2  25 -31.8045248143 301.4440100456 0.0000586853 0.0211839341 -0.0000573770
+  3  37 -31.8043935680 299.1271868912 0.0001085792 0.0214781523 -0.0000574428
+  4  49 -31.8041402859 293.2700519011 0.0001476826 0.0218951630 -0.0000570036
+  5  61 -31.8037768714 284.3267516440 0.0001733906 0.0224437768 -0.0000560637
+  6  73 -31.8033194235 272.9264725662 0.0001832795 0.0231125156 -0.0000546420
+  7  85 -31.8027870051 259.8057152864 0.0001752150 0.0238698884 -0.0000527691
+  8  97 -31.8022003504 245.7426304561 0.0001475268 0.0246685850 -0.0000504870
+  9 109 -31.8015806171 231.5028071591 0.0000992076 0.0270606007 -0.0000478460
  10 121 -31.8008921515 217.8018629938 0.0000862100 0.0294678421 -0.0000449028
  11 133 -31.8002640917 205.3149756742 0.0000004873 0.0315593847 -0.0000420615
  ...
@@ -2879,12 +2879,12 @@ Nos\ :math:`\acute{e}`-Hooverの熱浴ではなく、原子の速度を温度が
  |              | です。type=boxの場合のみ意味のある設定です。         |
  +--------------+------------------------------------------------------+
  | zmin         | 直方体の\ *z*                                        |
- |              | 方向の下限値を指定します。デフォルト値は\            |
+ |              | 方向の下限値を指定します。                           |
  |              | デフォルト値は－10\ :sup:`10`\                       |
  |              | です。type=boxの場合のみ意味のある設定です。         |
  +--------------+------------------------------------------------------+
  | zmax         | 直方体の\                                            |
- |              | *z*\ 方向の上限値を指定します。デフォルト値は\       |
+ |              | *z*\ 方向の上限値を指定します。                      |
  |              | デフォルト値は10\ :sup:`10`\                         |
  |              | です。type=boxの場合のみ意味のある設定です。         |
  +--------------+------------------------------------------------------+
@@ -3008,8 +3008,8 @@ atoms以降領域に割り当てられている原子のリストが出力され
 
 -  原子座標の更新回数は入力で指定した時間刻みの値(structure_evolutionブロック内のdtという変数で指定)を掛けること
    によって実時間での経過が分かります。時間の単位は入力で指定することが可能ですが、原子単位系を利用した場合(デフォルト)
-   :math:`2.418 \times 10^{- 17}`\ という値を掛ければ「秒」に変換することが可能です。たとえば100
-   a.u.という時間は2.418 fsに相当します。
+   :math:`2.41888 \times 10^{- 17}`\ という値を掛ければ「秒」に変換することが可能です。たとえば100
+   a.u.という時間は2.41888 fsに相当します。
 
 -  温度一定の分子動力学シミュレーションにおける、熱浴の質量\ :math:`Q`\ の値について注意点を挙げます。
    小さすぎる\ :math:`Q`\ を採用すると、系のダイナミックスに熱浴に起因する
@@ -3032,8 +3032,8 @@ atoms以降領域に割り当てられている原子のリストが出力され
 
 .. [Glenn92] Glenn J. Martyna and Michael L. Klein, and Mark Tuckerman, “Nosé-Hoover chains: The canonical ensemble via continuous dynamics”, Journal of Chemical Physics **97** 15 (1992).
 .. [Souza97] Ivo Souza and JoséLuís Martins, Phys. Rev. B 55 (1997) pp  8733-8742.
-.. [Hernandez01] E. Hernández, Journal of Chemical Physics, 115 (2001) pp.  10282-10290.
-.. [Nose91] S. Nos\ :math:`\acute{e}`\ 、Progress of Theoretical Physics Supplement No 103、1991、pp.1-46.
+.. [Hernandez01] E\. Hernández, Journal of Chemical Physics, 115 (2001) pp.  10282-10290.
+.. [Nose91] S\. Nos\ :math:`\acute{e}`\ 、Progress of Theoretical Physics Supplement No 103、1991、pp.1-46.
 
 .. _section_NEB:
 
@@ -3237,7 +3237,7 @@ PHASEにNEB法による計算を実行することを伝えるため、以下の
 
  multiple_replica{
    accuracy{
-     neb_convergence_condition = energy_e
+     neb_convergence_condition = delta_e
    }
  }
 
@@ -3248,7 +3248,7 @@ neb_convergence_conditionには、数値または文字列を指定すること�
 +------+---------------------------+------------------------------+
 | 数値 | 文字列                    | 説明                         |
 +======+===========================+==============================+
-| 1    | energy_e                  | dE :math:`<`\ threshold      |
+| 1    | delta_e                   | dE :math:`<`\ threshold      |
 +------+---------------------------+------------------------------+
 | 2    | phase_force               | PHASEの力の\                 |
 |      |                           | 最大値\ :math:`<`\ threshold |
@@ -4032,9 +4032,9 @@ nfchgt.data_r\*
 
  **参考文献**
 
-.. [Mills94] G. Mills and H. Jónsson, \``Quantum and Thermal Effects in H\ :sub:`2` Dissociative Adsorption: Evaluation of Free Energy Barriers in Multidimensional Quantum Systems'' Phys. Rev. Lett.  **72** (1994) p. 1124.
+.. [Mills94] G\. Mills and H. Jónsson, \``Quantum and Thermal Effects in H\ :sub:`2` Dissociative Adsorption: Evaluation of Free Energy Barriers in Multidimensional Quantum Systems'' Phys. Rev. Lett.  **72** (1994) p. 1124.
 
-.. [Henkelman00] 2. G. Henkelman, B. P. Uberuaga and H. Jónsson, \``A climbing image nudged elastic band method for finding saddle points and minimum energy paths'' J. Chem. Phys. **113** (2000) p. 9901.
+.. [Henkelman00] G\. Henkelman, B. P. Uberuaga and H. Jónsson, \``A climbing image nudged elastic band method for finding saddle points and minimum energy paths'' J. Chem. Phys. **113** (2000) p. 9901.
 
 .. _section_dimer_method:
 
@@ -5188,7 +5188,7 @@ H\ :sub:`2`\ O\ :sub:`2`\ とH\ :sub:`2`\ S\ :sub:`2`\ の大きな違いは2点
  **参考文献**
 
 .. [Sprik98] Michiel Sprik and Giovanni Ciccotti, Journal of Chemical Physics **109** (1998) p. 7737.
-.. [Pelz93] G. Pelz, K. Yamada, and G. Winnewisser, Journal of Molecular Spectroscopy **159**, (1993) p. 507.
+.. [Pelz93] G\. Pelz, K. Yamada, and G. Winnewisser, Journal of Molecular Spectroscopy **159**, (1993) p. 507.
 
 .. _section_meta_dynamics:
 
@@ -6101,9 +6101,9 @@ Meta dynamics法は、すべての擬ポテンシャルと組み合わせて利�
  **参考文献**
 
 
-.. [Laio02] A. Laio and M. Parrinello, Proceedings of the National Academy of Sciences **99**, (2002) p. 12562.
-.. [Iannuzzi03] M. Iannuzzi, A. Laio and M. Parrinello, Physical Review Letters **90**, (2003) p. 238302.
-.. [Laio05] A. Laio, A. Rodriguez-Fortea, F. L. Gervasio, Ceccarelli and M.  Parrinello, J. Phys. Chem. B **109**, (2005) p. 6714.
+.. [Laio02] A\. Laio and M. Parrinello, Proceedings of the National Academy of Sciences **99**, (2002) p. 12562.
+.. [Iannuzzi03] M\. Iannuzzi, A. Laio and M. Parrinello, Physical Review Letters **90**, (2003) p. 238302.
+.. [Laio05] A\. Laio, A. Rodriguez-Fortea, F. L. Gervasio, Ceccarelli and M.  Parrinello, J. Phys. Chem. B **109**, (2005) p. 6714.
 
 .. _section_constant_chemical_potential:
 
@@ -6258,7 +6258,7 @@ fcpブロックにおいて定義可能なパラメータは下記の通りで�
  **参考文献**
 
 
-.. [Bonnet12] N. Bonnet, T. Morishita, O. Sugino, and M. Otani, “First-Principles Molecular Dynamics at a Constant Electrode Potential”, Physical Review Letters **109** 266101 (2012).
+.. [Bonnet12] N\. Bonnet, T. Morishita, O. Sugino, and M. Otani, “First-Principles Molecular Dynamics at a Constant Electrode Potential”, Physical Review Letters **109** 266101 (2012).
 
 .. _section_rigid_body_dynamics:
 
@@ -6899,6 +6899,6 @@ PIMDによるトラジェクトリーは通常の分子動力学シミュレー�
 
  **参考文献**
 
-.. [Shiga22] M. Shiga, PIMD version 2.6.0 (2023).
-.. [Shiga01] M. Shiga, M. Tachikawa, S. Miura, J. Chem. Phys. 115, 9149-9159 (2001).  "A unified scheme for ab initio molecular orbital theory and path integral molecular dynamics''
-.. [Shiga00] M. Shiga, M. Tachikawa, S. Miura, Chem. Phys. Lett. 332, 396-402 (2000).  "Ab initio molecular orbital calculation considering the quantum mechanical effect of nuclei by path integral molecular dynamics''
+.. [Shiga22] M\. Shiga, PIMD version 2.6.0 (2023).
+.. [Shiga01] M\. Shiga, M. Tachikawa, S. Miura, J. Chem. Phys. 115, 9149-9159 (2001).  "A unified scheme for ab initio molecular orbital theory and path integral molecular dynamics''
+.. [Shiga00] M\. Shiga, M. Tachikawa, S. Miura, Chem. Phys. Lett. 332, 396-402 (2000).  "Ab initio molecular orbital calculation considering the quantum mechanical effect of nuclei by path integral molecular dynamics''
