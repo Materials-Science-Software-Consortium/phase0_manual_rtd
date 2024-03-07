@@ -1232,7 +1232,7 @@ k点サンプリング         SCF計算：Monk (4×4×4)
 
 .. code-block::
 
- band_unfold.pl nfenergy.data bandkpt_fcc_xglux.in nfband_spectr_wght.data -with_fermi -print_format=png -color
+ band_unfold.pl nfenergy.data bandkpt_fcc_xglux.in nfband_spectr_wght.data -with_fermi -print_format=png -color -erange=-15,5 -with_dispersion
 
 .. figure:: images/image80.png
  :name: advanced_bandunfold_fig5

@@ -15,3 +15,10 @@ h1,h2,h3,h4,h5,h6 {
 colgroup {
     display: none;
 }
+
+.right-aligned {
+    text-align: right;
+}
+.style-none {
+    list-style-type: none;
+}

@@ -1670,7 +1670,7 @@ H終端Si(110)表面に適用した例を紹介します。
 
  **参考文献**
 
-.. [Parlinski97] K. Parlinski, Z. Q. Li and Y. Kawazoe, Physical Review Letters vol. 78 pp. 4063 (1997)
+.. [Parlinski97] K\. Parlinski, Z. Q. Li and Y. Kawazoe, Physical Review Letters vol. 78 pp. 4063 (1997)
 
 .. _section_unitcell_optimization:
 
@@ -2730,6 +2730,7 @@ Nos\ :math:`\acute{e}`-Hooverの熱浴ではなく、原子の速度を温度が
 速度は、目的の温度に合うよう毎MDステップスケールされます。
 
 全運動量がゼロになるよう速度をシフトする方法
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 分子動力学シミュレーションにおいて理論上全運動量は保存します（ゼロになる）が、実際は数値誤差によりゼロとはならず、系全体が並進してしまう場合があります。これを防ぐには、以下のように変数sw_shift_velocitiesの値をonとし、MD計算中全運動量がゼロとなるようにします。
 
@@ -4219,7 +4220,7 @@ NEB法の例題にも付属するPt(111)面における酸素原子拡散の問�
  "energy (Ha)","-1308.214122","-1308.214122"
  "x (Bohr)","20.19726","20.21692"
  "y (Bohr)","11.66089","11.67224"
- "y (Bohr)","12.64020","12.63675"
+ "z (Bohr)","12.64020","12.63675"
 
 .. only:: not latex
 
@@ -6060,7 +6061,7 @@ MDステップに一度とします。この設定は、meta_dynamicsブロッ�
 本シミュレーションによって得られる計算結果を解説します。まず、 :numref:`advanced_mtd_result1` にバイアスポテンシャルを18,140回程度更新した結果得られたエネルギー表面の等高線図を示します。
 
 .. figure:: images/image204.svg
- :width: 350pt
+ :width: 435pt
  :name: advanced_mtd_result1
 
  C\ :sub:`4`\ H\ :sub:`6`\ 分子の自由エネルギー表面

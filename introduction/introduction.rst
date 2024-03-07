@@ -369,6 +369,7 @@ PHASE/0のライセンス
 -------------------
 
 PHASEシステム・ソフトウェア使用許諾条件
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PHASEシステム研究会は、次の条件や制限のもとで、PHASEシステム・ソフトウェアを無償で使用することを許諾する。なお、利用者がPHASEシステム・ソフトウェアをダウンロードした時点で、利用者は本使用許諾条件の各条項に同意したものとみなす。
 
@@ -389,7 +390,7 @@ PHASEシステム研究会は、次の条件や制限のもとで、PHASEシス�
 4. 利用者義務
 
  PHASEシステム・ソフトウェアを利用した結果を公表する場合には、使用したPHASEシステム・ソフトウェアの名前、バージョンを明示するとともに、適切な論文またはURLを引用しなれければならない。
- 利用者がPHASEシステム・ソフトウェアのバグや不具合を発見した場合、PHASEシステム研究会に報告すること。利用者が発見したバグや不具合をPHASEシステム研究会の許可なく公表すること、及び第三者に知らせることは禁止する。
+ 利用者がPHASEシステム・ソフトウェアのバグや不具合を発見した場合、PHASEシステム研究会に報告すること。
 
 5. 無保証
 
@@ -405,8 +406,18 @@ PHASEシステム研究会は、次の条件や制限のもとで、PHASEシス�
 
 － 以上 －
 
-License to Use PHASE System Software
-Terms and Conditions of the PHASE System Software License
+.. raw:: html
+
+  <div class="right-aligned">
+  <ul">
+    <li class="style-none">制定：平成26年5月9日</li>
+    <li class="style-none">改訂：令和6年2月29日</li>
+  </ul>
+  </div>
+  <br>
+
+License to Use PHASE System Software Terms and Conditions of the PHASE System Software License
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PHASE System consortium gives explicit permission for anyone to use any or all of the software contained in the PHASE System program package that is maintained and made publicly available at the Phase System consortium site free of charge, subject to the terms and conditions detailed below.
 
@@ -427,7 +438,7 @@ PHASE System consortium gives explicit permission for anyone to use any or all o
 4. User Obligations
 
  To publicly acknowledge that results have been achieved using PHASE System Software, users are obligated to clearly display the name, and version, show an appropriate reference or the download URL site.
- We request that users report any bugs or problems they discover in using the PHASE System Software to PHASE System consortium. Users may not publicly announce or disclose bugs or problems they discover in the PHASE System Software without permission.
+ We request that users report any bugs or problems they discover in using the PHASE System Software to PHASE System consortium.
 
 5. No Warranty
 
@@ -441,6 +452,15 @@ PHASE System consortium gives explicit permission for anyone to use any or all o
 
  If a public organization or a company intends to have rights to distribute PHASE System Software and to give permissions to use the software to third users for promoting popularization of the PHASE System Software, the public organization or the company must file an application with PHASE System consortium before using the PHASE System software. The PHASE System consortium decides if the public organization or the company could have rights to distribute and to give permissions to use, then submits a report of the decision to “non-profit-organization of materials science software consortium (NPOMSSC)”. If both the decisions by the PHASE System consortium and by NPOMSSC are positive, NPOMSSC concludes a contract of license agreement with the applied public organization or the applied company, if NPOMSSC decides to have the contract. The PHASE System consortium compiles and gives executable binary programs of the PHASE System software, or helps with giving information to make executable binary programs to the public organization or the company, after the positive decisions by the PHASE System consortium and NPOMSSC.
 
+.. raw:: html
+
+  <div class="right-aligned">
+  <ul">
+    <li class="style-none">enacted: May 9, 2014</li>
+    <li class="style-none">revised: Feb 29, 2024</li>
+  </ul>
+  </div>
+  <br>
 
 PHASE/0の更新履歴
 ------------------
