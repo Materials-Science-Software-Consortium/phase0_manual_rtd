@@ -1165,7 +1165,7 @@ SCF計算の計算結果の電荷密度ファイルnfchgt.dataを実行ディレ
 
 .. parsed-literal::
 
- % ../../|PHASE020XX.YY|/tools/bin/band_kpoint.pl bandkpt.in
+ % ../../|PHASE020XX.YY|/bin/band_kpoint.pl bandkpt.in
 
 SCF計算結果の電荷密度を用いた計算を行うには、入力パラメータファイルのcontrol ブロックのcondition をfixed_chargeとします。
 
@@ -1836,7 +1836,7 @@ PHASE Viewerや、Gaussian CUBE形式の可視化に対応している可視化�
 
 .. parsed-literal::
 
- % ../../|PHASE020XX.YY|/tools/bin/dos.pl dos.data -erange=-15,10 -with_fermi -color
+ % ../../|PHASE020XX.YY|/bin/dos.pl dos.data -erange=-15,10 -with_fermi -color
 
 .. table::
  :widths: auto
@@ -1870,7 +1870,7 @@ PHASE Viewerや、Gaussian CUBE形式の可視化に対応している可視化�
 
 .. parsed-literal::
 
- % ../../|PHASE020XX.YY|/tools/bin/ band.pl nfenergy.data bandkpt.in -erange=-15,10 -with_fermi -color
+ % ../../|PHASE020XX.YY|/bin/band.pl nfenergy.data bandkpt.in -erange=-15,10 -with_fermi -color
 
 +---------------+-----------------------------------------------------+
 | nfenergy.data | サンプリング\ **k**\ 点における固有値の出力ファイル |

@@ -98,6 +98,309 @@ BaO/Si(001)界面の部分電荷密度を計算した結果を :numref:`advanced
 
  Si (100)面のSTM像、(a) 占有状態の像、(b)非占有状態の像。
 
+.. _section_stm:
+
+STM像
+---------------
+
+概要
+~~~~~
+前節において部分電荷密度出力機能を用いてSTM像を可視化する方法を説明しました。前節の方法は、表面からある程度離れた位置では波動関数の精度が足りず、きれいな像が得られない場合があります。この問題は"STM"というPHASE/0とは異なるプログラムを用いることによって解決することができます。STMプログラムは、波動関数をPHASE/0から得られるポテンシャルをもとに一次元のSchrödinger方程式を用いて解きなおすことによって真空域でも精度の高い波動関数を得ることができるプログラムです。STMプログラムがもたらす波動関数によって得られる部分電荷密度から、表面から離れた地点においてもきれいなSTM像を得ることができるようになります。
+
+計算理論
+~~~~~~~~~~
+STMプログラムは、対象物の表面から少し離れた位置から真空層の中心までの領域で一次元の Schrödinger 方程式を解きます。具体的には以下のような方程式を解きます [Kageshima91]_ , [Kageshima92]_ 
+
+.. math::
+
+   E_{\mu k_{\parallel}} \Psi_{\mu k_{\parallel}} \left( G_{\parallel}, z \right) = \frac{\hbar^2}{2m} \left( k_{\parallel} + G_{\parallel} \right)^2 \Psi_{\mu k_{\parallel}} \left( G_{\parallel}, z \right) - \frac{\hbar^2}{2m} \frac{\partial^2}{\partial z^2} \Psi_{\mu k_{\parallel}} \left( G_{\parallel}, z \right) + \sum_{G^{'}_\parallel} V\left( G_\parallel - G^{'}_\parallel , z \right) \Psi_{\mu k_{\parallel}} \left( G_{\parallel}, z \right) 
+
+このとき表面から少し離れた位置においてPHASE/0 で得た波動関数と一致するという境界条件と真空層の中心において波動関数が0になるという境界条件を課した上で解きます。有効ポテンシャル :math:`V\left( r \right)` はPHASE/0で得られた遮蔽ポテンシャルを用います。ただし、本来の遮蔽ポテンシャルではなく非局所項を取り去ったもの、すなわち局所ポテンシャルのみを使います。
+
+コンパイル方法
+~~~~~~~~~~~~~~
+STMプログラムはPHASE/0とは別プログラムなので利用するたえにはコンパイルする必要があります。そのソースコードは ``src_stm`` 以下に配置されています。以下の要領でコンパイルしてください。
+
+.. parsed-literal::
+
+  $ cd ~/|PHASE020XX.YY|/src_stm
+  $ make COMP=gnu install
+
+``COMP`` にコンパイラーを指定します。 ``gnu`` (GNU Fortranコンパイラー) , ``ifort`` (classic Intel Fortranコンパイラー), ``ifx`` (Intel Fortranコンパイラー), ``AT`` (NEC nfortコンパイラー) ``fugaku`` (Fujitsu Fortranコンパイラー) を用いることができます。コンパイルに成功したら実行可能バイナリーファイル ``stm`` が作成されます。 ``make`` の引数に ``install`` をつけている場合、このファイルはPHASE/0インストールディレクトリーの下の ``bin`` ディレクトリーに移されます。
+
+入力
+~~~~~~
+
+PHASE/0の入力
+^^^^^^^^^^^^^^^^
+STMプログラムを用いるためには、STMプログラムが必要とする情報をPHASE/0に出力させる必要があります。 ``nfinp.data`` ファイルに以下のような記述を行います。
+
+.. code-block:: text
+
+  postprocessing{
+    STM{
+      sw_stm = ON
+    }
+  }
+
+この設定を施した状態でPHASE/0 を実行することによりSTMプログラムが必要とするファイル群 (continue_bin_stm.data, nfvlc.data など)が生成されます。また、 ``output000`` ファイルに以下のような出力が得られます。
+
+.. code-block:: text
+
+  !!STM: template input
+  2 1
+  1 0.1082 0.3247 0.0000 0.2500 0.3750 0.0000 0.5000
+  2 0.1082 0.1082 0.0000 0.2500 0.1250 0.0000 0.5000
+  48 60.0000000000
+  -1.0 0.0
+  90
+  45 90
+  3
+  0.10 0.30 100
+  0.01
+
+``!!STM: template input`` 以降の行をコピーペーストすることによってSTMプログラムのテンプレート入力ファイルとして用いることができます。このテンプレートファイルは、デフォルトの設定の場合表面に垂直な方向は *c* 軸で、波動関数の接続位置は最表面の原子から3 bohr離れた地点になるような値が採用されます。このふるまいを変更するには、 ``nfinp.data`` ファイルに次の記述を行います。
+
+.. code-block:: text
+
+  postprocessing{
+    stm{
+      sw_stm = on
+      z_axis = 3
+      connect_from = 3 bohr
+    }
+  }
+
+``postprocessing`` ブロックの下のstmブロックの下の ``z_axis`` に表面に垂直な軸の数値を(*a* 軸なら1, *b* 軸なら2,
+*c* 軸なら3)、 ``connect_from`` に接続位置の最表面原子からの距離を指定します。 ``z_axis`` のデフォルト値は3, ``connect_from`` のデフォルト値は3 bohrです。
+
+STMプログラムの入出力ファイル
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+STMプログラムの入出力ファイルには次の表に示す９つのものがあります。
+
++-----------------+------+-----------------+--------+-----------------+
+| ファイル指示名  | 番号 | 既定ファイル名  | 入出力 | 内容            |
++=================+======+=================+========+=================+
+| F_INP           | 31   | nfstminput.data | 入力   | STM\            |
+|                 |      |                 |        | 像のエネルギー\ |
+|                 |      |                 |        | 範囲などの指示  |
++-----------------+------+-----------------+--------+-----------------+
+| F_CNTN_BIN      | 55   | contin\         | 入力   | 固有値,         |
+|                 |      | ue_bin_stm.data |        | 基\             |
+|                 |      |                 |        | 底逆格子点の集\ |
+|                 |      |                 |        | 合などのデータ  |
++-----------------+------+-----------------+--------+-----------------+
+| F_ZAJ           | 44   | zaj.data        | 入力   | 波動関数の\     |
+|                 |      |                 |        | 平面波展開係数  |
++-----------------+------+-----------------+--------+-----------------+
+| F_VLC           | 45   | nfvlc.data      | 入力   | ポテンシ\       |
+|                 |      |                 |        | ャルの局所成分  |
++-----------------+------+-----------------+--------+-----------------+
+| F_CHGU          | 60   | nfchgu.cube     | 出力   | Schrödinger\    |
+|                 |      |                 |        | 方\             |
+|                 |      |                 |        | 程式を解いて得\ |
+|                 |      |                 |        | た電子状態密度  |
++-----------------+------+-----------------+--------+-----------------+
+| F_CHGD          | 61   | nfchgd.cube     | 出力   | F_CHGU\         |
+|                 |      |                 |        | と同様。但し,\  |
+|                 |      |                 |        | down spin 状態  |
++-----------------+------+-----------------+--------+-----------------+
+| F_CHGU_P        | 46   | n\              | 出力   | 入力\           |
+|                 |      | fchgu_asis.cube |        | 波動関数から得\ |
+|                 |      |                 |        | た電子状態密度  |
++-----------------+------+-----------------+--------+-----------------+
+| F_CHGD_P        | 47   | n\              | 出力   | F_CHGU_P\       |
+|                 |      | fchgd_asis.cube |        | と同様。但し,\  |
+|                 |      |                 |        | down spin 状態  |
++-----------------+------+-----------------+--------+-----------------+
+| file_names.data | 5    | stm\_\          | 入力   | 上の８つのファ\ |
+|                 |      | file_names.data |        | イルを指定する\ |
+|                 |      |                 |        | ためのファイル  |
++-----------------+------+-----------------+--------+-----------------+
+
+なお、電子状態密度は Gaussian cube
+形式で出力されます。
+
+ **stm_file_names.data**
+
+ファイル名を指定するためのファイル。PHASE/0におけるfile_names.dataファイルに相当するファイルです。このファイルが存在しない場合上述のデフォルトファイル名が採用されます。このファイルを利用する場合、以下のように記述します。
+
+.. code-block:: text
+
+  &fnames
+  F_INP = './nfstminput.data'
+  F_CNTN_BIN = './continue_bin_stm.data'
+  F_VLC = './nfvlc.data'
+  F_ZAJ = './zaj.data'
+  F_CHGU = './nfchgu_occ.cube'
+  F_CHGU_P = './nfchgu_p_occ.cube'
+  /
+
+F_CNTN_BIN, F_ZAJ, F_VLC はPHASE/0の出力データなので、PHASE/0の指定に合わせる必要があります。デフォルト値はPHASE/0と同じです。
+
+ **F_INP (nfstminput.data)**
+
+このファイルはSTMプログラムの入力ファイルです。典型的には以下のようなものになります。
+
+.. code-block:: text
+
+  4 1 : kv3, nspin
+  1 0.0000 -0.1624 -0.3247 0.0000 -0.3750 -0.3750 0.25
+  2 0.0000 -0.1624 -0.1082 0.0000 -0.3750 -0.1250 0.25
+  3 0.0000 -0.0541 -0.3247 0.0000 -0.1250 -0.3750 0.25
+  4 0.0000 -0.0541 -0.1082 0.0000 -0.1250 -0.1250 0.25
+  110 42.9043654360 ! neg, zl (=lattice c)
+  -3.00 -2.000 ! e1, e2 : Efermi+e1 - Efermi+e2
+  90 ! nlpf
+  53 90 !izi, izf
+  1 ! colomn number of the z-component
+  0.10 0.15 100 ! rini, rfin, nfin
+  0.01 ! erlmt
+
+１行目の最初の数字は, k 点の個数です。あとの数字はスピンの違いを考慮するかしないかを示す数で、考慮しない場合が 1 する場合が 2 です。2行目から4行目まではｋ点の座標です。全部で 4 × 1 = 4 組の座標があります。さらに最後のカラムにk点座標の重みを指定します。ここではスピンの違いを考慮していないためこうなりましたが、スピンの違いがある場合の記すべき座標の組の個数は１行目に記したｋ点の個数の倍に等しくなります。座標の番号・直交座標系での座標・基本逆格子ベクトル系での座標で一組の座標指定になります。
+
+6行目の ``110 42.9043654360 ! neg, zl (=lattice c)`` の最初の数字はエネルギーバンドの数、あとの数字は表面に垂直方向の結晶格子の長さです。長さはボーア単位です。7行目の2つの数字はエネルギー範囲です。フェルミエネルギーレベルを基準にします。8行目の数字は電荷密度FFTにおける格子点の表面垂直方向の数に関係した数です。反転対称がない系ではｃ軸方向の電荷密度 FFT 格子点の数そのもの, 反転対称がある系ではその半分の数を指定します。9行目の２つの数字は真空領域の Schrödinger 方程式を解く範囲の指定です。電荷密度FFTの格子点でその範囲を指定します。10行目の数は表面垂直方向がどの成分に対応しているかを指示します。表面垂直軸が第1格子ベクトルの方向であれば1、第2格子ベクトルの方向であれば2、第3格子ベクトルの方向であれば3を指定します。11行目, 12行目はSchrödinger 方程式を反復法で解くときに指定する必要がある数値で順に新しい解を混ぜる割合の初期値, 最終値, 反復回数, 収束判定誤差値にそれぞれ対応します。
+
+nfstminput.dataファイルはFFTのメッシュ点数など通常気にしなくてよい数値を指定する必要があり、その作成は煩雑で間違えやすいです。そのため、PHASE/0が出力するテンプレートファイルを利用することが推奨されます。テンプレートファイルをもとに、対象としたいエネルギーレンジ(上の例の場合7行目)や、実行してみて収束しなかった場合に収束に関わるパラメーター(上の例の場合11行目と12行目) を編集します。
+
+STMプログラムの実行
+~~~~~~~~~~~~~~~~~~~~~
+PHASE/0を実行したディレクトリーにおいて ``nfstminput.data`` ファイルと（既定のファイル名を変更したい場合） ``stm_file_names.data`` ファイルを準備し、実行します。
+
+.. parsed-literal::
+
+  $ ~/|PHASE020XX.YY|/bin/stm
+  STM program version 2024.01
+  @(#)system=linux
+  F_INP =
+  ./nfstminput.data
+  ...
+  ...
+  0.13860790D-07 0.85993468D-07
+ (  2 ) rmix = 0.10 ||d WF|| (errsum) = 0.3550D+02 ( 0.4077D+05)
+ (  3 ) rmix = 0.10 ||d WF|| (errsum) = 0.1716D+02 ( 0.3773D+05)
+ (  4 ) rmix = 0.10 ||d WF|| (errsum) = 0.1937D+03 ( 0.7686D+05)
+ (  5 ) rmix = 0.10 ||d WF|| (errsum) = 0.1398D+02 ( 0.3682D+05)
+ (  6 ) rmix = 0.10 ||d WF|| (errsum) = 0.1692D+02 ( 0.3691D+05)
+ (  7 ) rmix = 0.10 ||d WF|| (errsum) = 0.4915D+02 ( 0.4018D+05)
+ (  8 ) rmix = 0.10 ||d WF|| (errsum) = 0.8600D+02 ( 0.4573D+05)
+ (  9 ) rmix = 0.10 ||d WF|| (errsum) = 0.2747D+02 ( 0.3736D+05)
+ ( 10 ) rmix = 0.10 ||d WF|| (errsum) = 0.1368D+02 ( 0.3679D+05)
+ ( 11 ) rmix = 0.10 ||d WF|| (errsum) = 0.2098D+02 ( 0.3660D+05)
+ ( 12 ) rmix = 0.10 ||d WF|| (errsum) = 0.1242D+02 ( 0.3609D+05)
+  ...
+  ...
+  << cpu time statistics >>
+  1 2dFFT_fine 68.72040(sec.)
+  2 rd_WFs_doFFT_and_solve_eq_core 17.95710(sec.)
+  3 FFT_fine 0.49030(sec.)
+  4 m_pwBS_set_FFT_mapfunctions 0.00090(sec.)
+  5 m_pwBS_kinetic_energies 0.00010(sec.)
+
+  closed filenumber = 31
+  closed filenumber = 55
+  closed filenumber = 60
+  closed filenumber = 61
+  closed filenumber = 44
+  closed filenumber = 45
+  closed filenumber = 46
+  closed filenumber = 47
+  closed filenumber = 48
+
+ログにはまずは前処理の結果などが報告されます。繰り返し計算の部分の ``(errsum)=`` に続く数値が収束判定に用いられる数値です。この数値が順調に減少していれば問題なく計算が進行していることになりますが、振動してしまったり、悪い場合はInfinityとなってしまったりしている場合はうまく進行していないので混合パラメーターなどを見直して再度計算を行います。最後にclosed filenumber =から始まる行が続けば計算修了です。
+
+計算結果
+~~~~~~~~~
+STMプログラムによって得られる主要な結果は ``nfchgu.cube`` と ``nfchgd.cube`` です。前者はアップスピン状態の電荷密度ファイル、後者はダウンスピン状態の電荷密度ファイルですが後者はスピンを考慮していない場合空ファイルとなります。このほか、PHASE/0の結果から読み込んだ波動関数を何も加工せずに部分電荷密度を計算した結果が ``nfchgu_asis.cube`` と ``nfchgd_asis.cube`` に記録されます。
+
+cubeファイルから指定のzの値における二次元的な電荷密度データを抽出しファイルに記録するスクリプトが ``extract_slice.py`` です。 このスクリプトは ``bin`` ディレクトリーの下にあります。オプション ``-h`` もしくは ``--help`` をつけて実行すると簡単なヘルプメッセージが得られます。
+
+.. parsed-literal::
+
+  $ ~/|PHASE020XX.YY|/bin/extract_slice.py -h
+  Usage: extract_slice.py [options]
+
+  extract slice data from a cube file
+
+  Options:
+    -h, --help            show this help message and exit
+    -c CUBE, --cube=CUBE  the target cube file. defaults to nfchr.cube
+    -z ZVAL, --zval=ZVAL  the height from which the slice data shall be
+                          extracted.
+    -a ZAXIS, --zaxis=ZAXIS
+                          specify which direction is considered as the z-axis. 1
+                          stands for the a-vector,                       2
+                          stands for the b-vector, and 3 stands for the
+                          c-vector. defaults to 3
+    -i ZINDEX, --zindex=ZINDEX
+                          
+                          shall be extracted.
+    -o OUTPUT, --output=OUTPUT
+                          the file to which the extracted results are output
+
+用いることができるオプションは次の表に記述する通りです。
+
+.. csv-table:: extract_slice.pyスクリプトのオプション
+
+  "-c CUBE, --cube=CUBE", "対象のcubeファイル。デフォルト値はnfchr.cube."
+  "-z ZVAL, --zval=ZVAL", "二次元的な電荷密度データを抽出したいzの値。単位はÅ. デフォルト値はNoneであり、指定がない場合は--zindexによって指定されるいインデックスが用いられる。"
+  "-a ZAXIS, --zaxis=ZAXIS", "表面に垂直とみなす軸。1の場合 *a* 軸 2の場合 *b* 軸 3の場合 *c* 軸に対応する。デフォルト値は3."
+  "-i ZINDEX, --zindex=ZAXIS", "二次元的な電荷密度データを抽出したいzの値をFFTボックスのインデックスで指定する。--zvalによる指定がある場合は無視される。デフォルト値は0."
+  "-o OUTPUT, --output=OUTPUT", "出力先のファイル。デフォルト値はslice.dat"
+
+結果は以下のような形式で出力されます。
+
+.. code-block:: text
+
+  x_1 y_1 c_1_1
+  x_1 y_2 c_1_2
+  ..
+  x_nx y_ny c_nx_ny
+
+  x_2 y_1 c_2_1
+  ..
+
+ここで ``x_i`` は ``i`` 番目のx座標、 ``y_j`` は ``j`` 番目のx座標、 ``c_i_j`` は対応する電荷密度の値です。長さの単位はÅです。
+
+計算例
+~~~~~~~~~~~~~~~~~~~~~
+
+計算例として、前節でも用いたSiの2x1表面のSTM像の計算を行います。入力ファイルは ``stm/Si_2x1`` 以下にあります。SCF計算の入力が ``stm/Si_2x1/scf`` 以下に、STMプログラムの入力が ``stm/Si_2x1/occ`` と ``stm/Si_2x1/uocc`` 以下にあります。前者には占有状態の入力ファイル、後者には非占有状態の入力ファイルが配置されています。
+
+``stm/Si_2x1/scf`` には原点を中心とした反転対称性がある系のPHASE/0の入力ファイルがおかれています。単位胞としては *a* 軸が14.512 Bohr, *b* 軸が7.256 Bohr, *c* 軸が60 Bohrです。60 Bohrのちょうど半分の30 Bohrの位置が二面ある表面双方から最も遠い点に対応します。 ``Postprocessing`` ブロックにおいて ``stm`` ブロックの下に ``sw_stm = on`` を設定しているためSTMプログラムを利用するために必要なファイルが出力される状態になっています。
+
+``stm/Si_2x1/occ`` と ``stm/Si_2x1/uocc`` に配置されているSTMプログラムの入力は、いずれもPHASE/0が出力したテンプレートから作成したものです。エネルギーレンジの部分のみ変更しており、前者はフェルミエネルギーからみて-1.0 eVから 0.0 eV, 後者はフェルミエネルギーからみて0.0 eVから1.0 eVのSTM像が得られる設定となっています。また、SCF計算0の計算結果は一階層上の下の ``scf`` ディレクトリーに出力されることになるため、 ``stm_file_names.data`` ファイルはそのことを考慮して以下のような内容になっています。
+
+.. code-block:: text
+
+  &fnames
+  F_CNTN_BIN = '../scf/continue_bin_stm.data'
+  F_ZAJ      = '../scf/zaj.data'
+  F_VLC      = '../scf/nfvlc.data'
+  /
+
+``stm/Si_2x1/scf`` においてPHASE/0によるSCF計算を行い、さらに ``stm/Si_2x1/occ``, ``stm/Si_2x1/uocc`` においてSTMプログラムを実行すると結果を得ることができます。 ``nfchgu.cube`` がSTMプログラムによって得られた部分電荷密度ファイル、 ``nfchgu_asis.cube`` がPHASE/0から引き継いだ波動関数をそのまま用いて得られた部分電荷密度ファイルです。得られたcubeファイルを用いて表面から5 Å および10 Åの位置におけるSTM像を描画した結果が :numref:`advanced_STM_occ` および :numref:`advanced_STM_uocc` です。前者が占有状態、後者が非占有状態の結果に対応します。
+
+.. figure:: images/stm_occ.svg
+ :name: advanced_STM_occ
+
+ 占有状態のSTM像。(a) PHASE/0の波動関数、最表面から5 Åの位置の像 (b) PHASE/0の波動関数、最表面から10 Åの位置の像 (c) STMプログラムによって解きなおした波動関数、最表面から5 Åの位置の像(b) STMプログラムによって解きなおした波動関数、最表面から10 Åの位置の像
+
+.. figure:: images/stm_uocc.svg
+ :name: advanced_STM_uocc
+
+ 非占有状態のSTM像。(a) PHASE/0の波動関数、最表面から5 Åの位置の像 (b) PHASE/0の波動関数、最表面から10 Åの位置の像 (c) STMプログラムによって解きなおした波動関数、最表面から5 Åの位置の像 (b) STMプログラムによって解きなおした波動関数、最表面から10 Åの位置の像
+
+:numref:`advanced_STM_occ` より、最表面原子から5 Å離れた位置ではPHASE/0が出力した波動関数でもそれらしい像が得られますが、10 Å離れた位置ではPHASE/0が出力した波動関数の像はノイズが大きく不明瞭なことが分かります。それに対し、STMがプログラムが出力した像は10 Åにおいてもなおもっともらしい像が得られ、また5 Åの場合と比較してどのように変化したかを理解することができます。:numref:`advanced_STM_uocc` より、非占有状態の場合5 Åの段階ですでにPHASE/0が出力した波動関数がもたらす像にはある程度の不明瞭さがあることが分かります。それに対し、STMプログラムがもたらす像は5 Å, 10 Åいずれの距離においてもはっきりとしたきれいな像になっていることが分かります。
+
+.. only:: not latex
+
+
+ **参考文献**
+
+.. [Kageshima91] 影 島 博 之 博 士 論 文(1991年 東 京 大 学).  
+.. [Kageshima92] H\. Kageshima and M. Tsukada , "Theory of scanning tunneling microscopy and spectroscopy on Si(100) reconstructed surfaces" PHYSICAL REVIEW B 46 6928 (1992).
+
 .. _section_bader_charge:
 
 ベーダ―解析向け電荷密度ファイルの出力 (バージョン2019.02以降)
@@ -2425,6 +2728,8 @@ part　の寄与、第2項は擬ポテンシャルを用いたことによる補
 
 また、吸収端のエネルギーは、基底状態と内殻電子励起状態の全エネルギー差で与えられるものとします。
 
+.. _section_elnes_xanes_pp:
+
 準備：擬ポテンシャル
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -2847,7 +3152,7 @@ eps_E2_E2.data の出力例
 SrTiO\ :sub:`3`\ 結晶の計算例を紹介します。入力ファイルは :code:`samples/XANES/SrTiO3` にあります。
 
 まず、単位胞 (5原子) の格子定数を、k点: Monk(8×8×8)
-で最適化しa=3.923Åを得ましたた。これを各結晶軸方向に3倍したスーパーセル
+で最適化しa=3.923Åを得ました。これを各結晶軸方向に3倍したスーパーセル
 (135原子、a=11.769Å)
 を作成し、1つのTi原子の擬ポテンシャルを1sに内殻正孔を持つものに置き換えました。計算条件は以下の通。
 
@@ -2898,6 +3203,253 @@ t2g 軌道をプローブするa の場合でです ( :numref:`advanced_XANES_qu
 .. [Gao08] S. -P. Gao, C. J. Pickard, M. C. Payne, J. Zhu, and J. Yuan, Phys.  Rev. B **77** (2008) 115122.
 .. [Gougoussis09] C. Gougoussis, M. Calandra, A. P. Seitsonen, and F. Mauri, Phys. Rev. B **80** (2009) 075102.
 .. [Cabaret10] D. Cabaret, A. Bordage, A. Juhin, M. Arfaoui, and E. Gaudry, Phys.  Chem. Chem. Phys. **12** (2010) 5619.
+
+.. _section_xes:
+
+XES解析機能 (バージョン2024.01以降)
+--------------------------------------
+
+はじめに
+~~~~~~~~~~
+
+X-ray Emission Spectroscopy (XES, X線発光分光) では、X線照射により内殻電子が真空中に飛び出した後 (XPSと同等)、外殻電子が内殻正孔と再結合する過程で、発光する現象を観測します。特に、外殻電子が価電子帯にある場合の XES を、Valence-to-Core (V2C)-XES と呼びます。PHASE/0では、内殻電子が飛び出した状態を始状態として、V2C-XES におけるスペクトルを計算することができます。以下、断りのない限り、単純に XES と呼ぶことにします。PHASE/0 には、XANES の計算機能も実装されています。XES との電子配置の違いは以下のとおりです。なお、Nc, Nv は内殻及び価電子数を意味します。
+
+.. csv-table:: XANESとXESにおける電子配置
+
+  "", "XANES", "V2C-XES"
+  "始状態","Nc, Nv", "Nc-1, Nv"
+  "終状態","Nc-1, Nv+1 a.", "Nc, Nv-1 b."
+
+a. 励起された内殻電子は伝導帯に占有されます。
+b. 価電子帯の電子が内殻に落ち込みます。
+
+XESの遷移強度は、双極子或いは四重極子近似で計算を行います。このような計算は XANES計算と同じように実行されます。
+
+準備：擬ポテンシャル
+~~~~~~~~~~~~~~~~~~~~
+XANESの場合と同様、内殻に正孔を有する擬ポテンシャルを作成する必要があります。この点については :numref:`section_elnes_xanes_pp` を参照してください。
+
+始状態SCF計算
+~~~~~~~~~~~~~~~~~~~~
+
+以下に、始状態SCF計算の入力例を示します。
+
+.. code-block:: text
+
+  accuracy{ 
+      paw = on 
+  }
+  structure{
+    atom_list{
+      atoms{
+       #tag element rx ry rz
+       Six  0.00000   0.00000   0.00000   ← 内殻正孔を持つ原子
+       Si   0.12500   0.12500   0.12500
+       Si   0.25000   0.25000   0.00000
+       Si   0.37500   0.37500   0.12500
+      (中略)
+      }
+    }
+    charged_state{
+       additional_charge = 1.0        ← 内殻電子が真空中に飛び出し系が正に帯電
+    }
+    element_list{
+        #tag element atomicnumber 
+                Si       14
+                Six      14       ← 内殻正孔を持つ原子
+    }
+  }
+  postprocessing{
+     corelevels{
+       sw_calc_core_energy = on
+    }
+  }
+
+XANESなどの場合と似ていますが、内殻電子が真空中に飛び出し、系が正に帯電することを模擬するためにstructureブロックの下のcharged_stateブロックのadditional_chargeによって電荷を追加している点が特徴的です。
+
+終状態SCF計算
+~~~~~~~~~~~~~~~~~~~~
+
+以下に、終状態SCF計算の入力例を示します。
+
+.. code-block:: text
+
+  accuracy{ 
+      paw = on 
+  }
+  structure{
+    atom_list{
+      atoms{
+        #tag element rx ry rz
+             Si   0.00000   0.00000   0.00000   
+             Si   0.12500   0.12500   0.12500
+             Si   0.25000   0.25000   0.00000
+             Si   0.37500   0.37500   0.12500
+             (中略)
+      }
+    }
+    charged_state{
+       additional_charge = 1.0　　← 内殻正孔は消滅するが価電子帯に正孔ができる。系が正に帯電したまま。
+    }
+    element_list{
+        #tag element atomicnumber 
+                Si       14
+    }
+  }
+  postprocessing{
+     corelevels{
+       sw_calc_core_energy = on
+    }
+  }
+
+終状態においては内殻は消滅するのですが、価電子帯に正孔ができると考えるため、系は正に帯電する設定が施されています。
+
+スペクトル計算
+~~~~~~~~~~~~~~~~~~~~
+
+終状態のSCF計算で得られた電荷密度を読み込み、固定電荷モードでスペクトル計算を行います。epsilon ブロックの設定は、sw_v2c_xes = on を記述する以外、XANES計算と共通です。以下は入力例です。
+
+.. code-block:: text
+
+  control{
+      condition = fixed_charge
+      use_additional_projector = on
+  }
+  accuracy{
+      paw = on
+  }
+  structure{
+    atom_list{
+        atoms{
+            #tag element rx ry rz
+        Si   0.00000   0.00000   0.00000   
+        Si   0.12500   0.12500   0.12500
+        Si   0.25000   0.25000   0.00000
+        Si   0.37500   0.37500   0.12500
+        (中略)
+      }
+    }
+  }
+  epsilon{
+        sw_epsilon = on
+        sw_corelevel_spectrum = on
+        sw_v2c_xes = on               　　　  ← XES 計算特有の宣言
+
+        probe{
+           atom_id = 1
+           orbital = 2p
+        }
+        photon{
+           energy{
+              low = -1.5, high = 0.2, step = 0.002
+           }
+        }
+        BZ_integration {
+                method = g       !{parabolic(p)|gaussian(g)}
+                width = 0.8 eV
+        }
+        fermi_energy{
+               read_efermi = on
+        }
+  }
+
+また、file_names.data 内で、始状態及び終状態のcore_energy.dataファイルを、それぞれF_CORE_ENERGY_INITIAL及びF_CORE_ENERGY_FINALに指定します。加えて、終状態のフェルミ準位が書かれたファイルをF_EFERMIに指定します。これらの指定も、XANES計算と同様です。典型的には以下のような内容になります。
+
+.. code-block:: text
+
+  &fnames
+  F_EFERMI = '../scf_final/nfefermi.data'
+  F_CHGT   = '../scf_final/nfchgt.data'
+  F_CNTN_BIN_PAW   = '../scf_final/continue_bin_paw.data'
+  
+  F_CORE_ENERGY_INITIAL = '../scf_initial/core_energy.data'
+  F_CORE_ENERGY_FINAL   = '../scf_final/core_energy.data'
+  /
+
+スペクトル計算の計算結果はeps.dataファイルに以下の要領で記録されます。
+
+.. code-block:: text
+
+  #             Spectrum data
+  #      Energy[eV]        Spectrum
+    0.7176531082E+02  0.0000000000E+00
+  (中略)
+    0.8814656534E+02  0.1416217026E-03
+    0.8820098811E+02  0.1532007066E-03
+  (後略)
+
+計算例
+~~~~~~~~
+計算例として、Si結晶(8原子)とMgO結晶(8原子)の例を紹介します。入力ファイルはそれぞれ ``samples/XES/Si``, ``samples/XES/MgO`` 以下にあります。各例題ディレクトリーはさらに以下のサブディレクトリーから構成されています。
+
+.. csv-table:: 
+
+ "scf_initial", "始状態に対応するSCF計算の入力が格納されているディレクトリー"
+ "scf_final", "終状態に対応するSCF計算の入力格納されているディレクトリー"
+ "eps", "スペクトル計算の入力が格納されているディレクトリー"
+ "pp", "内殻正孔を有する元素の擬ポテンシャルファイルなどが格納されているディレクトリー"
+
+``scf_initial`` および ``scf_final`` においてphaseによるSCF計算を行い、 ``eps`` において epsmainによるスペクトル計算を行うことによって結果を得ることができるようになっています。
+
+Si結晶(8原子)
+^^^^^^^^^^^^^^^^^
+以下に、Si結晶(8原子)のXESスペクトル計算の条件を示します。なお、格子定数は、事前に最適化した値 (5.4726Å)を用いました。また、内殻正孔の入る軌道として Si 2pを選択しました。
+
+.. csv-table:: Si結晶(8原子)のSCF・スペクトル計算の計算条件
+
+  "平面波カットオフ [Ry]","25"
+  "電荷密度カットオフ [Ry]","225"
+  "k 点サンプリング","monk(4×4×4)"
+  "バンド数","24"
+  "交換相関相互作用", "GGAPBE PAW"
+  "磁性の考慮","ferro"
+  "系の荷電状態","additional_charge = 1.0"
+  "擬ポテンシャル","Si_ggapbe_paw_002_nocorehole.gncpp2 Si_ggapbe_paw_005_corehole_2p.gncpp2"
+  "初期波動関数","atomic_orbitals"
+  "初期電荷密度","atomic_charge"
+  "スメアリング [eV]","0.05 (parabolic)"
+  "SCF 収束条件 [Ha/atom]","1.0E-8"
+
+
+得られる結果を次の図に示します。2個のピークと１個のショルダーが見られますが、先行研究 [Lyalin19]_ でも同様の結果が示されています。
+
+.. figure:: images/XES_Si8.png
+ :name: advanced_XES_fig1
+
+ Si 結晶(8原子)の :math:`L_{2,3}` XESスペクトル。
+
+MgO結晶 (8原子)
+^^^^^^^^^^^^^^^^^^^
+以下に、MgO結晶(8原子)のXESスペクトル計算の条件を示します。なお、格子定数は、事前に最適化した値 (4.2752Å)を用いました。また、内殻正孔の入る軌道として O 1sを選択しました。
+
+.. csv-table:: MgO結晶(8原子)のSCF・スペクトル計算の条件
+
+  "平面波カットオフ [Ry]","25"
+  "電荷密度カットオフ [Ry]","225"
+  "k 点サンプリング","monk(4×4×4)"
+  "バンド数","20"
+  "交換相関相互作用","GGAPBE PAW"
+  "磁性の考慮",Ferro"
+  "系の荷電状態",additional_charge = 1.0"
+  "擬ポテンシャル","Mg_ggapbe_paw_002_nocorehole.gncpp2 O_ggapbe_paw_002_nocorehole.gncpp2 O_ggapbe_paw_005_corehole_1s.gncpp2 Si_ggapbe_paw_005_corehole_2p.gncpp2"
+  "初期波動関数","無指定"
+  "初期電荷密度","無指定"
+  "スメアリング [eV]","0.05 (parabolic)"
+  "SCF 収束条件 [Ha/atom]","1.0E-8"
+
+得られる結果を次の図に示します。1個のピークと1個のショルダーが見られますが、実験 [Galakhov00]_ でも同様の結果が示されています。
+
+.. figure:: images/XES_MgO.png
+ :name: advanced_XES_fig2
+
+ MgO結晶(8原子)の :math:`K_{\alpha}` XESスペクトル。
+
+.. only:: not latex
+
+ **参考文献**
+
+.. [Lyalin19] A\. Lyalin et al, J. Electrochem. Soc. 166, A5362 (2019).
+.. [Galakhov00] V\. R\. Galakhov et al, Phys. Rev. B 62, 4922 (2000).
 
 .. _section_borncharge:
 
@@ -4522,7 +5074,7 @@ EDAの結果は、以下のような形式でログファイル(output000ファ�
 
 計算例
 ^^^^^^^^
-EDAを用いた計算例として、Si(001)面にC2H2分子が吸着した系の最適化計算例を紹介します。吸着様式としてはdimerized model (DM,  :numref:`EDA_example_dm_dcm` (a)) およびdimer-cleaved model (DCM, :numref:`EDA_example_dm_dcm` (b))を採用しましたた。サンプルの入力ファイルは ``samples/EDA/Si001_C2H2`` の ``DCM`` および ``DM`` 以下に配置されています。
+EDAを用いた計算例として、Si(001)面にC2H2分子が吸着した系の最適化計算例を紹介します。吸着様式としてはdimerized model (DM,  :numref:`EDA_example_dm_dcm` (a)) およびdimer-cleaved model (DCM, :numref:`EDA_example_dm_dcm` (b))を採用しました。サンプルの入力ファイルは ``samples/EDA/Si001_C2H2`` の ``DCM`` および ``DM`` 以下に配置されています。
 
 採用した計算条件は下記の通り。
 

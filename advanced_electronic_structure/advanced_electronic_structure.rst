@@ -524,6 +524,10 @@ FLLでは磁気モーメントが単調に増加するが、AMFではU=5.0 eV程
 approximation=LDA）を改善する手法には一般勾配近似（generalized
 gradientapproxiation=GGA）のほかに、Hartree-Fock交換汎関数を一定量取り入れるハイブリッド汎関数法があります。PHASE/0では、PBE0 [Perdew96]_ [Emzerhof97]_ [Emzerhof99]_ [Adamo99]_ とHSE06 [Heyd03]_ [Heyd04a]_ [Heyd04b]_ [Heyd06]_ の二種類の汎関数が使えます。
 
+.. note::
+
+  2024.01版以降、Gau-PBE [Song11]_ [Song13]_ も利用できるようになりました。
+
 厳密交換エネルギー（Hartree-Fock交換エネルギー）\ :math:`E_{x}^{\text{exact}}`\ は、{:math:`k`\ 、\ :math:`\nu`\ 、\ :math:`\sigma`}で指定される{サンプリングｋ点、バンド、スピン状態}の波動関数\ :math:`\psi_{\text{kνσ}}(\mathbf{r})`
 を用いて
 
@@ -572,7 +576,7 @@ Hybrid汎関数で電子状態計算を行うには、以下のように指定�
    }
  }
 
-この例の場合は、HSE06汎関数を指定したことになります。HSE06のほか、PBE0、HFを指定することが可能です。例では、sampling
+この例の場合は、HSE06汎関数を指定したことになります。HSE06のほか、gaupbe、PBE0、HFを指定することが可能です。例では、sampling
 k点はΓ点（method=gamma）を指定していますが、ほかに格子状sampling（method=mesh）あるいはMonkhorst-Packによるスペシャルk点sampling（method=monk）を指定することもできます。パラメータalphaは :eq:`eq:hybrid2` 、:eq:`eq:hybrid3` 式に現れる厳密交換相互作用の混合率
 :math:`\alpha`\ で、デフォルトの値は0.25です。Omegaは :eq:`eq:hybrid3` 式に現れる遮蔽パラメータ\ :math:`\omega`\ で、デフォルト値は0.106
 bohr\ :sup:`-1`\ です。
@@ -728,7 +732,7 @@ BLASによって処理させることができます。この機能は、以下�
 
 水素分子
 
-水素分子のPBE計算、PBE0計算、Hartree-Fock計算の計算例題は、 :code:`samples/hybrid/H2` 以下のディレクトリPBE、PBE0、HFです。go_h2.shを実行すると、これらの計算を順番に実行します。これらの結果とGausian03の結果との比較を :numref:`advanced_hybrid_fig1` に示します。
+水素分子のPBE計算、PBE0計算、Hartree-Fock計算の計算例題は、 :code:`samples/hybrid/H2` 以下のディレクトリPBE、PBE0、HFです。go_h2.shを実行すると、これらの計算を順番に実行します。これらの結果とGaussian03の結果との比較を :numref:`advanced_hybrid_fig1` に示します。
 
 .. figure:: images/image107.svg
  :name: advanced_hybrid_fig1
@@ -737,7 +741,7 @@ BLASによって処理させることができます。この機能は、以下�
 
 水分子
 
-水分子のPBE計算、PBE0計算例題は、 :code:`samples/hybrid/H2O` 以下のディレクトリのPBE、PBE0です。go_h2o.shを実行すると、これらの計算を順番に実行します。これらの結果とGausian03の結果との比較を :numref:`advanced_hybrid_fig2` に示します。
+水分子のPBE計算、PBE0計算例題は、 :code:`samples/hybrid/H2O` 以下のディレクトリのPBE、PBE0です。go_h2o.shを実行すると、これらの計算を順番に実行します。これらの結果とGaussian03の結果との比較を :numref:`advanced_hybrid_fig2` に示します。
 
 .. figure:: images/image108.svg
  :name: advanced_hybrid_fig2
@@ -819,6 +823,8 @@ SCF計算はハイブリッド計算でも通常のPBE計算でもよいです�
 
 .. [Emzerhof97] M\. Emzerhof, J. P. Perdew, and K. Burke, Int J. Quantum Chem. **64** (1997) 285.
 .. [Emzerhof99] M\. Emzerhof and G. E. Scuseria, J. Chem. Phys. **110** (1999) 5029.
+.. [Song11] J\. Song, K. Yamashita, and K, Hirao, J. Chem. Phys. 135, 071103 (2011).
+.. [Song13] J\. Song, G. Giorgi, K. Yamashita, and K. Hirao, J. Chem. Phys. 138, 241101 (2013).
 .. [Adamo99] C\. Adamo and V. Barone, J. Chem. Phys. **110** (1999) 6158.
 .. [Heyd03] J\. Heyd, G. E. Scuseria, and M. Ernzerhof, J. Chem. Phys. **118** (2003) 8207.
 .. [Heyd04a] J\. Heyd and G. E. Scuseria, J. Chem. Phys. **120** (2004) 7274.
@@ -1343,7 +1349,7 @@ DFT-D2法やWilliamsの方法と違い、ファンデルワールス相互作用
 
 F_DFTD3PARのデフォルト値は./dftd3par.dataです。dftd3par.dataファイルは、PHASE/0インストールディレクトリーの下の以下の場所にあります。
 
-\ :code:`samples/vdw_correction/dftd3`
+\ :code:`samples/vdw_correction/dft-d3`
 
 .. _入力パラメータ-9:
 
@@ -1728,7 +1734,7 @@ ESM法を利用すると、\ *c*\ 軸方向に電場を印加した計算を実�
  **参考文献**
 
 .. [Otani06] M\. Otani and O. Sugino, “First-principles calculations of charged surfaces and interfaces: A plane-wave nonrepeated slab approach”, Physical Review B **73**, 115407 (2006).
-.. [Hamada09] Hamada, M. Otani, O. Sugino and Y. Morikawa, “Green’s function method for elimination of the spurious multipole interaction in the surface/interface slab model”, Physical Review B **80**, 165411 (2009).
+.. [Hamada09] I\. Hamada, M. Otani, O. Sugino and Y. Morikawa, “Green’s function method for elimination of the spurious multipole interaction in the surface/interface slab model”, Physical Review B **80**, 165411 (2009).
 
 ライセンス
 ~~~~~~~~~~~~~~~~~~~~

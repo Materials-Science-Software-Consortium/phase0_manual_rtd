@@ -108,7 +108,7 @@ naldos_formとnaldos_toに原子分割局所状態密度を計算する最初の
 
 .. code-block:: bash
 
-   % ../../../tools/bin/dos.pl dos.data -erange=-30,5 -dosrange=0,12 -mode=atom
+   % ../../../bin/dos.pl dos.data -erange=-30,5 -dosrange=0,12 -mode=atom
 
 BaO/Si(001)界面の原子分割局所状態密度を計算した結果を :numref:`advanced_BaO_image1` に示します。
 Si,Ba,Oの原子分割局所状態密度にそれぞれの原子の特徴を見ることができます。
@@ -167,7 +167,7 @@ noは層の番号です。minとmaxは層の下端の位置と上端の位置を
 
 .. code-block:: bash
 
-  % ../../../tools/bin/dos.pl dos.data -erange=-20,5 -dosrange=0,20 -mode=layer
+  % ../../../bin/dos.pl dos.data -erange=-20,5 -dosrange=0,20 -mode=layer
 
 BaO/Si(001)界面の層分割局所状態密度を計算した結果を :numref:`advanced_BaO_image2` に示します。
 
@@ -524,6 +524,213 @@ BaTiO3 結晶の全状態密度を :numref:`advanced_pdos_image1` に、Ti のd 
 --------------
 通常のバンド構造の計算方法については :numref:`firststep_fc_section` や :numref:`section_band_structure` を参照してください。
 
+.. _advanced_local_band:
+
+局所バンド構造（バージョン2024.01以降）
+----------------------------------------
+
+機能の概要
+~~~~~~~~~~~
+
+原子或いは層ごとに局所分割した状態密度 (LDOS) を求めるとき、各k点における波動関数の局所成分を計算しています。この仕組みを利用して、対称点に沿ったバンド計算で適用すると局所バンド構造 (LBAND) を得ることができます。
+
+使い方
+~~~~~~~~~~
+
+入力パラメーター
+^^^^^^^^^^^^^^^^^^
+LBAND 機能を用いるには、postprocessingブロックのlband ブロック内で sw_calc_wf_atom_decompositionあるいはsw_calc_wf_layer_decompositionを ON にします。前者は原子分割、後者は層分割に対応します。両者を同時に使用することもできます。
+
+原子分割LBANDの場合の入力例は以下の通りです。
+
+.. code-block:: text
+
+  structure{
+      atom_list{
+          atoms{
+              #tag element rx ry rz  atom_decomp
+  S     0.666666666666666852  0.333333333333333370  0.123244449411807913  0
+  Mo    0.333333333333333315  0.666666666666666741  0.250000000000000056
+  S     0.666666666666666852  0.333333333333333370  0.376755550588192156
+          }
+      }
+  }
+  postprocessing{
+    lband{
+       sw_calc_wf_atom_decomposition = on     ! 原子分割の場合
+       atom_decomposition{
+          sw_wd_only_specified_atoms = on	!　デフォルト: off
+       }
+    }
+  }
+
+原子の一部を出力したい場合、sw_wd_only_specified_atoms = on にするとともに、出力しない原子に対して atom_decomp タグを 0 に設定します。
+
+層分割LBANDの場合の入力例は以下の通りです。
+
+.. code-block:: text
+
+  structure{
+      atom_list{
+        atoms{
+            #tag element rx ry rz   num_layer
+  S     0.666666666666666852  0.333333333333333370  0.376755550588192156  1
+  S     0.333333333333333315  0.666666666666666741  0.623054822874977710  2
+        }
+     }
+  }
+  postprocessing{
+    lband{
+       sw_calc_wf_layer_decomposition = on     ! 層分割の場合
+       layer_decomposition{
+         slicing_way = by_atomic_positions  ! regular_intervals or by_atomic_positions ( デフォルト値: regular_intervals )
+         normal_axis = 3          ! 層分割の法線方向 (1:x, 2:y, 3:z) デフォルト値:1
+         deltaz = 1.0  angstrom    ! デフォルト値: 0.5 bohr
+         crtdst = 3.5              ! デフォルト値: 3.5 bohr
+       }
+    }
+  }
+
+層分割の場合には、分割方向を層の法線方向 (normal_axis )で指定します。slicing_way、deltaz、crtdstの意味は、LDOS機能と同じです。また、LDOSと同様、num_layerタグを用いることによって層指定を行います。
+
+出力
+^^^^^^^^^^^^^^^^^^
+
+各バンドの局所分割成分は、F_WFK_LOCAL_DECOMPで指定したファイル (デフォルト値: wfn_local_decomp.data) に出力されます。
+
+原子分割の場合以下のような内容になります。
+
+.. code-block:: text
+
+  # Local Decomposition for bands
+
+   num_kpoints =       57
+   num_bands   =      60
+   nspin       =        1
+
+  # Decomposition Info.
+   num_atoms   =        7  ( last 1 corresponds to external region )
+
+  # Atom Info.
+     no.    target_atom    species
+      1         1            S
+      2         2            Mo
+      3         3            S
+      4         4            S
+      5         5            W
+      6         6            S
+      7
+
+   weight for each atomic cell    nk =        1      ← 1番目のk 点
+  1)  0.0000004203   0.0000000726   0.0000004669   0.0061235360   0.9877519372
+      0.0061235670   0.0000000000　    ← 1 番目のバンド
+                                      ( num_aoms 個の成分が出力される。最後の1個は空隙・真空層の成分。)
+  2)  0.0000000451  -0.0000000145   0.0000000623   0.0027563085   0.9944983463
+      0.0027452524   0.0000000000　　　← 2 番目のバンド
+  (後略)
+
+層分割の場合以下のような内容になります。
+
+.. code-block:: text
+
+  # Local Decomposition for bands
+
+  num_kpoints =       57
+  num_bands   =      60
+  nspin       =        1
+
+  # Decomposition Info.
+  num_layers  =       48  ( last 1 corresponds to external region )
+
+  # Layer Info. (Angstrom)               　    ← 層分割の情報
+   no.       min.         max.  (Angstrom)
+    1      -0.3218      -0.0572
+  (中略)
+   47      11.8493      12.0955
+   48      12.0955      12.0955
+
+  weight for each layer          nk =        1          ← 1番目のk 点
+  1)  0.0000002919   0.0000000887   0.0000001319   0.0000001037   0.0000000172
+  (中略)
+  0.0161865026   0.0034412983   0.0007256887   0.0001641874   0.0000380678
+  0.0000078706   0.0000018031   0.0000000000
+    ← 1 番目のバンド ( num_layers 個の成分が出力される。最後の1個は空隙・真空層成分。)
+  2) -0.0000000516   0.0000000330   0.0000000889   0.0000000505  -0.0000000281
+    ← 2番目のバンド
+  (後略)
+
+可視化スクリプト
+^^^^^^^^^^^^^^^^^^^
+
+可視化には、band_local_decomp.py スクリプトを使用します。
+
+.. code-block:: text
+
+  usage: band_local_decomp.py [-h]
+  [--atom_id [ATOM_ID [ATOM_ID ...]]]
+             [--layer_id [LAYER_ID [LAYER_ID ...]]]
+             [--e_range E_RANGE E_RANGE] [--e_inc E_INC] [--unit UNIT]
+             [--plot_style PLOT_STYLE] [--circle_scale CIRCLE_SCALE]
+             [--cb_range CB_RANGE CB_RANGE] [--line_width LINE_WIDTH]
+             [--window_scale WINDOW_SCALE WINDOW_SCALE] [--vertical]
+             [--fig_format FIG_FORMAT] [--out_file OUT_FILE] [--with_fermi]
+             [--threshold THRESHOLD]
+             band_file kpt_file lband_weight_file
+
+bulk_band_file、kpt_file、及びweight_fileは、最低限実行に必要なファイルで、それぞれ nfenergy.data、bandkpt.in、及びwfn_local_decomp.dataに対応します。上記で括弧内は省略可能なオプションで、その意味は以下のとおりです。
+
+.. csv-table:: band_local_decomp.pyのオプション
+ :widths: 25,50,25
+
+  "引数","意味","デフォルト値"
+  "--atom_id","選択する原子の番号のリスト","なし"
+  "--layer_id","選択する層番号のリスト","なし"
+  "--e_range","表示するエネルギー領域の最小値、最大値","なし"
+  "--e_inc","エネルギー領域のインクリメント","なし"
+  "--unit","エネルギーの単位 (eV, Ry, Ha)","eV"
+  "--plot_style","局所分割成分の和の表示法 (1,2,3) 1: 半径で表示 2: カラースケール 3. 半径+カラースケール","1"
+  "--circle_scale","半径のスケール","1.0"
+  "--cb_range","plot_style = 2, 3におけるカラーの範囲の最小値、最大値","なし"
+  "--line_width","線の幅","1.0"
+  "--window_scale","プロットする領域の幅、高さのスケール","1.0 1.0"
+  "--vertical","nspin=2 の場合、グラフを縦に並べる (引数は不要)","False (横に並べる)"
+  "--fig_format","可視化画像の形式 (png/eps)","eps"
+  "--out_file","(拡張子を除く)出力ファイル名","plot_lband"
+  "--with_fermi","E = 0.0 eV に線を引く (引数は不要)","False (線を引かない)"
+  "--threshold","plot_style=3 の場合に、バンドの局所分割成分の和が thresholdを超えた場合にプロットする。","0.0"
+
+例題
+~~~~~
+MoS2/WS2 結晶を例に、L0BAND計算例を紹介します。入力ファイルは ``samples/dos_band/Lband/MoS2_WS2`` 以下にあります。このディレクトリーの下の ``scf`` にSCF計算の入力が、 ``lband_atom`` に原子分割LBANDの入力が、 ``lband_layer`` に層分割LBANDの入力がおかれています。主な計算条件は下記の通り。
+
+.. csv-table:: Te-doped MoS2結晶(24原子)の計算条件
+
+  "平面波カットオフ [Ry]","25"
+  "電荷密度カットオフ [Ry]","225"
+  "k 点サンプリング","SCF: monk (6×6×1) バンド: 57 点"
+  "バンド数","SCF: 38 バンド: 60"
+  "交換相関相互作用","GGAPBE"
+  "擬ポテンシャル","Mo_ggapbe_paw_us_02.pp, W_ggapbe_paw_us_01.pp, S_ggapbe_paw_nc_01m.pp"
+  "初期波動関数","atomic_orbitals"
+  "初期電荷密度","atomic_charge"
+  "スメアリング [eV]","0.05 (parabolic)"
+  "SCF 収束条件 [Ha/atom]","1.0E-8"
+
+バンド計算では、slicing_wayとしてby_atomic_positionsを採用し、MoS2及びWS2層にそれぞれnum_layer を 1 及び2に設定しました。
+
+``scf`` ディレクトリーにおいてSCF計算を行い、 ``lband_atom``, ``lband_layer`` において固定電荷計算を行うとLBANDを得ることができます。コマンド例とその結果得られるLBAND図を紹介します。
+
+コマンド例
+
+.. code-block:: text
+
+  band_local_decomp.py nfenergy.data bandkpt.in wfn_local_decomp.data --layer_id 1 --e_range -5 5 --e_inc 1.0 --fig_format png --plot_style 2 --line_width 2 --window_scale 0.8 1.0  --with_fermi --circle_scale 2.0
+
+.. figure:: images/lband_MoS2_WS2.png
+ :name: lband_MoS2_WS2
+
+ MoS2/WS2 結晶(6原子)のlband. plot_type 2で可視化した結果。
+
 射影バンド構造（バージョン2020.01以降）
 ----------------------------------------
 
@@ -780,7 +987,7 @@ MoS\ :sub:`2` / WS\ :sub:`2`
 の構造を示します。また、用いた計算条件を :numref:`advanced_PBAND_table1` に示します。格子定数は、事前に最適化して得られた値a = 3.232 Å, c = 12.417 Åを使用しました。
 
 また、PBAND計算のために、MoS\ :sub:`2`
-及びWS\ :sub:`2`\ のユニットにそれぞれkey 値1, 2 を与え、射影軌道を :numref:`advanced_PBAND_table2` のように指定しましたた。\ :numref:`advanced_PBAND_table3` に、postprocessingブロック内で使用したワードを示します。
+及びWS\ :sub:`2`\ のユニットにそれぞれkey 値1, 2 を与え、射影軌道を :numref:`advanced_PBAND_table2` のように指定しました。\ :numref:`advanced_PBAND_table3` に、postprocessingブロック内で使用したワードを示します。
 最後に、 :numref:`advanced_MoS2_structure` にブリルアンゾーン及び対称点を示します。
 
 .. table:: MoS\ :sub:`2`/WS\ :sub:`2` PBANDの計算条件
@@ -1137,6 +1344,8 @@ EnergyDataFile はバンド固有値ファイル、KpointFile
 
 Band-unfolding機能の利用例を紹介します。入力（と一部出力）は :code:`samples/dos_band/Unfold` 以下のサブディレクトリーにあります。
 
+.. _band_unfold_Te_dope_MoS2:
+
 Teドープ 2H-MoS\ :sub:`2`
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1206,6 +1415,8 @@ k点サンプリング         SCF計算：Monk (4×4×1)あるいは(2×2×1)
 | -with_fermi -color -erange=-6,4 -print_format=png                    |
 +----------------------------------------------------------------------+
 
+.. _band_unfold_Ge_dope_Si:
+
 GeドープSi
 ^^^^^^^^^^^^
 
@@ -1239,6 +1450,176 @@ k点サンプリング         SCF計算：Monk (4×4×4)
 
  (左) GeドープSiの構造。(右)アンフォールドしたバンド。
 
+
+.. _advanced_projected_band_unfold_section:
+
+射影バンドアンフォールディング計算機能（2024.01以降）
+---------------------------------------------------------
+
+概要
+~~~~~~
+射影バンド機能では、各バンドにおける波動関数の、ユーザーが指定した原子軌道への射影成分を計算します。一方、バンドアンフォールディング機能では、スーパーセルで計算した波動関数の、基本格子の逆格子ベクトルの整数倍成分を抽出します。射影バンドアンフォールディング計算機能とは、両者を組み合わせて利用する計算機能です。射影バンドアンフォールディング機能では、バンドアンフォールディング機能と同様に、（スーパーセルの逆格子でなく） 基本格子に対応する逆格子ベクトルをもとに生成したｋ点座標を用いてスペクトル強度が出力されます。そのため、バンドアンフォールディング機能と同じband_orbital_proj.plスクリプトによってスペクトル強度を描画することできます。
+
+使い方
+~~~~~~
+
+入力ファイル
+^^^^^^^^^^^^^^^^
+射影バンドアンフォールディング計算機能を利用するためには、射影バンドの入力と、バンドアンフォールディングの入力 (以下の例でハイライトしている箇所)を列挙すればよいだけです。
+
+.. code-block:: text
+ :emphasize-lines: 20-24,27-29
+
+  accuracy{
+    ksampling{
+        method = file
+    }
+    projector_list{
+        projectors{
+            #tag  group radius l
+                  1    2.0    1
+        }
+     }
+  }
+  structure{
+    atom_list{
+         atoms{
+         #tag  element rx   ry     rz     proj_group
+                Si  0.00  0.00  0.00
+                Ge  0.25  0.25  0.25      1
+          }
+     }
+    reference_cell{
+          a_vector =  0.00  5.25  5.25
+          b_vector =  5.25  0.00  5.25
+          c_vector =  5.25  5.25  0.00
+    }
+  }
+  postprocessing{
+      band_unfolding{
+          sw_band_unfolding = on
+      }
+      wf_orb_projection{
+          sw_calc_wf_orb_projection = on
+      }
+  }
+
+なお、バンドアンフォールディング機能と同様、k点座標は、reference_cell の逆格子ベクトルのブリルアンゾーンの対称点に沿って生成しておいてください。
+
+出力ファイル
+^^^^^^^^^^^^^^^^
+filenames.data内でF_BAND_SPECTR_WGHTに割り当てたファイル (デフォルト: nfband_spectr_wght.data)にバンドアンフォールディングのスペクトル強度、F_WFK_ORB_PROJに割り当てたファイル (デフォルト: wfn_orb_proj.data)に、射影バンドアンフォールディングのスペクトル強度が出力されます。後者の出力形式は、射影バンド機能による出力と同じですが、k点座標が reference_cell に対応する逆格子ベクトルを単位とした値に変換されています。以下に、wfn_orb_proj.dataの出力例を示します。
+
+.. code-block:: text
+
+  # Orbital Projection for bands
+
+  num_kpoints =      141
+  num_bands   =       40
+  nspin       =        1
+  num of orbitals =        6
+
+  population_diag_mode =   1
+
+  # Orbital Info.
+    iorb  ia  l  m  tau  element  key
+      1   4  1  1  1     Ge       0
+  (中略)
+  =================
+  ik =      1 (       0.00000000      0.50000000      0.50000000 )
+      1    4  1  1  1 : iorb, ia, l, m, tau
+        0.0000055229      0.0032036337      0.0033765015      0.0003999101
+  (後略)
+
+例題
+~~~~~~~~~~~~~~
+
+Teドープ 2H-MoS\ :sub:`2`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ :numref:`band_unfold_Te_dope_MoS2` においてTeドープ 2H-MoS\ :sub:`2` のバンドアンフォールディングの計算例がありますが、ここではさらに射影バンドを組み合わせた例を紹介します。入力ファイルは ``samples/dos_band/PBAND_Unfold/Te_doped_MoS2`` 以下にあります。 ``scf`` ディレクトリーにSCF計算用の入力データが、 ``band`` に固定電荷計算用の入力データが格納されています。主な計算条件は下記の通り。
+
+.. csv-table:: Te-doped MoS2結晶(24原子)の計算条件
+
+  "","SCF計算","バンド計算"
+  "平面波カットオフ [Ry]","25","25"
+  "電荷密度カットオフ [Ry]","225","225"
+  "k 点サンプリング","monk(2×2×1)", "57点"
+  "バンド数","128","160"
+  "交換相関相互作用","GGAPBE PAW+D2","GGAPBE PAW+D2"
+  "擬ポテンシャル","Mo_ggapbe_paw_us_02.pp, S_ggapbe_paw_nc_01m.pp Te_ggapbe_paw_us_02.pp","Mo_ggapbe_paw_us_02.pp S_ggapbe_paw_nc_01m.pp Te_ggapbe_paw_us_02.pp"
+  "プロジェクタ","--","Te s p軌道 (rcut=2.3 bohr)"
+
+``scf`` ディレクトリーにおいてSCF計算を行い、ついで ``band`` ディレクトリーにおいて固定電荷計算を実行すると結果を得ることができます。結果は、以下のようなコマンドによって可視化することができます。
+
+コマンド(Te s軌道)
+
+.. code-block:: text
+
+  band_orbital_proj.pl nfenergy.data bandkpt.in wfn_orb_proj.data -element=Te -il=0 -color -print_format=png -plot_style=2 -erange=-12,4 -circle_radius=0.7 -window_width=0.8 -outfile=contrib_Te_s.png
+
+得られるpngファイル (Te s軌道)
+
+.. figure:: images/contrib_Te_s.png
+ :name: PBAND_Unfold_Te_s
+
+ Te-doped MoS\ :sub:`2` 結晶の電子バンドにおける基本格子へのアンフォールディング。Te s軌道成分を抽出。
+
+コマンド(Te p軌道)
+
+.. code-block:: text
+
+  band_orbital_proj.pl nfenergy.data bandkpt.in wfn_orb_proj.data -element=Te -il=1 -color -print_format=png -plot_style=2 -erange=-12,4 -circle_radius=0.7 -window_width=0.8 -outfile=contrib_Te_p.png
+
+得られるpngファイル (Te p軌道)
+
+.. figure:: images/contrib_Te_p.png
+ :name: PBAND_Unfold_Te_p
+
+ Te-doped MoS\ :sub:`2` 結晶の電子バンドにおける基本格子へのアンフォールディング。Te p軌道成分を抽出。
+
+GeドープSi
+^^^^^^^^^^^^
+ :numref:`band_unfold_Ge_dope_Si` においてGeドープ Si結晶のバンドアンフォールディングの計算例がありますが、ここではさらに射影バンドを組み合わせた例を紹介します。入力ファイルは ``samples/dos_band/PBAND_Unfold/Ge_doped_Si`` 以下にあります。 ``scf`` ディレクトリーにSCF計算用の入力データが、 ``band`` に固定電荷計算用の入力データが格納されています。主な計算条件は下記の通り。
+
+.. csv-table:: Ge-doped Si 結晶(8原子)の計算条件
+
+  "","SCF計算","バンド計算"
+  "平面波カットオフ [Ry]","25","25"
+  "電荷密度カットオフ [Ry]","225","225"
+  "k 点サンプリング","monk(4×4×4)", "141点"
+  "バンド数","24","40"
+  "交換相関相互作用","GGAPBE PAW","GGAPBE PAW"
+  "擬ポテンシャル","Si_ggapbe_paw_nc_01m.pp, Ge_ggapbe_paw_nc_01m.pp","Si_ggapbe_paw_nc_01m.pp, Ge_ggapbe_paw_nc_01m.pp"
+  "プロジェクタ","--","Ge s p軌道 (rcut=2.2 bohr)"
+
+``scf`` ディレクトリーにおいてSCF計算を行い、ついで ``band`` ディレクトリーにおいて固定電荷計算を実行すると結果を得ることができます。結果は、以下のようなコマンドによって可視化することができます。
+
+コマンド(Ge s軌道)
+
+.. code-block:: text
+
+  band_orbital_proj.pl  nfenergy.data  bandkpt.in  wfn_orb_proj.data -element=Ge  -il=0 -color -print_format=png  -plot_style=2  -erange=-15,5 -circle_radius=0.5  window_width=0.8  -outfile=contrib_Ge_s.png
+
+得られるpngファイル (Ge s軌道)
+
+.. figure:: images/contrib_Ge_s.png
+ :name: PBAND_Unfold_Ge_s
+
+ Ge-doped Si 結晶の電子バンドにおける基本格子へのアンフォールディング。Ge s軌道成分を抽出。
+
+コマンド(Ge p軌道)
+
+.. code-block:: text
+
+  band_orbital_proj.pl  nfenergy.data  bandkpt.in  wfn_orb_proj.data -element=Ge  -il=1 -color -print_format=png  -plot_style=2  -erange=-15,5 -circle_radius=0.5  window_width=0.8  -outfile=contrib_Ge_p.png
+
+得られるpngファイル (Ge p軌道)
+
+.. figure:: images/contrib_Ge_p.png
+ :name: PBAND_Unfold_Ge_p
+
+ Ge-doped Si 結晶の電子バンドにおける基本格子へのアンフォールディング。Ge p軌道成分を抽出。
+
 .. _projected_surface_band_section:
 
 バルクの電子バンドの表面ブリルアンゾーンへの射影（バージョン2022.01以降）
@@ -1254,6 +1635,7 @@ k点サンプリング         SCF計算：Monk (4×4×4)
 
 使い方
 ~~~~~~~~~~
+
 k点座標生成
 ^^^^^^^^^^^^^
 

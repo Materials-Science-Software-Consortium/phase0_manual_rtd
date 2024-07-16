@@ -250,3 +250,64 @@ Makefileを以下のように編集します。
      sw_mpi_fftw = on
    }
 
+.. _section_install_eigenexa:
+
+EigenExaとリンクする方法（バージョン2024.01以降）
+------------------------------------------------------------------
+3次元版PHASE/0を `EigenExa <https://www.r-ccs.riken.jp/labs/lpnctrt/projects/eigenexa/>`_ とリンクし、分散並列による行列対角化をこのライブラリーに任せることができます。PHASE/0の標準的な分散並列行列対角化ライブラリーはScaLAPACKですが、計算機アーキテクチャーや問題規模、並列数によってはEigenExaの方が高速に動作する場合があります。
+
+リンクする方法は環境によって異なります。ここでは、MPIとしてインテルMPI, コンパイラーとしてインテル Fortranコンパイラー・クラシックを用いた例を紹介します。
+
+まずはEigenExaをコンパイルします。上記のサイトから最新版をダウンロードし、 ``README.md`` ファイルの指示に従ってコンパイルします。
+
+.. code-block:: shell
+
+  tar -zxvf EigeExa-2.12.tar.gz
+  cd EigenExa-2.12
+  ./bootstrap
+  ./configure
+  make install
+
+インテルMPIの環境が設定されている場合、自動的にそれが選択されます。
+
+Makefileに以下のような編集を施す必要があります。 
+
+- ``CPPFLAGS = -D_USE_DATE_AND_TIME_ ...`` に ``-DUSE_EIGENLIB -DEIGEN_EXA_2_9`` を追加します
+- ``LIBS`` から始まる行にEigenExaのライブラリーを次のように指定します ``LIBS = -L$(HOME)/EigenExa-2.12/lib -lEigenExa ...``
+- OpenMPを有効にするため、コンパイラーオプションに ``-qopenmp`` を加えます。 ``F90 = mpiifort -qopenmp`` ``LINK = mpiifort -qopenmp``
+- ESMを有効にしている場合、 ``libesm.a`` の次の行における ``-D__MPI__`` という文字列を ``-D__OPENMP`` に差し替えます
+
+環境変数 ``CPATH`` にEigenExaのインクルードディレクトリーを追加します。
+
+.. code-block:: shell
+
+ export CPATH=$HOME/EigenExa-2.12/include:$CPATH
+
+この状態で ``make clean;make`` とするとEigenExaを利用することのできる実行可能ファイルを得ることができます。
+
+デフォルトの状態ではScaLAPACKを用います。EigenExaを使う場合は以下のような設定を施します。
+
+.. code-block:: text
+
+  wavefunction_solver{
+    submat{
+      eigen_exa{
+        sw_eigen_exa = on
+      }
+    }
+  }
+
+また、実行する前に環境変数 ``LD_LIBRARY_PATH`` にEigenExaのライブラリーファイルが配置されているディレクトリーを指定する必要があります。
+
+.. code-block:: shell
+
+ export LD_LIBRARY_PATH=$HOME/EigenExa-2.12/lib:$LD_LIBRARY_PATH
+
+さらに、環境変数 ``OMP_NUM_THREADS`` によってMPI並列数や利用可能なコア数を勘案しながら適切なスレッド並列数を指定します。
+
+.. code-block:: shell
+
+ export OMP_NUM_THREADS=2
+
+なお、EigenExaはIntel oneAPI 2024年版以降に同梱されているインテルMPIとコンパイラーではコンパイルできなくなっているようです。2023年版以下のバージョンを用いるようにしてください。また、EigenExaとk点並列を同時に利用することはできません。
+

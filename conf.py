@@ -18,11 +18,11 @@
 # -- Project information -----------------------------------------------------
 
 project = 'PHASE/0 Manual'
-copyright = '2023, PHASEシステム研究会'
+copyright = '2024, PHASEシステム研究会'
 author = 'PHASEシステム研究会'
 
 # The full version, including alpha/beta/rc tags
-release = '2023.01'
+release = '2024.01'
 
 
 # -- General configuration ---------------------------------------------------
@@ -85,7 +85,7 @@ latex_elements = {
         'preamble': r''' \usepackage{braket} '''
 }
 rst_prolog=u"""
-.. |PHASE020XX.YY| replace:: phase0_2023.01
+.. |PHASE020XX.YY| replace:: phase0_2024.01
 """
 
 master_doc = 'index'
