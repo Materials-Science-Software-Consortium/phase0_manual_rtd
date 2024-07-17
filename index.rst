@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-第一原理電子状態計算ソフトウェアPHASE/0 2023ユーザーマニュアル
+第一原理電子状態計算ソフトウェアPHASE/0 2024ユーザーマニュアル
 ==============================================================
 
 .. toctree::
