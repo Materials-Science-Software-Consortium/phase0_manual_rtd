@@ -3211,7 +3211,7 @@ predictorブロックで定義できる変数です。
 
 また、printoutlevelに変数ipripredictorを定義し、その値を2以上にすると補外をする際に原子配置の予測の精度やなどの情報がログファイルに出力されます。
 
-.. [Arias94] T. Arias, M. C. Payne and J. D. Joannopoulos, “\ *Ab initio* molecular-dynamics techniques extended to large-length-scale systems”, Physical Review B **45**, 1538 (1992).
+.. [Arias94] T\. Arias, M. C. Payne and J. D. Joannopoulos, “\ *Ab initio* molecular-dynamics techniques extended to large-length-scale systems”, Physical Review B **45**, 1538 (1992).
 
 ストレステンソル計算
 ~~~~~~~~~~~~~~~~~~~~
