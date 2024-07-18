@@ -309,7 +309,7 @@ PAW法                    ✔        ✔
 マニュアルは、以下のような章構成になっています。
 
 .. table::
- :widths: auto
+ :widths: 40 60
  :class: longtable
 
  +--------------------------------+-----------------------------+
@@ -464,6 +464,20 @@ PHASE System consortium gives explicit permission for anyone to use any or all o
 
 PHASE/0の更新履歴
 ------------------
+
+PHASE/0 2024.01 2024/06 公開
+ - band_symmプログラムを更新しました。詳しくはband_symmのマニュアルを参照してください。
+ - ハイブリッド汎関数としてGau-PBEを利用することができるようになりました (\ :numref:`機能の概要-12` )
+ - X-ray Emission Spectroscopy (XES) のスペクトルを計算することができるようになりました (\ :numref:`section_xes` )
+ - 局所バンド構造の計算ができるようになりました (\ :numref:`advanced_local_band` )
+ - 射影バンド機能とバンドアンフォールディング機能を組み合わせて利用することができるようになりました (\ :numref:`advanced_projected_band_unfold_section` )
+ - フォノンバンドの縦波・横波比率を抽出することができるようになりました (\ :numref:`project_phonon_band_to_atoms_section` )
+ - フォノンバンドのアンフォールディングができるようになりました (\ :numref:`phonon_band_unfolding_section` )
+ - `deepmd <https://docs.deepmodeling.com/projects/deepmd/en/master/>`_ 形式の教師データを出力することができるようになりました (\ :numref:`section_neural_network_potential` )
+ - 高精度なSTM像を得ることができるようになりました( :numref:`section_stm` )
+ - 分散並列行列対角化ライブラリー `EigenExa <https://www.r-ccs.riken.jp/labs/lpnctrt/projects/eigenexa/>`_ とリンクすることができるようになりました ( :numref:`section_install_eigenexa` )
+..  - スピン軸による並列化に対応しました ( :numref:`section_spin_axis_parallelization` )
+
 
 PHASE/0 2023.01 2023/06 公開
  - 利用できる拘束条件を追加しました (\ :numref:`section_constraints_bluemoon` )

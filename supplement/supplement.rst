@@ -422,7 +422,7 @@ DosDataに状態密度データが記録されたファイル(通常dos.data)を
 概要
 ^^^^^^
 
-PHASE/0には状態密度可視化スクリプトdos.plが付属します。このスクリプトを用いると、全状態密度・原子分割局所状態密度・層分割局所状態密度・射影状態密度の状態密度図をEPS形式で得ることができます。dos.pyスクリプトはその改良版です。スクリプト名の拡張子から示唆されるように、Pythonスクリプトです。下記のような機能が搭載されています。
+PHASE/0には状態密度可視化スクリプトdos.plが付属します。このスクリプトを用いると、全状態密度・原子分割局所状態密度・層分割局所状態密度・射影状態密度の状態密度図をEPS形式で得ることができます。dos.pyスクリプトはその改良版です。スクリプト名の拡張子から示唆されるように、Pythonスクリプトです。Python3以降で動作します。下記のような機能が搭載されています。
 
 -  dos.plが持っている全機能
 -  EPS以外の画像ファイルの対応
@@ -434,33 +434,35 @@ PHASE/0には状態密度可視化スクリプトdos.plが付属します。こ�
 
 状態密度を加算する機能などを利用する場合、すべてのオプションを引数で渡すのは煩雑な場合がありえます。そこで、dos.pyは対話的にも利用できるようになっています。たとえば加算機能を利用する場合、加算対象となりえる状態密度データがリストアップされるので、所望の状態密度データをそこから選択します。
 
-dos.pyは簡易的なGUIも提供します。利用するGUIのフレームワークはtkinter
-(https://docs.python.org/ja/3/library/tkinter.html) です。tkinterは通常Pythonに標準的に備わっているので、利用の際特別な準備は必要ありません。
+状態密度プロットの際、dos.plはgnuplotを用います。これに対し、dos.pyはmatplotlib (https://matplotlib.org/) をプロットの際に用いる仕様となっているため、動作にはPythonのほかmatplotlibが必要となります。また、numpy (https://numpy.org/ja/) も必要です。Matplotlibやnumpyはpip (https://www.python.jp/install/windows/pip.html) などの仕組みを用いてインストールすることが可能です。たとえば以下のようなコマンドによってインストールします。
 
-状態密度プロットの際、dos.plはgnuplotを用います。これに対し、dos.pyはmatplotlib
-(https://matplotlib.org/) をプロットの際に用いる仕様となっているため、動作にはPythonのほかmatplotlibが必要となります。また、numpyも必要です。
-Matplotlibやnumpyはpip(https://www.python.jp/install/windows/pip.html)などの仕組みを用いてインストールすることが可能です。
-また、両方ともAnaconda (https://www.anaconda.com/) のようなPython distributionにはプリインストールされています。
-なお、Python3以降が必須であり、Python2系列では動作しません。
+.. code-block::
+
+  $ python3 -m pip install matplotlib
+  $ python3 -m pip install numpy
+
+dos.pyは簡易的なGUIも提供します。利用するGUIのフレームワークはtkinter (https://docs.python.org/ja/3/library/tkinter.html) です。次のようなコマンドによってtkinterがインストールされているかどうかを確認することができます。
+
+.. code-block::
+
+  $ python3 -m tkinter
+
+このコマンドによってtkinterのデモプログラムが起動すればインストールされていることになります。他方 :code:`No module named tkinter` というメッセージが得られた場合インストールされていないので、お使いの環境に応じた方法によってインストールしてください。たとえばUbuntuの場合以下のようなコマンドによってインストールすることができます。
+
+.. code-block::
+
+  $ sudo apt-get install python3-tk
 
 使い方
 ^^^^^^^^^^
 
 **起動の仕方**
 
-以下のよう要領で起動することができます。
+以下の要領で起動することができます。
 
 .. code-block::
 
    $ dos.py [OPTIONS]
-
-ただし、処理系によってはPythonを起動するコマンドがpythonではなくpython3などである場合があり、そのようなケースではこの実行方法は利用できません。その場合でも
-
-.. code-block::
-
-   $ python3 dos.py [OPTIONS]
-
-とすることによって起動することができます。
 
 **バッチモード**
 
@@ -544,7 +546,7 @@ Matplotlibやnumpyはpip(https://www.python.jp/install/windows/pip.html)など�
  | --dosid=DOSID     | dosidによっ\                                    |
  |                   | て加算対象の状態密度を選択する。                |
  |                   |                                                 |
- |                   | dosidは、得に射\                                |
+ |                   | dosidは、特に射\                                |
  |                   | 影状態密度の場合は分かりづらいので後述のatomid, |
  |                   | lid, mid, tidを利用してもよい。                 |
  +-------------------+-------------------------------------------------+
@@ -610,7 +612,7 @@ Matplotlibやnumpyはpip(https://www.python.jp/install/windows/pip.html)など�
  +----------------------------+----------------------------------------+
  | --cmap=CMAP                | 層分割局所状態密度のヒートマップ作成の\|
  |                            | 場合に、カラーマップの種類を指定する。 |
- |                            | 可能な選択肢が※のウェブサイトに        |
+ |                            | 可能な選択肢が※のウェブサイトに\       |
  |                            | 掲載されている。デフォルト値はviridis  |
  +----------------------------+----------------------------------------+
  | --imgtype=IMGTYPE          | 画像ファ\                              |
@@ -635,7 +637,8 @@ dos.pyを-i もしくは--interactiveをつけて実行すると対話モード�
 
 dos.pyに-g もしくは--guiオプションをつけて実行すると :numref:`commands_and_tools_fig2` で示すようなGUIが得られます。
 
-.. figure:: images/ch8_10_image2.png
+.. figure:: images/ch8_10_image2.svg
+ :width: 600px
  :name: commands_and_tools_fig2
 
  dos.pyが提供するGUI.
@@ -873,12 +876,12 @@ KpointFileの後が作図を制御するオプションです。
  +-------------------+-------------------------------------------------+
  | -erange=Emin,Emax | 表示するエネルギーの範囲をeV単位で指定する。    |
  |                   |                                                 |
- |                   | たとえば、-10 eVから5 eVまで表示したい場合は、  |
+ |                   | たとえば、-10 eVから5 eVまで表示したい場合は、\ |
  |                   | -erange=-10,5                                   |
  |                   | とします。                                      |
  +-------------------+-------------------------------------------------+
  | -einc=dE          | 目盛りの間隔を指定する。\                       |
- |                   | たとえば2eV間隔に目盛りをふりたいなら、         |
+ |                   | たとえば2eV間隔に目盛りをふりたいなら、\        |
  |                   | -einc=2                                         |
  |                   | とします。                                      |
  +-------------------+-------------------------------------------------+
@@ -1000,7 +1003,7 @@ freq.plのオプションです。
  |                     | とします。                                    |
  +---------------------+-----------------------------------------------+
  | -height=H           | 図の幅のデフォルト値は1であるが、そ\          |
- |                     | の値を変更したい場合はこのオプションを使う。  |
+ |                     | の値を変更したい場合はこのオプションを使う。\ |
  |                     | たとえば、2.5に変更したい場合は               |
  |                     | -height=2.5                                   |
  |                     | とします。                                    |
@@ -1062,18 +1065,18 @@ animate.plを以下のように実行します。
 座標データ変換ツールconv.py
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-conv.pyというPythonスクリプトを使って、座標データを変換することができます。binディレクトリーの下にあります。\ ``conv.py`` コマンドを実行すれば起動することができますが、\ :ref:`cmd_tools_dospy_section` でも述べたように、Pythonのコマンド名がpythonではなくpython3などの場合は ``python3 conv.py`` のように起動します。conv.pyは対話的に利用します。たとえば、nfdynm.dataファイルをCIFに変換する手続きは下記の通りです。
-
+conv.pyというPythonスクリプトを使って、座標データを変換することができます。binディレクトリーの下にあります。\ ``conv.py`` コマンドを実行すれば起動することができます。conv.pyは対話的に利用します。たとえば、nfdynm.dataファイルをCIFに変換する手続きは下記の通りです。
+  
 +----------------------------------+----------------------------------+
 | 画面に現れる文字列               | 説明                             |
 +==================================+==================================+
 | $ conv.py                        |                                  |
 +----------------------------------+----------------------------------+
-| atomic configuration converter   | 変換元のファイル形式\            |
-| utility.                         | を指定する。nfdynm.dataの場合ph\ |
-|                                  | ase_outputなので1を指定し、Enter |
-| Copyright (C) the RISS project,  |                                  |
-| The University of Tokyo          |                                  |
+| atomic configuration converter   | 変換元のファイル形式を指定する。 |
+| utility.                         | nfdynm.dataの場合phase_output\   |
+|                                  | なので1を指定し、Enter           |
+| Copyright (C)                    |                                  |
+| PHASE System Consortium          |                                  |
 |                                  |                                  |
 | select the type of the input     |                                  |
 | atomic coordinate file           |                                  |
@@ -1112,16 +1115,16 @@ conv.pyというPythonスクリプトを使って、座標データを変換す�
 | input atomic coordinate file, or | taファイルのファイル名を指定。nf\|
 | type x to exit. [nfdynm.data]:   | dynm.dataでよいならそのままEnter |
 +----------------------------------+----------------------------------+
-| Please enter the frame no.       | フレ\                            |
-| (enter a negative value in order | ームを選択する。負の値の場合「全\|
-| to output all frames when        | フレーム」を選択することに相当す\|
-| possible), or type x to exit.    | る。カンマ区切りで三つの整数を指\|
+| Please enter the frame no.       | フレームを選択する。             |
+| (enter a negative value in order | 負の値の場合「全フレーム」\      |
+| to output all frames when        | を選択することに相当する。       |
+| possible), or type x to exit.    | カンマ区切りで三つの整数を指\    |
 | [-1]:                            | 定することによって、始フレーム, \|
 |                                  | 終フレーム、間隔を指定することが\|
 |                                  | できる。フレームの数値は0始まり  |
 +----------------------------------+----------------------------------+
-| select the type of the output    | 変換先の形式を指\                |
-| atomic coordinate file           | 定する。CIFの場合7と入力しEnter  |
+| select the type of the output    | 変換先の形式を指定する。         |
+| atomic coordinate file           | CIFの場合7と入力しEnter          |
 |                                  |                                  |
 | 0. phase_input                   |                                  |
 |                                  |                                  |
@@ -1205,7 +1208,7 @@ inpcheck.pyとは、PHASE/0の入力の正誤チェックを行うツールで�
  INFO: checking if required/recommended entries exist...
  INFO:
  INFO: found [accuracy.matrix_diagon.cutoff_wf] at line 31, a recommended
- entry when [accuracy.initial_wavefunctions] is 'matrix_diagon'
+ entry when [accuracy.initial_wavefunctions] is 'matrix_diagon
  ...
  ...
  INFO: checking whether each entires are valid...
@@ -1579,33 +1582,33 @@ GGA-PBE
 
 .. code-block:: text
 
- H_ggapbe_paw_nc_01.pp, He_ggapbe_paw_us_01.pp, Li_ggapbe_paw_nc_01.pp,
- Be_ggapbe_paw_nc_01.pp, B_ggapbe_paw_us_01.pp, C_ggapbe_paw_us_01.pp,
- N_ggapbe_paw_us_01.pp, O_ggapbe_paw_us_02.pp, F_ggapbe_paw_us_01.pp,
- Ne_ggapbe_paw_us_01.pp, Na_ggapbe_paw_nc_01.pp, Mg_ggapbe_paw_nc_01.pp,
- Al_ggapbe_paw_nc_01.pp, Si_ggapbe_paw_nc_01.pp, P_ggapbe_paw_us_01.pp,
- S_ggapbe_paw_us_01.pp, Cl_ggapbe_paw_us_01.pp, Al_ggapbe_paw_nc_01.pp,
- K_ggapbe_paw_us_01.pp, Ca_ggapbe_paw_us_01.pp, Sc_ggapbe_paw_us_02.pp,
+ H_ggapbe_paw_nc_01m.pp, He_ggapbe_paw_us_01.pp, Li_ggapbe_paw_nc_01m.pp,
+ Be_ggapbe_paw_nc_01m.pp, B_ggapbe_paw_us_01m.pp, C_ggapbe_paw_us_01.pp,
+ N_ggapbe_paw_us_01m.pp, O_ggapbe_paw_us_02m.pp, F_ggapbe_paw_us_01m.pp,
+ Ne_ggapbe_paw_us_01.pp, Na_ggapbe_paw_nc_01m.pp, Mg_ggapbe_paw_nc_01m.pp,
+ Al_ggapbe_paw_nc_01.pp, Si_ggapbe_paw_nc_01m.pp, P_ggapbe_paw_nc_01m.pp,
+ S_ggapbe_paw_nc_01m.pp, Cl_ggapbe_paw_nc_01m.pp, Ar_ggapbe_paw_us_02.pp,
+ K_ggapbe_paw_us_01m.pp, Ca_ggapbe_paw_us_01m.pp, Sc_ggapbe_paw_us_01.pp,
  Ti_ggapbe_paw_us_02.pp, V_ggapbe_paw_us_02.pp, Cr_ggapbe_paw_us_02.pp,
  Mn_ggapbe_paw_us_02.pp, Fe_ggapbe_paw_us_02.pp, Co_ggapbe_paw_us_01.pp,
- Ni_ggapbe_paw_us_01.pp, Cu_ggapbe_paw_us_02.pp, Zn_ggapbe_paw_us_01.pp,
- Ga_ggapbe_paw_us_01.pp, Ge_ggapbe_paw_nc_01.pp, As_ggapbe_paw_nc_01.pp,
- Se_ggapbe_paw_nc_01.pp, Br_ggapbe_paw_nc_01.pp, Kr_ggapbe_paw_nc_01.pp,
- Rb_ggapbe_paw_us_01.pp, Sr_ggapbe_paw_us_01.pp, Y_ggapbe_paw_us_02.pp,
+ Ni_ggapbe_paw_us_01.pp, Cu_ggapbe_paw_us_02m.pp, Zn_ggapbe_paw_us_01m.pp,
+ Ga_ggapbe_paw_us_01m.pp, Ge_ggapbe_paw_nc_01m.pp, As_ggapbe_paw_nc_01m.pp,
+ Se_ggapbe_paw_nc_01m.pp, Br_ggapbe_paw_nc_01.pp, Kr_ggapbe_paw_nc_01.pp,
+ Rb_ggapbe_paw_us_01.pp, Sr_ggapbe_paw_us_01m.pp, Y_ggapbe_paw_us_02.pp,
  Zr_ggapbe_paw_us_02.pp, Nb_ggapbe_paw_us_02.pp, Mo_ggapbe_paw_us_02.pp,
  Tc_ggapbe_paw_us_02.pp, Ru_ggapbe_paw_us_01.pp, Rh_ggapbe_paw_us_01.pp,
  Pd_ggapbe_paw_us_01.pp, Ag_ggapbe_paw_us_01.pp, Cd_ggapbe_paw_us_01.pp,
- In_ggapbe_paw_us_02.pp, Sn_ggapbe_paw_us_02.pp, Sb_ggapbe_paw_us_02.pp,
+ In_ggapbe_paw_us_01.pp, Sn_ggapbe_paw_us_01m.pp, Sb_ggapbe_paw_us_01.pp,
  Te_ggapbe_paw_us_02.pp, I_ggapbe_paw_us_02.pp, Xe_ggapbe_paw_us_01.pp,
- Cs_ggapbe_paw_us_01.pp, Ba_ggapbe_paw_us_01.pp, La_ggapbe_paw_us_02.pp,
+ Cs_ggapbe_paw_us_01m.pp, Ba_ggapbe_paw_us_01m.pp, La_ggapbe_paw_us_02.pp,
  Ce_ggapbe_paw_us_02.pp, Pr_ggapbe_paw_us_01.pp, Nd_ggapbe_paw_us_01.pp,
  Pm_ggapbe_paw_us_01.pp, Sm_ggapbe_paw_us_01.pp, Eu_ggapbe_paw_us_01.pp,
  Gd_ggapbe_paw_us_01.pp, Tb_ggapbe_paw_us_01.pp, Dy_ggapbe_paw_us_01.pp,
  Ho_ggapbe_paw_us_01.pp, Er_ggapbe_paw_us_01.pp, Tm_ggapbe_paw_us_01.pp,
  Yb_ggapbe_paw_us_01.pp, Lu_ggapbe_paw_us_01.pp, Hf_ggapbe_paw_us_03.pp,
  Ta_ggapbe_paw_us_03.pp, W_ggapbe_paw_us_01.pp, Re_ggapbe_paw_us_01.pp,
- Os_ggapbe_paw_us_01.pp, Ir_ggapbe_paw_us_01.pp, Pt_ggapbe_paw_us_01.pp,
- Au_ggapbe_paw_us_01.pp, Hg_ggapbe_paw_us_01.pp, Tl_ggapbe_paw_us_01.pp,
+ Os_ggapbe_paw_us_01.pp, Ir_ggapbe_paw_us_01m.pp, Pt_ggapbe_paw_us_01m.pp,
+ Au_ggapbe_paw_us_01m.pp, Hg_ggapbe_paw_us_01.pp, Tl_ggapbe_paw_us_01.pp,
  Pb_ggapbe_paw_us_01.pp, Bi_ggapbe_paw_us_02.pp, Po_ggapbe_paw_us_02.pp,
  At_ggapbe_paw_us_02.pp, Rn_ggapbe_paw_us_02.pp, Fr_ggapbe_paw_us_01.pp,
  Ra_ggapbe_paw_us_01.pp, Ac_ggapbe_paw_us_01.pp, Th_ggapbe_paw_us_01.pp,
@@ -1615,7 +1618,7 @@ GGA-PBE
  Fm_ggapbe_paw_us_01.pp, Md_ggapbe_paw_us_01.pp, No_ggapbe_paw_us_01.pp,
  Lr_ggapbe_paw_us_01.pp, Rf_ggapbe_paw_us_01.pp, Db_ggapbe_paw_us_01.pp,
  Sg_ggapbe_paw_us_01.pp, Bh_ggapbe_paw_us_01.pp, Hs_ggapbe_paw_us_01.pp,
- Mt_ggapbe_paw_us_01.pp, Ds_ggapbe_paw_us_01.pp, Rg_ggapbe_paw_us_01.pp,
+ Mt_ggapbe_paw_us_01.pp, Ds_ggapbe_paw_us_01.pp, Rg_ggapbe_paw_us_01.pp
 
 LDA-PW91
 
