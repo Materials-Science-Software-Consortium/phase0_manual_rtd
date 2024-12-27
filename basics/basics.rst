@@ -999,10 +999,9 @@ structureブロックの原子の指定atom_listにmobile属性を定義し、�
 
 この例では、1番目のBa原子は最適化の対象とせず、2番目と4番目のO原子と3番目のBa原子が最適化の対象としています。
 
-*x*, *y*,
-*z*\ 座標を個別に最適化の対象とするかどうかを設定することも可能です。この設定は、mobilex,
-mobile, mobilez属性値によって行います。mobilex, mobile,
-mobilez属性値は、mobile属性値と同じ値がデフォルト値です。
+*x*, *y*, *z*\ 座標を個別に最適化の対象とするかどうかを設定することも可能です。
+この設定は、mobilex, mobiley, mobilez属性値によって行います。
+mobilex, mobiley, mobilez属性値は、mobile属性値と同じ値がデフォルト値です。
 
 .. code-block:: text
 

@@ -434,12 +434,32 @@ PHASE/0には状態密度可視化スクリプトdos.plが付属します。こ�
 
 状態密度を加算する機能などを利用する場合、すべてのオプションを引数で渡すのは煩雑な場合がありえます。そこで、dos.pyは対話的にも利用できるようになっています。たとえば加算機能を利用する場合、加算対象となりえる状態密度データがリストアップされるので、所望の状態密度データをそこから選択します。
 
-状態密度プロットの際、dos.plはgnuplotを用います。これに対し、dos.pyはmatplotlib (https://matplotlib.org/) をプロットの際に用いる仕様となっているため、動作にはPythonのほかmatplotlibが必要となります。また、numpy (https://numpy.org/ja/) も必要です。Matplotlibやnumpyはpip (https://www.python.jp/install/windows/pip.html) などの仕組みを用いてインストールすることが可能です。たとえば以下のようなコマンドによってインストールします。
+状態密度プロットの際、dos.plはgnuplotを用います。これに対し、dos.pyはmatplotlib (https://matplotlib.org/) をプロットの際に用いる仕様となっているため、動作にはPythonのほかmatplotlibが必要となります。また、numpy (https://numpy.org/ja/) も必要です。Matplotlibやnumpyはpip (https://www.python.jp/install/windows/pip.html) などの仕組みを用いてインストールすることが可能です。まずはpip自身がインストールされているかどうかを以下のコマンドによって確認します。
+
+.. code-block::
+
+  $ python3 -m pip
+
+  Usage:
+    /usr/bin/python -m pip <command> [options]
+
+  Commands:
+    install                     Install packages.
+    download                    Download packages.
+    ...
+    ...
+
+上で記したようなヘルプメッセージが表示されればpipはインストールされています。他方 :code:`No module named pip` というメッセージが得られた場合インストールされていないので、お使いの環境に応じた方法によってインストールしてください。たとえばUbuntuの場合以下のようなコマンドによってインストールすることができます。
+
+.. code-block::
+
+  $ sudo apt-get install python3-pip
+
+pipを用いて以下のように matplotlib をインストールします (matplotlibをインストールするとnumpyもインストールされます)
 
 .. code-block::
 
   $ python3 -m pip install matplotlib
-  $ python3 -m pip install numpy
 
 dos.pyは簡易的なGUIも提供します。利用するGUIのフレームワークはtkinter (https://docs.python.org/ja/3/library/tkinter.html) です。次のようなコマンドによってtkinterがインストールされているかどうかを確認することができます。
 
@@ -1928,12 +1948,13 @@ F_DYNM識別子によって指定されるファイルには、
 | (e) | 各ステップでの情報が記述されています。この例では\             |
 |     | イオンの更新回数が1 回, SCF の更新回数が24 回となります。     |
 +-----+---------------------------------------------------------------+
-| (f) | 実際の原子の場所とその原子に働いている力が記述されています。\ |
-|     | 1 番目の列は原子のID、2 番目から4 番目の列が原子の場所の\     |
-|     | x,y,z座標、5 番目から6 番目の列が原子に働く力のx,y,z \        |
+| (f) | 実際の原子の場所とその原子に働いている力が記述されています。1\|
+|     | 番目の列は原子のID, 2 番目から4 番目の列が原子の場所のx,y,z\  |
+|     | 座標, 5 番目から7 番目の列が原子に働く力のx,y,z\              |
 |     | 座標となります。もし、入力ファイルにおいてprintlevel\         |
-|     | ブロックのvelocity 変数を2 に設定していた場合、7 番目から9\   |
-|     | 番目の列に速度が原子単位で出力されます。                      |
+|     | ブロックのvelocity 変数を2 に設定していた場合、5番目から7番目\|
+|     | の列に速度が原子単位で出力され、8 番目から10番目の列に\       |
+|     | 原子に働く力が出力されます。                                  |
 +-----+---------------------------------------------------------------+
 
 電荷密度ファイル F_CHR（=nfchr.cube）（出力）
