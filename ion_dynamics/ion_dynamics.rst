@@ -4266,10 +4266,9 @@ Dimer法を有効にするためには、以下のような設定を施します
      max_iteration = 10000000
      multiple_replica_mode = ON
      multiple_replica_method = dimer
-     multiple_replica_max_iteration = 2000
  }
 
-NEBと同じように、controlブロックにおいてmultiple_replica_mode = onとします。さらに、multiple_replica_method = dimerを指定するとdimer法が用いられるようになります。multiple_replica_max_iterationの意味はNEBの場合と同様です。
+NEBと同じように、controlブロックにおいてmultiple_replica_mode = onとします。さらに、multiple_replica_method = dimerを指定するとdimer法が用いられるようになります。
 
 Dimer法の詳細設定もNEBと同じようにmultiple_replicaブロックにおいて行います。以下のような設定を施すことができます。
 

@@ -1119,12 +1119,12 @@ NiO
 .. figure:: images/band_t2g.png
  :name: advanced_NiO_pband_t2g
 
- NiO のPBAND。Ni d 軌道 t2g。左右はそれぞれ、アップ及ぶダウンスピン成分に対応する。
+ NiO のPBAND。Ni d 軌道 t2g。左右はそれぞれ、アップ及びダウンスピン成分に対応する。
 
 .. figure:: images/band_eg.png
  :name: advanced_NiO_pband_eg
 
- NiO のPBAND。Ni d 軌道 eg。左右はそれぞれ、アップ及ぶダウンスピン成分に対応する。
+ NiO のPBAND。Ni d 軌道 eg。左右はそれぞれ、アップ及びダウンスピン成分に対応する。
 
 .. table:: :numref:`advanced_MoS2_pband` 作成に使用したコマンド
  :numref:`advanced_NiO_pband_t2g` :numref:`advanced_NiO_pband_eg` 作成に使用したコマンド
