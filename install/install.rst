@@ -240,7 +240,12 @@ Makefileを以下のように編集します。
 
  export CPATH=$MKLROOT/include/fftw:$CPATH
 
-この状態で ``make clean;make`` とするとdistributed-memory FFTWを利用することのできるバイナリーを得ることができます。
+この状態で ``MPI_FFTW`` という文字列を含むソースファイルのタイムスタンプを更新し、 ``make`` とするとdistributed-memory FFTWを利用することのできるバイナリーを得ることができます。
+
+.. code-block:: shell
+
+  grep MPI_FFTW -l *.F90 | xargs touch
+  make
 
 デフォルトの状態では内蔵の並列FFTを用います。Distributed-memory FFTWを使う場合は以下のような設定を施します。
 
@@ -270,12 +275,11 @@ EigenExaとリンクする方法（バージョン2024.01以降）
 
 インテルMPIの環境が設定されている場合、自動的にそれが選択されます。
 
-Makefileに以下のような編集を施す必要があります。 
+3次元版PHASE/0のMakefileに以下のような編集を施す必要があります。 
 
 - ``CPPFLAGS = -D_USE_DATE_AND_TIME_ ...`` に ``-DUSE_EIGENLIB -DEIGEN_EXA_2_9`` を追加します
-- ``LIBS`` から始まる行にEigenExaのライブラリーを次のように指定します ``LIBS = -L$(HOME)/EigenExa-2.12/lib -lEigenExa ...``
-- OpenMPを有効にするため、コンパイラーオプションに ``-qopenmp`` を加えます。 ``F90 = mpiifort -qopenmp`` ``LINK = mpiifort -qopenmp``
-- ESMを有効にしている場合、 ``libesm.a`` の次の行における ``-D__MPI__`` という文字列を ``-D__OPENMP`` に差し替えます
+- ``LIBS`` から始まる行にEigenExaのライブラリーを次のように指定します ``LIBS = $(HOME)/EigenExa-2.12/lib/libEigenExa.a ...``
+- ``F90FLAGS`` ``F77FLAGS`` ``LINK`` にOpenMPを有効にするため ``-qopenmp`` を加えます。 ``F90FLAGS = -traceback -extend-source -qopenmp`` ``F77FLAGS = -traceback -extend-source -qopenmp``  ``LINK = mpiifort -qopenmp``
 
 環境変数 ``CPATH`` にEigenExaのインクルードディレクトリーを追加します。
 
@@ -283,7 +287,12 @@ Makefileに以下のような編集を施す必要があります。
 
  export CPATH=$HOME/EigenExa-2.12/include:$CPATH
 
-この状態で ``make clean;make`` とするとEigenExaを利用することのできる実行可能ファイルを得ることができます。
+この状態で ``USE_EIGENLIB`` ``EIGEN_EXA_2.9`` という文字列を含むソースファイルのタイムスタンプを更新し ``make`` とするとEigenExaを利用することのできる実行可能ファイルを得ることができます。
+
+.. code-block:: shell
+
+  grep -e USE_EIGENLIB -e EIGEN_EXA_2.9 *.F90 -l | xargs touch
+  make
 
 デフォルトの状態ではScaLAPACKを用います。EigenExaを使う場合は以下のような設定を施します。
 
@@ -297,17 +306,11 @@ Makefileに以下のような編集を施す必要があります。
     }
   }
 
-また、実行する前に環境変数 ``LD_LIBRARY_PATH`` にEigenExaのライブラリーファイルが配置されているディレクトリーを指定する必要があります。
-
-.. code-block:: shell
-
- export LD_LIBRARY_PATH=$HOME/EigenExa-2.12/lib:$LD_LIBRARY_PATH
-
-さらに、環境変数 ``OMP_NUM_THREADS`` によってMPI並列数や利用可能なコア数を勘案しながら適切なスレッド並列数を指定します。
+実行時は環境変数 ``OMP_NUM_THREADS`` によってMPI並列数や利用可能なコア数を勘案しながら適切なスレッド並列数を指定します。 ``OMP_NUM_THREADS`` のデフォルト値はシステムのコア数であり多くの場合適切な設定ではないため、注意が必要です。
 
 .. code-block:: shell
 
  export OMP_NUM_THREADS=2
 
-なお、EigenExaはIntel oneAPI 2024年版以降に同梱されているインテルMPIとコンパイラーではコンパイルできなくなっているようです。2023年版以下のバージョンを用いるようにしてください。また、EigenExaとk点並列を同時に利用することはできません。
+なお、公開版EigenExaバージョン2.12はIntel oneAPI 2024年版以降に同梱されているインテルMPIとコンパイラーではコンパイルできなくなっているようです。 `GitHubのリポジトリ <https://github.com/RIKEN-RCCS/EigenExa>`_ から入手できる開発版はoneAPI 2024年版以降で問題なくコンパイルできるのでこちらを用いるか、oneAPIの2023年版以下のバージョンを用いるようにしてください。また、EigenExaとk点並列を同時に利用することはできません。
 
