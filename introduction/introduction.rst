@@ -273,6 +273,7 @@ PHASE/0には、2D並列版と3D並列版の２つの並列版プログラムが
 射影状態密度             ✔        ✔
 電荷密度出力             ✔        ✔
 部分電荷密度出力         ✔        ✔
+波動関数出力             ✔
 最大局在化ワニア関数     ✔
 バンド構造               ✔        ✔
 実空間法                 ✔        ✔
@@ -376,11 +377,11 @@ PHASEシステム研究会は、次の条件や制限のもとで、PHASEシス�
 1. PHASEシステム・ソフトウェアの定義
 
  PHASEシステム・ソフトウェア（「PHASEシステム　プログラムパッケージ」と同義）とは、東京大学生産技術研究所 革新的シミュレーション研究センター（以下 革新センター）で管理・公開している平成24年度までの「イノベーション基盤シミュレーションソフトウェアの研究開発プロジェクト」の成果物を基に開発し、現在PHASEシステム研究会が管理しているソフトウェアである。
- PHASEシステム・ソフトウェアは、ソースプログラム、オブジェクトプログラム、仕様書、設計書、データ、実行結果、マニュアルなど、原則として、PHASEシステム研究会から公開するもの全てを含む。ただし、利用者の便宜のために配布プログラムパッケージに同包したサードパーティ製ソフトウェアBLAS、LAPACK、ScaLAPACK、EigenK、EigenExa、およびEsmPackなどは除く。
+ PHASEシステム・ソフトウェアは、ソースプログラム、オブジェクトプログラム、仕様書、設計書、データ、実行結果、マニュアルなど、原則として、PHASEシステム研究会から公開するもの全てを含む。ただし、利用者の便宜のために配布プログラムパッケージに同包したサードパーティ製ソフトウェアBLAS、LAPACK、およびEsmPackなどは除く。
 
 2. 使用許諾の範囲
 
- 利用者がPHASEシステム・ソフトウェアを無償で使用できる行為には、自己のためにPHASEシステム・ソフトウェアを、翻訳（コンパイル）することによりバイナリを作成する行為、任意のデータを用いて実行する行為、その結果を利用者の自己のために使用および公表する行為、および自己のために改変したソフトウェアを翻訳してこれを実行する行為が含まれる。ただし、自己のために当該ソフトウェアを改変しそれを実行し、その結果を公表する場合には、次項に従うこととする。これら以外の行為（複製・頒布など）は７項で示す場合を除き禁止する。利用者の便宜のために配布プログラムパッケージに同包したサードパーティ製ソフトウェアBLAS、LAPACK、ScaLAPACK、EigenK、EigenExaおよびEsmPackなどを使用する場合は、それぞれのソフトウェアの使用許諾条件に従うこととする。これらサードパーティ製ソフトウェアの使用許諾条件は、対応するソフトウェアのサイト、BLAS、LAPACK、ScaLAPACK、libEigen、およびEsmPackディレクトリ内のlicense.txt、ソースファイル、あるいはマニュアルに記述されている。
+ 利用者がPHASEシステム・ソフトウェアを無償で使用できる行為には、自己のためにPHASEシステム・ソフトウェアを、翻訳（コンパイル）することによりバイナリを作成する行為、任意のデータを用いて実行する行為、その結果を利用者の自己のために使用および公表する行為、および自己のために改変したソフトウェアを翻訳してこれを実行する行為が含まれる。ただし、自己のために当該ソフトウェアを改変しそれを実行し、その結果を公表する場合には、次項に従うこととする。これら以外の行為（複製・頒布など）は７項で示す場合を除き禁止する。利用者の便宜のために配布プログラムパッケージに同包したサードパーティ製ソフトウェアBLAS、LAPACK、およびEsmPackなどを使用する場合は、それぞれのソフトウェアの使用許諾条件に従うこととする。これらサードパーティ製ソフトウェアの使用許諾条件は、対応するソフトウェアのサイト、BLAS、LAPACK、およびEsmPackディレクトリ内のlicense.txt、ソースファイル、あるいはマニュアルに記述されている。
 
 3. 改変における遵守事項
 
@@ -416,6 +417,14 @@ PHASEシステム研究会は、次の条件や制限のもとで、PHASEシス�
   </div>
   <br>
 
+.. raw:: latex
+
+  \begin{flushright}
+  制定：平成26年5月9日 \\
+  改訂：令和6年2月29日
+  \end{flushright}
+
+
 License to Use PHASE System Software Terms and Conditions of the PHASE System Software License
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -424,11 +433,11 @@ PHASE System consortium gives explicit permission for anyone to use any or all o
 1. Definition of PHASE System Software
 
  PHASE System Software, which is same with “the PHASE system program packages”, is any software maintained by PHASE System consortium and developed based on the software products which had been maintained by the Center for Research on Innovative Simulation Software (CISS) at the Institute of Industrial Science, the University of Tokyo and made publicly available at the CISS site until the end of 2012 fiscal year.
- The PHASE System Software contains all of source programs, object programs, specifications, design specifications, data, implementation results, and instruction manuals, except for third-party software contents contained in the PHASE distribute packages for user convenience, e.g., BLAS, LAPACK, ScaLAPACK, EigenK, EigenExa, and EsmPack, etc.
+ The PHASE System Software contains all of source programs, object programs, specifications, design specifications, data, implementation results, and instruction manuals, except for third-party software contents contained in the PHASE distribute packages for user convenience, e.g., BLAS, LAPACK, and EsmPack, etc.
 
 2. Extent of Free Use
 
- Users may use PHASE System Software free of charge to run their own data, and use any results obtained for their own personal use. Users also have the rights to copy, to modify PHASE System Software, to compile and run the modified software, and to use and make public their obtained results. However, users need to obey the described rule in the following item 3 of this document when to use and make public their results by using their modified PHASE System software. Other conducts, e. g., making a copy (copies) of the PHASE System Software and distributing it (them) to other users, etc., are not allowed except for the cases described in the item 7 of this document. For the other third-party software contents, e.g., BLAS, LAPACK, ScaLAPACK, EigenK, EigenExa and EsmPack, etc, which are contained in the PHASE distribute packages for user convenience, users must obey to the license descriptions in the corresponding software URL sites or manuals, “license.txt”s or the source files in directories of BLAS, LAPACK, ScaLAPACK, ligEigen, and EsmPack, or the instruction manuals of the PHASE System Software.
+ Users may use PHASE System Software free of charge to run their own data, and use any results obtained for their own personal use. Users also have the rights to copy, to modify PHASE System Software, to compile and run the modified software, and to use and make public their obtained results. However, users need to obey the described rule in the following item 3 of this document when to use and make public their results by using their modified PHASE System software. Other conducts, e. g., making a copy (copies) of the PHASE System Software and distributing it (them) to other users, etc., are not allowed except for the cases described in the item 7 of this document. For the other third-party software contents, e.g., BLAS, LAPACK, and EsmPack, etc, which are contained in the PHASE distribute packages for user convenience, users must obey to the license descriptions in the corresponding software URL sites or manuals, “license.txt”s or the source files in directories of BLAS, LAPACK, and EsmPack, or the instruction manuals of the PHASE System Software.
 
 3. Rules for Modification
 
@@ -462,8 +471,22 @@ PHASE System consortium gives explicit permission for anyone to use any or all o
   </div>
   <br>
 
+.. raw:: latex
+
+  \begin{flushright}
+  enacted: May 9, 2014 \\
+  revised: Feb 29, 2024
+  \end{flushright}
+
 PHASE/0の更新履歴
 ------------------
+
+PHASE/0 2025 2025/08 公開
+ - スピン軸による並列化に対応しました ( :numref:`section_spin_axis_parallelization` )
+ - MPI初期化処理を高速化しました（三次元版のみ）
+ - 基礎物理定数を更新しました（CODATA2022準拠） ( :numref:`section_system_of_units` )
+ - Makefileを追加整備しました
+
 
 PHASE/0 2024.01 2024/06 公開
  - band_symmプログラムを更新しました。詳しくはband_symmのマニュアルを参照してください。
@@ -476,7 +499,6 @@ PHASE/0 2024.01 2024/06 公開
  - `deepmd <https://docs.deepmodeling.com/projects/deepmd/en/master/>`_ 形式の教師データを出力することができるようになりました (\ :numref:`section_neural_network_potential` )
  - 高精度なSTM像を得ることができるようになりました( :numref:`section_stm` )
  - 分散並列行列対角化ライブラリー `EigenExa <https://www.r-ccs.riken.jp/labs/lpnctrt/projects/eigenexa/>`_ とリンクすることができるようになりました ( :numref:`section_install_eigenexa` )
-..  - スピン軸による並列化に対応しました ( :numref:`section_spin_axis_parallelization` )
 
 
 PHASE/0 2023.01 2023/06 公開
@@ -549,7 +571,7 @@ PHASE/0 2019.02 2020/03 公開
  - チェックポイントファイルが出力できるようにしました(\ :numref:`first_step_checkpoint_section` )
  - 四重極子計算機能に対応しました(\ :numref:`advanced_xanes_quad_section` )
  - Bader解析に適した電荷密度を出力することができるようにしました(\ :numref:`section_bader_charge` )
- - 格子最適化の振る舞いを改善しました(\ :numref:`advanced_latopt_reuse_wfchg_section` )
+ - 格子最適化の際に、電荷密度と波動関数を補間（再利用）するように動作を変更しました
  - 入力ファイル正誤チェックツールを追加しました(\ :numref:`ch08_10_inpcheck_py_section` )
 
 PHASE/0 2019.01 2019/04 公開

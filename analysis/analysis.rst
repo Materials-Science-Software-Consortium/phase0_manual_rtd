@@ -1917,7 +1917,7 @@ Dirac の場合、上式にて :math:`V` を :math:`V-\varepsilon_i` と読み�
 
 内殻電子のスピン
 ^^^^^^^^^^^^^^^^^^
-CIAOでは、擬ポテンシャルはスピン中性で作成します。内殻電子についても同様であり、この時の内殻電子密度を :math:`\rho_{\rm core}` とします。ここで、ある軌道 (n,l) におけるスピン占有数 :math:`f_{n,l}^{\uparrow}` 及び :math:`f_{n,l}^{\downarrow}` が変わり、 :math:`f_{n,l}^{\uparrow} \neq f_{n,l}^{\downarrow}` になったとします。ただし、  :math:`f_{n,l}^{\uparrow} + f_{n,l}^{\downarrow}` は擬ポテンシャル作成時と同じであるとします。このとき。各スピンの内殻電子密度は以下のように表されます。
+CIAOでは、擬ポテンシャルはスピン中性で作成します。内殻電子についても同様であり、この時の内殻電子密度を :math:`\rho_{\rm core}` とします。ここで、ある軌道 (n,l) におけるスピン占有数 :math:`f_{n,l}^{\uparrow}` 及び :math:`f_{n,l}^{\downarrow}` が変わり、 :math:`f_{n,l}^{\uparrow} \neq f_{n,l}^{\downarrow}` になったとします。ただし、  :math:`f_{n,l}^{\uparrow} + f_{n,l}^{\downarrow}` は擬ポテンシャル作成時と同じであるとします。このとき。各スピンの内殻電子密度は以下のように表されます [Tagami22]_ 。
 
 .. math::
  \rho_{\rm core}^{\uparrow} \left( r \right) = \rho_{\rm core} \left( r \right) + \frac{1}{2} \Delta \rho \left( r \right) \\
@@ -2381,6 +2381,7 @@ a\) https://t-ozaki.issp.u-tokyo.ac.jp/vps_pao_core2019/O/index.html and referen
 2つのスピン状態とも、実験値に近い値が得られました。
 
 .. [Lenthe96] https://www.scm.com/wp-content/uploads/vlenthe.pdf
+.. [Tagami22] K\. Tagami, J. Nara, T. Ohno, and M. Usami, Jpn. J. Appl. Phys. 61 (2022) 022003.
 .. [Ozaki17] T\. Ozaki and C. Lee,  Phys. Rev. B 118 (2017) 026401.
 .. [Mahmood03] A\. Mahmood, R. Machorro, S. Muhl, J. Heiras, F. F. Castillon, M. H. Farıas, and E. Andrade, DIAM RELAT MATER 12 (2003) 1315.
 
@@ -4312,7 +4313,7 @@ accuracy　タグで陽電子寿命計算のオプションを指定
  }
 
 .. table::
- :widths: auto
+ :widths: 10 30 60
  :class: longtable
 
  +-+----------------------------------+----------------------------------+
