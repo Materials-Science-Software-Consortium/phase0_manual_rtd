@@ -82,7 +82,7 @@
 原子分割局所状態密度
 ~~~~~~~~~~~~~~~~~~~~~~
 
-原子分割の局所状態密度を計算するにはタグPostprocessingの中にタグdosとタグldosを書きます。そして、タグdosの中の変数sw_dosをONにし、タグldosの中の変数sw_aldosをONにします（phase/0 2015.01以前のバージョンではではsw_dos=OFFでsw_aldos=ONに設定した場合、異常終了しますのでご注意下さい）。
+原子分割の局所状態密度を計算するにはタグPostprocessingの中にタグdosとタグldosを書きます。そして、タグdosの中の変数sw_dosをONにし、タグldosの中の変数sw_aldosをONにします。
 
 .. code-block::
 
@@ -121,7 +121,7 @@ Si,Ba,Oの原子分割局所状態密度にそれぞれの原子の特徴を見�
 層分割局所状態密度
 ~~~~~~~~~~~~~~~~~~~~~~
 
-層分割の局所状態密度を計算するにはタグPostprocessingの中にタグdosとタグldosを書きます。そして、タグdosの中の変数sw_dosをONにし、タグldosの中の変数sw_layerdosをONにします（原子分割局所状態密度の計算の場合と同様、phase/0 2015.01以前のバージョンでは、sw_dos=OFFでsw_layer=ONに設定した場合、異常終了しますのでご注意下さい）。
+層分割の局所状態密度を計算するにはタグPostprocessingの中にタグdosとタグldosを書きます。そして、タグdosの中の変数sw_dosをONにし、タグldosの中の変数sw_layerdosをONにします。
 
 .. code-block:: text
 

@@ -109,11 +109,11 @@ STM像
 
 計算理論
 ~~~~~~~~~~
-STMプログラムは、対象物の表面から少し離れた位置から真空層の中心までの領域で一次元の Schrödinger 方程式を解きます。具体的には以下のような方程式を解きます [Kageshima91]_ , [Kageshima92]_ 
+STMプログラムは、対象物の表面から少し離れた位置から真空層の中心までの領域で一次元の Schrödinger 方程式を解きます。具体的には以下のような方程式を解きます [Kageshima91]_ , [Kageshima92]_
 
 .. math::
 
-   E_{\mu k_{\parallel}} \Psi_{\mu k_{\parallel}} \left( G_{\parallel}, z \right) = \frac{\hbar^2}{2m} \left( k_{\parallel} + G_{\parallel} \right)^2 \Psi_{\mu k_{\parallel}} \left( G_{\parallel}, z \right) - \frac{\hbar^2}{2m} \frac{\partial^2}{\partial z^2} \Psi_{\mu k_{\parallel}} \left( G_{\parallel}, z \right) + \sum_{G^{'}_\parallel} V\left( G_\parallel - G^{'}_\parallel , z \right) \Psi_{\mu k_{\parallel}} \left( G_{\parallel}, z \right) 
+   E_{\mu k_{\parallel}} \Psi_{\mu k_{\parallel}} \left( G_{\parallel}, z \right) = \frac{\hbar^2}{2m} \left( k_{\parallel} + G_{\parallel} \right)^2 \Psi_{\mu k_{\parallel}} \left( G_{\parallel}, z \right) - \frac{\hbar^2}{2m} \frac{\partial^2}{\partial z^2} \Psi_{\mu k_{\parallel}} \left( G_{\parallel}, z \right) + \sum_{G^{'}_\parallel} V\left( G_\parallel - G^{'}_\parallel , z \right) \Psi_{\mu k_{\parallel}} \left( G_{\parallel}, z \right)
 
 このとき表面から少し離れた位置においてPHASE/0 で得た波動関数と一致するという境界条件と真空層の中心において波動関数が0になるという境界条件を課した上で解きます。有効ポテンシャル :math:`V\left( r \right)` はPHASE/0で得られた遮蔽ポテンシャルを用います。ただし、本来の遮蔽ポテンシャルではなく非局所項を取り去ったもの、すなわち局所ポテンシャルのみを使います。
 
@@ -333,7 +333,7 @@ cubeファイルから指定のzの値における二次元的な電荷密度デ
                           stands for the b-vector, and 3 stands for the
                           c-vector. defaults to 3
     -i ZINDEX, --zindex=ZINDEX
-                          
+
                           shall be extracted.
     -o OUTPUT, --output=OUTPUT
                           the file to which the extracted results are output
@@ -398,7 +398,7 @@ cubeファイルから指定のzの値における二次元的な電荷密度デ
 
  **参考文献**
 
-.. [Kageshima91] 影 島 博 之 博 士 論 文(1991年 東 京 大 学).  
+.. [Kageshima91] 影 島 博 之 博 士 論 文(1991年 東 京 大 学).
 .. [Kageshima92] H\. Kageshima and M. Tsukada , "Theory of scanning tunneling microscopy and spectroscopy on Si(100) reconstructed surfaces" PHYSICAL REVIEW B 46 6928 (1992).
 
 .. _section_bader_charge:
@@ -913,93 +913,6 @@ structureブロックの下にstrainブロックを作成し、変数sw_strained
 これにスティフネス定数\ :math:`c_{11}`, :math:`c_{12}`\ を代入すれば Siの弾性定数は :math:`Y = 123 \ \mathrm{GPa}, P=0.268, B=88.4 \ \mathrm{GPa}` と求まります。
 
 より精度の高い弾性定数の計算を行ないたい場合、 cutoff_wf, cutoff_cdを大きめにとり、電子状態を充分に収束させる必要があり、計算時間のかかる計算になります。
-
-ストレステンソルの補正
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-PHASE/0によるストレステンソルの計算は、精度が低い場合があります。原因は、“格子がひずむことによる平面波数の変化の効果”がとりいれられていないからです。この効果を取り入れることによって、ある程度補正を行うことが可能です。
-
-- 方法１．
-
-運動エネルギーの計算におけるGベクトルの高周波成分をスメアすることによって、“平面波数一定”の状況を“カットオフエネルギー一定”の状況に近づけることができます。 [Bernasconi95]_ では、運動エネルギーの高周波成分を以下のように置き換えることが提案されています。
-
-.. math:: G^2 \rightarrow G^2 + A \left[ 1 +  \mathrm{erf}\left(\frac{\frac{1}{2}G^2-E_0}{\sigma}\right) \right]
-
-PHASE/0では、上式を利用したストレステンソルの計算を行うことができます。以下のような設定を入力パラメーターファイルに記述します。
-
-.. code-block:: text
-
-  structure_evolution{
-    lattice{ sw_optimize_lattice = on }
-    stress{
-      sw_smear_KE = on
-      a = 15 rydberg
-      sigma = 0.1 rydberg
-      e0 = 35 rydberg
-    }
-  }
-
-structure_evolutionの下にstressブロックを作成し、設定を行います。sw_smear_KE=onとするとこの機能が有効になります。a, sigma, e0には対応するパラメーターを指定します。
-
-デフォルト値はa=0.375, ecut, sigma = 0.1 Rydberg, e0=ecut-1 Rydbergです。
-
-- 方法２．（バージョン2019.01以降）
-
-複数のカットオフエネルギーによる計算から誤差を見積もることができます。ターゲットカットオフエネルギーを :math:`E_{\mathrm c}` 、変化量を :math:`\Delta E_{\mathrm c}` 全エネルギーの変化量を :math:`\Delta E_{\mathrm t}` とすると、ストレスの誤差 :math:`\sigma_{\mathrm e}` は以下のように見積もることができます。
-
-.. math:: \sigma_{\mathrm e} = - \left( \frac{2 E_{\mathrm c}}{3V} \right) \times \left( \frac{\Delta E_{\mathrm t}}{\Delta E_{\mathrm c}} \right)
-
-この補正をPHASE/0に計算させるには、以下のようにstressブロックにおいてsw_stress_correctionをonとします。
-
-.. code-block:: text
-
-  structure_evolution{
-    stress{
-      sw_stress = on
-      sw_stress_correction = on
-    }
-  }
-
-ストレステンソルの補正は、カットオフエネルギーを変化させてストレステンソルを求めることによって計算します。どの程度カットオフエネルギーを変化させるかはdelta_ecutによって指定します。カットオフエネルギーをecut-delta_ecutとしたケースとecut+delta_ecutとしたケースのストレステンソル計算が行われ、その後補正が計算されます。なお、補正の計算前に計算が終了した場合継続できないので注意が必要です。補正値は以下のようにoutput000ファイルに記録されます。
-
-.. code-block:: text
-
- !** Pulay stress : -0.000194696412156
-
-補正が計算されたあと、入力パラメーターファイルに格子最適化の設定が行われている場合補正を組み込んだ状態で格子最適化計算が始まります。そうでない場合、以下の要領で補正の値を入力ファイルに書き込み、格子最適化などを行う設定にしたうえで再度計算を実行してください（補正が必要なのは対角要素のみ、また誤差が－0.0001auだったとして）。
-
-.. code-block:: text
-
-  structure_evolution{
-    lattice{
-      sw_optimize_lattice = on
-      external_stress{
-        s11 = -0.0001
-        s22 = -0.0001
-        s33 = -0.0001
-      }
-    }
-  }
-
-※ バージョン 2018.01以前の場合補正は手動で計算する必要があります
-
-- 検証
-
-これらの補正を利用し、TiO\ :sub:`2`\ の格子定数を計算した結果を以下の表にまとめました。方法１．のパラメーターはデフォルト値、方法２．のは±5 Rydbergとしました。
-
-============================== ========== ==========
-\                              *a* (bohr) *c* (bohr)
-============================== ========== ==========
-カットオフ36 Rydberg,  EV曲線  8.8017     5.6355
-カットオフ36 Rydberg, 補正なし 8.6825     5.5862
-カットオフ36 Rydberg, 方法 1.  8.7593     5.6072
-カットオフ36 Rydberg, 方法 2.  8.8052     5.6200
-カットオフ80 Rydberg, 補正なし 8.7918     5.6158
-============================== ========== ==========
-
-方法１．２．とも改善しています。特に、方法２．を使うとEV曲線からもとめた格子定数とほぼ同じ格子定数が得られています。
-
-.. [Bernasconi95] M\. Bernasconi, G.L.Chiarotti, P.Focher,S.Scandolo,E.Tosatti,M.Parrinello Journal of Physics and Chemistry of Solids, **56** 501-505 (1995).
 
 .. _section_workfunc:
 
@@ -3233,8 +3146,8 @@ XANESの場合と同様、内殻に正孔を有する擬ポテンシャルを作
 
 .. code-block:: text
 
-  accuracy{ 
-      paw = on 
+  accuracy{
+      paw = on
   }
   structure{
     atom_list{
@@ -3251,7 +3164,7 @@ XANESの場合と同様、内殻に正孔を有する擬ポテンシャルを作
        additional_charge = 1.0        ← 内殻電子が真空中に飛び出し系が正に帯電
     }
     element_list{
-        #tag element atomicnumber 
+        #tag element atomicnumber
                 Si       14
                 Six      14       ← 内殻正孔を持つ原子
     }
@@ -3271,14 +3184,14 @@ XANESなどの場合と似ていますが、内殻電子が真空中に飛び出
 
 .. code-block:: text
 
-  accuracy{ 
-      paw = on 
+  accuracy{
+      paw = on
   }
   structure{
     atom_list{
       atoms{
         #tag element rx ry rz
-             Si   0.00000   0.00000   0.00000   
+             Si   0.00000   0.00000   0.00000
              Si   0.12500   0.12500   0.12500
              Si   0.25000   0.25000   0.00000
              Si   0.37500   0.37500   0.12500
@@ -3289,7 +3202,7 @@ XANESなどの場合と似ていますが、内殻電子が真空中に飛び出
        additional_charge = 1.0　　← 内殻正孔は消滅するが価電子帯に正孔ができる。系が正に帯電したまま。
     }
     element_list{
-        #tag element atomicnumber 
+        #tag element atomicnumber
                 Si       14
     }
   }
@@ -3319,7 +3232,7 @@ XANESなどの場合と似ていますが、内殻電子が真空中に飛び出
     atom_list{
         atoms{
             #tag element rx ry rz
-        Si   0.00000   0.00000   0.00000   
+        Si   0.00000   0.00000   0.00000
         Si   0.12500   0.12500   0.12500
         Si   0.25000   0.25000   0.00000
         Si   0.37500   0.37500   0.12500
@@ -3358,7 +3271,7 @@ XANESなどの場合と似ていますが、内殻電子が真空中に飛び出
   F_EFERMI = '../scf_final/nfefermi.data'
   F_CHGT   = '../scf_final/nfchgt.data'
   F_CNTN_BIN_PAW   = '../scf_final/continue_bin_paw.data'
-  
+
   F_CORE_ENERGY_INITIAL = '../scf_initial/core_energy.data'
   F_CORE_ENERGY_FINAL   = '../scf_final/core_energy.data'
   /
@@ -3379,7 +3292,7 @@ XANESなどの場合と似ていますが、内殻電子が真空中に飛び出
 ~~~~~~~~
 計算例として、Si結晶(8原子)とMgO結晶(8原子)の例を紹介します。入力ファイルはそれぞれ ``samples/XES/Si``, ``samples/XES/MgO`` 以下にあります。各例題ディレクトリーはさらに以下のサブディレクトリーから構成されています。
 
-.. csv-table:: 
+.. csv-table::
 
  "scf_initial", "始状態に対応するSCF計算の入力が格納されているディレクトリー"
  "scf_final", "終状態に対応するSCF計算の入力格納されているディレクトリー"
@@ -4416,7 +4329,7 @@ rateは、全消滅速度に対するコア電子の消滅速度の割合を示�
 Cubeファイル
 
 計算が終了すると、電子の電荷分布、陽電子の電荷分布、電子・陽電子ペアの分布が、ファイルelectron.cube、positron.cube、ep_pair.cubeに出力されます。これらのファイルはGaussian
-cube 形式であり、可視化できます。 
+cube 形式であり、可視化できます。
 :numref:`advanced_positron1` にSi結晶における計算結果を示します。
 価電子は主として、結合領域に存在し、陽電子は、隙間領域に存在することが分かります。陽電子の波動関数が広がり運動エネルギーが低下した方がエネルギー的に有利であることから、一般に陽電子は隙間領域に存在する傾向があります。電子・陽電子対分布を :numref:`advanced_positron1` (c)に示します。この分布が高いところで、陽電子が大きな確率で消滅することになります。
 
@@ -5039,7 +4952,7 @@ Energy Density Analysis(バージョン2022.01以降)
 ~~~~~~~~~~
 Energy Density Analysis法（以降EDA法）とは、平面波基底に基づく第一原理擬ポテンシャル法によって得られるエネルギーを原子ごとに分割する計算手法です [Imamura10]_ 。
 
-.. caution:: 
+.. caution::
 
    本機能はPAW法に対応していません。
 

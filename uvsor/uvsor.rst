@@ -1024,8 +1024,8 @@ ek_convergenceでは、delta_eigenvalue及びsuccessionの設定を行う。delt
  ============ ========================= ==========
  材料系       delta_eigenvalue(Rydberg) succession
  ============ ========================= ==========
- 絶縁体       1.e-4                     3
- 半導体・金属 1.e-6                     3
+ 絶縁体       1.e-4                     2
+ 半導体・金属 1.e-6                     2
  ============ ========================= ==========
 
 **epsilonブロック**
@@ -2644,7 +2644,7 @@ zeff_xx(i),zeff_xy(i)などは原子iの補正されたボルン有効電荷の
    !#tag   sol    till_n  dts  dte  itr  var  prec cmix submat
            MSD    5    0.2  0.2    1  *    on   2    off
            lm+MSD   20    0.2  1.0  100  tanh on   2    on
-           rmm2p   -1    1.0  1.0    *    *  on   1    on
+           rmm3    -1    1.0  1.0    *    *  on   1    on
    }
    line_minimization{
      dt_lower_critical = 0.1
@@ -2776,7 +2776,7 @@ sw_displace_atomがONに設定されていると、displaced_atomで指定した
    !#tag   sol till_n  dts  dte itr prec submat
            MSD     10  1.0  1.0 1   on   on
            lm+MSD    20  1.0  1.0 1   on   on
-           rmm2p     -1  1.0  1.0 1   on   on
+           rmm3      -1  1.0  1.0 1   on   on
    }
    line_minimization{
      dt_lower_critical = 0.1
@@ -2985,7 +2985,7 @@ phononディレクトリの上にシリコン原子のポテンシャルpotentia
      !#tag   sol    till_n  dts  dte  itr  var  prec cmix submat
              MSD       5    0.2  0.2    1  *    on   2    off
              lm+MSD   20    0.2  1.0  100  tanh on   2    on
-             rmm2p    -1    1.0  1.0    *    *  on   1    on
+             rmm3     -1    1.0  1.0    *    *  on   1    on
    }
    line_minimization{
      dt_lower_critical = 0.1
@@ -4355,7 +4355,7 @@ template_scfの内容は、イオン固定項の同名のディレクトリと�
 
 3つのひずみ成分に対して、正と負のひずみを与えた計算を実行するので、計6つのSCF計算を実行することになります。
 
-計算が終了したら、strfrc.dataというファイルが作成されます。このデータと格子振動解析の結果を利用して内部ひずみ項を計算します。格子振動解析は、講師誘電率計算の際に実行した結果を再度利用するので、この格子振動解析を行ったディレクトリにstrfrc.dataファイルをコピーします。
+計算が終了したら、strfrc.dataというファイルが作成されます。このデータと格子振動解析の結果を利用して内部ひずみ項を計算します。格子振動解析は、格子誘電率計算の際に実行した結果を再度利用するので、この格子振動解析を行ったディレクトリにstrfrc.dataファイルをコピーします。
 
 .. code-block::
 
