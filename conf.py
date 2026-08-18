@@ -82,6 +82,7 @@ class CustomLatexFormatter(LatexFormatter):
 PygmentsBridge.latex_formatter = CustomLatexFormatter
 
 latex_elements = {
+        'papersize': 'a4paper',
         'preamble': r''' \usepackage{braket} '''
 }
 rst_prolog=u"""
