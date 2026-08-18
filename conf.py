@@ -31,7 +31,7 @@ release = '2025'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-#'sphinxcontrib.rsvgconverter',
+'sphinxcontrib.rsvgconverter',
 #'sphinxcontrib.inkscapeconverter'
 #'sphinxcontrib.cairosvgconverter'
 ]
