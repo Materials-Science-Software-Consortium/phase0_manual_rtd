@@ -83,7 +83,10 @@ PygmentsBridge.latex_formatter = CustomLatexFormatter
 
 latex_elements = {
         'papersize': 'a4paper',
-        'preamble': r''' \usepackage{braket} '''
+        'preamble': r'''
+\usepackage{braket}
+\setlength{\tymin}{1cm}
+''',
 }
 rst_prolog=u"""
 .. |PHASE020XX.YY| replace:: phase0_2025
