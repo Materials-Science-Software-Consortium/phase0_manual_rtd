@@ -106,80 +106,68 @@ Si 結晶（ダイヤモンド構造；2原子）の電子状態計算を行う�
 
 .. code-block:: text
 
-  control{
-    condition = initial
-    cpumax = 86400 sec
-    max_iteration = 10000
+  control {
+  	condition = initial
+        cpumax = 1 hour
   }
-  accuracy{
-    cutoff_wf = 25.0 rydberg
-    cutoff_cd = 100.0 rydberg
-    num_bands = 8
-    ksampling{
-      method = monk
-      mesh{
-        nx = 10
-        ny = 10
-        nz = 10
-      }
-    }
-    initial_wavefunctions = atomic_orbitals
-    initial_charge_density = atomic_charge_density
-    scf_convergence{
-      delta_total_energy = 1e-10
-      succession = 3
-    }
-    force_convergence{
-      max_force = 0.001 hartree/bohr
-    }
+  
+  accuracy {
+  	cutoff_wf = 25.0 rydberg
+  	cutoff_cd = 100.0 rydberg
+  	num_bands = 8
+  	ksampling {
+  		mesh { nx = 8, ny = 8, nz = 8 }
+  	}
+  	scf_convergence { delta_total_energy = 1.0e-10 }
+  	force_convergence { max_force = 0.001 }
+  	initial_charge_density = atomic_charge_density
+  	initial_wavefunctions = atomic_orbitals
   }
-  structure{
-    element_list{
-    #tag element atomicnumber
-        Si 14
-    }
-    unit_cell{
-      #units angstrom
-      a_vector = 0 2.732299538 2.732299538
-      b_vector = 2.732299538 0 2.732299538
-      c_vector = 2.732299538 2.732299538 0
-    }
-    unit_cell_type = bravais
-    atom_list{
-      atoms{
-        #tag element rx ry rz mobile
-            Si 0.125 0.125 0.125 0
-            Si -0.125 -0.125 -0.125 0
-      }
-      coordinate_system = internal
-    }
+  
+  structure {
+  	unit_cell_type = primitive
+  	unit_cell {
+  	#units angstrom
+  		a_vector = 0 2.732299538 2.732299538
+  		b_vector = 2.732299538 0 2.732299538
+  		c_vector = 2.732299538 2.732299538 0
+  	}
+  	atom_list {
+  		atoms {
+  		#tag element rx ry rz
+  			Si   0.125   0.125   0.125
+  			Si  -0.125  -0.125  -0.125
+  		}
+  	}
+  	element_list {
+  	#tag element atomicnumber
+  		Si   14
+  	}
   }
-  wavefunction_solver{
-    solvers{
-      #tag sol till_n prec cmix submat
-        pdavidson 1 on 1 on
-        rmm3 -1 on 1 on
-    }
-    rmm{
-      edelta_change_to_rmm=5e-5
-    }
+  
+  wavefunction_solver {
+  	solvers {
+  	#tag sol till_n
+  		pdavidson   4
+  		rmm3       -1
+  	}
+  	rmm { edelta_change_to_rmm = 1.0e-5 }
   }
-  charge_mixing{
-    mixing_methods{
-      #tag no method rmxs rmxe istr prec nbmix
-      1 pulay 0.40 0.40 3 on 15
-    }
+  
+  charge_mixing {
+  	mixing_methods {
+  	#tag  method rmxs
+  		pulay   0.40
+  	}
   }
-  Postprocessing{
-     dos{
-       sw_dos = ON
-       deltaE = 1.e-4 hartree
-     }
-     charge{
-       sw_charge_rspace = ON
-       filetype = cube !{cube|density_only}
-       title = "This is a title line for the bulk Si"
-     }
+  
+  postprocessing {
+  	dos { sw_dos = ON }
+  	charge {
+  		sw_charge_rspace = ON
+  		filetype = cube ! { cube|density_only }
+  		title = "This is a title line for the bulk Si"
+  	}
   }
 
 最上位のブロックは、以下のものがあります。
@@ -204,18 +192,16 @@ controlブロックでは、計算全体の制御に関するパラメータを�
 
 .. code-block:: text
 
- control{
-   condition = initial
-   cpumax = 86400 sec
-   max_iteration = 10000
- }
+  control {
+  	condition = initial
+        cpumax = 1 hour
+  }
 
 .. csv-table::
    :widths: 3, 7
 
-   condition, 最初の計算、継続（リスタート）計算、電荷を固定した計算などの計算モードを指定します。initialは最初の計算、continuationは継続計算になります。
+   condition, 最初の計算、継続（リスタート）計算、電荷を固定した計算などの計算モードを指定します。initialは最初の計算、continuationは継続計算です。
    cpumax, 計算時間（計算を打ち切る時間）を指定します。
-   max_iteration, SCF計算を打ち切るイタレーション数を指定します。
 
 Accuracyブロック
 ^^^^^^^^^^^^^^^^
@@ -224,39 +210,27 @@ accuracyブロックでは、計算精度に関するパラメータを指定し
 
 .. code-block:: text
 
- accuracy{
-   cutoff_wf = 25.0 rydberg
-   cutoff_cd = 100.0 rydberg
-   num_bands = 8
-   ksampling{
-     method = monk
-     mesh{
-       nx = 10
-       ny = 10
-       nz = 10
-     }
-   }
-   initial_wavefunctions = atomic_orbitals
-   initial_charge_density = atomic_charge_density
-   scf_convergence{
-     delta_total_energy = 1e-10
-     succession = 3
-   }
-   force_convergence{
-     max_force = 0.001 hartree/bohr
-   }
- }
+  accuracy {
+  	cutoff_wf = 25.0 rydberg
+  	cutoff_cd = 100.0 rydberg
+  	num_bands = 8
+  	ksampling {
+  		mesh { nx = 8, ny = 8, nz = 8 }
+  	}
+  	scf_convergence { delta_total_energy = 1.0e-10 }
+  	force_convergence { max_force = 0.001 }
+  	initial_charge_density = atomic_charge_density
+  	initial_wavefunctions = atomic_orbitals
+  }
 
 .. table::
  :widths: auto
  :class: longtable
 
  +---------------------------+-----------------------------------------+
- | cutoff_wf                 | 波動関数の\                             |
- |                           | カットオフエネルギーを指定します。      |
+ | cutoff_wf                 | 波動関数のカットオフエネルギー          |
  +---------------------------+-----------------------------------------+
- | cutoff_cd                 | 電荷密\                                 |
- |                           | 度のカットオフエネルギーを指定します。  |
+ | cutoff_cd                 | 電荷密度のカットオフエネルギー          |
  +---------------------------+-----------------------------------------+
  | num_bands                 | 計算するバンド数を指定します。          |
  +---------------------------+-----------------------------------------+
@@ -270,27 +244,26 @@ accuracyブロックでは、計算精度に関するパラメータを指定し
  +---------------------------+-----------------------------------------+
  | mesh                      | 逆空間の分割数を指定します。            |
  +---------------------------+-----------------------------------------+
- | initial_wavefunctions     | 波\                                     |
- |                           | 動関数の初期値の計算方法を指定します。  |
+ | initial_wavefunctions     | 波動関数の初期値の計算方法を指定します。|
  |                           |                                         |
- |                           | atomic_cha\                             |
- |                           | rge_densityは、擬ポテンシャルファイルの |
- |                           | 原子の電荷密度から初期値を計算します。  |
+ |                           | atomic_charge_densityは、\              |
+ |                           | 擬ポテンシャルファイルに記録されている\ |
+ |                           | 原子の電荷密度から計算を始めます。      |
  +---------------------------+-----------------------------------------+
- | scf_convergenceブロック   | エネルギーに\                           |
- |                           | よるSCF計算の収束判定条件を指定します。 |
+ | scf_convergenceブロック   | SCF計算の収束判定条件を指定します。     |
  +---------------------------+-----------------------------------------+
  | delta_total_energy        | エネルギーの変化量の閾値を指定します。\ |
  |                           | エネルギーの変化量が、この閾値より小さ\ |
- |                           | い場合、SCF計算は収束したと判定します。 |
+ |                           | い場合、SCF計算（電子状態）が\          |
+ |                           | 収束したと判定します。                  |
  +---------------------------+-----------------------------------------+
  | force_convergenceブロック | 原子に働く力に\                         |
  |                           | よるSCF計算の収束判定条件を指定します。 |
  +---------------------------+-----------------------------------------+
- | max_force                 | 原子\                                   |
- |                           | に働く力の最大値の閾値を指定します。原\ |
- |                           | 子に働く力の最大値が、この閾値より小さ\ |
- |                           | い場合、SCF計算は収束したと判定します。 |
+ | max_force                 | 原子に働く力の最大値の閾値を指定します。|
+ |                           | 原子に働く力の最大値が、この閾値より\   |
+ |                           | 小さくなれば、構造緩和計算が収束した\   |
+ |                           | と判定します。                          |
  +---------------------------+-----------------------------------------+
 
 Structureブロック
@@ -302,26 +275,25 @@ structureブロックでは、原子構造を指定します。
 
 .. code-block:: text
 
-  structure{
-    element_list{
-      #tag element atomicnumber
-          Si 14
-    }
-    unit_cell{
-      #units angstrom
-      a_vector = 0 2.732299538 2.732299538
-      b_vector = 2.732299538 0 2.732299538
-      c_vector = 2.732299538 2.732299538 0
-    }
-    unit_cell_type = bravais
-    atom_list{
-      atoms{
-        #tag element rx ry rz mobile
-        Si 0.125 0.125 0.125 0
-        Si -0.125 -0.125 -0.125 0
-      }
-      coordinate_system = internal
-    }
+  structure {
+  	unit_cell_type = primitive
+  	unit_cell {
+  	#units angstrom
+  		a_vector = 0 2.732299538 2.732299538
+  		b_vector = 2.732299538 0 2.732299538
+  		c_vector = 2.732299538 2.732299538 0
+  	}
+  	atom_list {
+  		atoms {
+  		#tag element rx ry rz
+  			Si   0.125   0.125   0.125
+  			Si  -0.125  -0.125  -0.125
+  		}
+  	}
+  	element_list {
+  	#tag element atomicnumber
+  		Si   14
+  	}
   }
 
 .. table::
@@ -336,8 +308,7 @@ structureブロックでは、原子構造を指定します。
  +----------------------+----------------------------------------------+
  | unit_cell ブロック   | ユニットセルのサイズ、形状を指定します。     |
  |                      |                                              |
- |                      | #units                                       |
- |                      | angstrom                                     |
+ |                      | #units angstrom                              |
  |                      | は、単位がオングストロームを意味します。     |
  |                      |                                              |
  |                      | a_vector、b_vector\                          |
@@ -345,14 +316,14 @@ structureブロックでは、原子構造を指定します。
  +----------------------+----------------------------------------------+
  | atom_listブロック    | 元素と座標を指定します。                     |
  |                      |                                              |
- |                      | この例\                                      |
- |                      | では、Si原子が2個あり、その内部座標が0.125,  |
- |                      | 0.125, 0.125としています。                   |
+ |                      | この例では、Si原子が2個あり、その内部座標が\ |
+ |                      | 0.125, 0.125, 0.125です。                    |
  +----------------------+----------------------------------------------+
  | coordinate_system    | 原子座標系を指定します。                     |
  |                      |                                              |
  |                      | internalは、ユニットセルを基準\              |
  |                      | とした内部座標系であることを意味しています。 |
+ |                      | 直交座標で指定する場合はcartesianとします。  |
  +----------------------+----------------------------------------------+
 
 入力パラメーターファイルとは異なるファイルで原子配置を指定する方法(バージョン2019.02以降)
@@ -366,16 +337,15 @@ wavefunction_solverブロックでは、波動関数の更新方法に関する�
 
 .. code-block:: text
 
- wavefunction_solver{
-   solvers{
-     #tag sol till_n prec cmix submat
-       pdavidson 1 on 1 on
-       rmm3 -1 on 1 on
-   }
-   rmm{
-     edelta_change_to_rmm=5e-5
-   }
- }
+  wavefunction_solver {
+  	solvers {
+  	#tag sol till_n
+  		pdavidson   4
+  		rmm3       -1
+  	}
+  	rmm { edelta_change_to_rmm = 1.0e-5 }
+  }
+  
 
 .. table::
  :widths: auto
@@ -402,12 +372,12 @@ charge_mixingブロックでは、電荷密度の更新方法（混合方法）�
 
 .. code-block:: text
 
- charge_mixing{
-   mixing_methods{
-     #tag no method rmxs rmxe istr prec nbmix
-       1 pulay 0.40 0.40 3 on 15
-   }
- }
+  charge_mixing {
+  	mixing_methods {
+  	#tag  method rmxs
+  		pulay   0.40
+  	}
+  }
 
 .. table::
  :widths: auto
@@ -430,17 +400,14 @@ Postproccesingブロックでは、後処理に関するパラメータを指定
 
 .. code-block:: text
 
- Postprocessing{
-    dos{
-      sw_dos = ON
-      deltaE = 1.e-4 hartree
-    }
-    charge{
-      sw_charge_rspace = ON
-      filetype = cube
-      title = "This is a title line for the bulk Si"
-    }
- }
+  postprocessing {
+  	dos { sw_dos = ON }
+  	charge {
+  		sw_charge_rspace = ON
+  		filetype = cube ! { cube|density_only }
+  		title = "This is a title line for the bulk Si"
+  	}
+  }
 
 .. table::
  :widths: auto
@@ -451,20 +418,16 @@ Postproccesingブロックでは、後処理に関するパラメータを指定
  +------------------+--------------------------------------------------+
  | sw_dos           | ONで状態密度の計算を行います。                   |
  +------------------+--------------------------------------------------+
- | deltaE           | 状態密度のエネルギー間隔を指定します。           |
- +------------------+--------------------------------------------------+
  | chargeブロック   | 電荷密度分布の出力パラメータを指定します。       |
  +------------------+--------------------------------------------------+
  | sw_charge_rspace | ONで出力用の電荷密度分布の計算を行います。       |
  +------------------+--------------------------------------------------+
- | filetype         | 電荷密\                                          |
- |                  | 度分布のファイル形式を指定します。               |
+ | filetype         | 電荷密度分布のファイル形式を指定します。         |
  |                  |                                                  |
  |                  | cubeはGaussian CUBE系形式を指定してしいます。    |
  +------------------+--------------------------------------------------+
- | title            | 出力のGaussian                                   |
- |                  | CU\                                              |
- |                  | BE系形式のファイルにおけるタイトルを指定します。 |
+ | title            | 出力のGaussian CUBE系形式のファイルにおける\     |
+ |                  | タイトルを指定します。                           |
  +------------------+--------------------------------------------------+
 
 入力パラメータファイルの最低限の設定項目
@@ -472,90 +435,80 @@ Postproccesingブロックでは、後処理に関するパラメータを指定
 
 ここで紹介した例では設定項目がそれなりにありますが、大部分のパラメータは多くの計算で共通に使用できます。そのため、異なる系を計算する場合に、ユーザーがわざわざ変更する必要はありません。
 
-ユーザーが必ず設定しなければならないのは、カットオフエネルギー、\ **ｋ**\ 点、原子構造に関する設定です。入力パラメータファイルのAccuracyブロックにあるカットオフエネルギーの指定cutoff_wf, cutoff_cd, **k**\ 点の指定ksampling, Structureブロックにある元素の指定 element_list, ユニットセルの指定 unit_cell, 原子座標の指定atom_listの部分です。
+特に重要な設定は、カットオフエネルギー、\ **ｋ**\ 点、原子配置です。
+入力パラメータファイルのAccuracyブロックにあるカットオフエネルギーの指定cutoff_wf, cutoff_cd, **k**\ 点の指定ksampling, Structureブロックにある元素の指定 element_list, ユニットセルの指定 unit_cell, 原子座標の指定atom_listの部分です。
 
 先程の入力パラメータファイルの例において、ユーザーの設定部分をハイライトで示します。ユーザが計算したい系にあわせて、この部分を変更することにより、様々な系の計算をすることができます。ただし、最適な計算条件については、個々のパラメータを適切に設定する必要があります。
 
 .. code-block:: text
- :emphasize-lines: 7,8,13,14,15,31,35,36,37,43,44
+ :emphasize-lines: 7,8,11,23,24,25,30,31,36
 
- control{
-   condition = initial
-   cpumax = 86400 sec
-   max_iteration = 10000
- }
- accuracy{
-   cutoff_wf = 25.0 rydberg
-   cutoff_cd = 100.0 rydberg
-   num_bands = 8
-   ksampling{
-     method = monk
-     mesh{
-       nx = 10
-       ny = 10
-       nz = 10
-     }
-   }
-   initial_wavefunctions = atomic_orbitals
-   initial_charge_density = atomic_charge_density
-   scf_convergence{
-     delta_total_energy = 1e-10
-     succession = 3
-   }
-   force_convergence{
-     max_force = 0.001 hartree/bohr
-   }
- }
- structure{
-   element_list{
-     #tag element atomicnumber
-         Si 14
-   }
-   unit_cell{
-     #units angstrom
-     a_vector = 0 2.732299538 2.732299538
-     b_vector = 2.732299538 0 2.732299538
-     c_vector = 2.732299538 2.732299538 0
-   }
-   unit_cell_type = bravais
-   atom_list{
-     atoms{
-       #tag element rx ry rz mobile
-             Si 0.125 0.125 0.125 0
-             Si -0.125 -0.125 -0.125 0
-     }
-     coordinate_system = internal
-   }
- }
- wavefunction_solver{
-   solvers{
-     #tag sol till_n prec cmix submat
-       davidson 1 on 1 on
-       rmm3 -1 on 1 on
-   }
-   rmm{
-     edelta_change_to_rmm=5e-5
-   }
- }
- charge_mixing{
-   mixing_methods{
-       #tag no method rmxs rmxe istr prec nbmix
-           1 pulay 0.40 0.40 3 on 15
-   }
- }
- Postprocessing{
-   dos{
-     sw_dos = ON
-     deltaE = 1.e-4 hartree
-   }
-   charge{
-     sw_charge_rspace = ON
-     filetype = cube !{cube|density_only}
-     title = "This is a title line for the bulk Si"
-   }
- }
+  control {
+  	condition = initial
+        cpumax = 1 hour
+  }
+  
+  accuracy {
+  	cutoff_wf = 25.0 rydberg
+  	cutoff_cd = 100.0 rydberg
+  	num_bands = 8
+  	ksampling {
+  		mesh { nx = 8, ny = 8, nz = 8 }
+  	}
+  	scf_convergence { delta_total_energy = 1.0e-10 }
+  	force_convergence { max_force = 0.001 }
+  	initial_charge_density = atomic_charge_density
+  	initial_wavefunctions = atomic_orbitals
+  }
+  
+  structure {
+  	unit_cell_type = primitive
+  	unit_cell {
+  	#units angstrom
+  		a_vector = 0 2.732299538 2.732299538
+  		b_vector = 2.732299538 0 2.732299538
+  		c_vector = 2.732299538 2.732299538 0
+  	}
+  	atom_list {
+  		atoms {
+  		#tag element rx ry rz
+  			Si   0.125   0.125   0.125
+  			Si  -0.125  -0.125  -0.125
+  		}
+  	}
+  	element_list {
+  	#tag element atomicnumber
+  		Si   14
+  	}
+  }
+  
+  wavefunction_solver {
+  	solvers {
+  	#tag sol till_n
+  		pdavidson   4
+  		rmm3       -1
+  	}
+  	rmm { edelta_change_to_rmm = 1.0e-5 }
+  }
+  
+  charge_mixing {
+  	mixing_methods {
+  	#tag  method rmxs
+  		pulay   0.40
+  	}
+  }
+  
+  postprocessing {
+  	dos { sw_dos = ON }
+  	charge {
+  		sw_charge_rspace = ON
+  		filetype = cube ! { cube|density_only }
+  		title = "This is a title line for the bulk Si"
+  	}
+  }
 
-ちなみに、上記の入力パラメータファイルに対し、最低限の設定項目のみを記述し、他の計算条件を省略（デフォルトを使用）した以下のような入力パラメータファイルでも、計算は可能です。上記の入力パラメータでは計算条件がデフォルトとは異なる部分があるため、上記と下記の入力パラメータファイルを用いた計算では、計算途中の状況が異なります。
+なお、省略可能な計算条件を指定せずに（既定値を使用）、最低限の設定項目のみを記述した以下の入力パラメータファイルでも計算は可能です。
+上記の入力パラメータでは計算条件がデフォルトとは異なる部分があるため、上記と下記の入力パラメータファイルを用いた計算では、計算結果が異なります。
 
 .. code-block:: text
 
@@ -1230,7 +1183,7 @@ Accuracyブロック内に、k点サンプリングと、固有値に関する�
 PHASEとekcalの振る舞いの違いについて
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-固定電荷計算をPHASEで行うと、デフォルトの状態ではすべての\ **k**\ 点を一括で処理するモードで動作します。ekcalのように\ **k**\ 点を一点ずつ処理する場合、入力パラメーターファイルに以下のような記述を行います。
+固定電荷計算をPHASEで行うと、デフォルトの状態ではすべての\ **k**\ 点を一括で処理するモード (`ALL_AT_ONCE` モード) で動作します。ekcalのように\ **k**\ 点を一点ずつ処理する場合 (`ONE_BY_ONE` モード) 、入力パラメーターファイルに以下のように記述します。
 
 .. code-block:: text
 
@@ -1241,9 +1194,10 @@ PHASEとekcalの振る舞いの違いについて
    }
  }
 
-いずれのモードでもバンド、\ **k**\ 点、\ **G**\ 点並列を組み合わせて利用することができます。ただし、ベリー位相計算の場合は上述のkparallelをone_by_oneとし、また\ **k**\ 点並列を使わないようにしてください。
+いずれのモードでもバンド、\ **k**\ 点、\ **G**\ 点並列を組み合わせて利用できます。
+ただし、ベリー位相計算の場合は上述のkparallelをone_by_oneとし、また\ **k**\ 点並列を使わないでください。
 
-なお、3D版にはekcalプログラムは付属しません。固定電荷計算もPHASEプログラムで実行するようにしてください。
+なお、3D版にはekcalプログラムは付属しません。固定電荷計算もPHASEプログラムで実行してください。
 
 計算結果の確認
 --------------

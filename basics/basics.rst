@@ -1958,16 +1958,6 @@ dos ブロックでは以下の設定を行うことができます。
 
 状態密度の計算方法としてtetrahedralを利用する場合、以下の条件が満たされている必要があります。
 
--  k点サンプリング手法としてmesh 法を採用している
-
-.. code-block:: text
-
-         accuracy{
-             ksampling{
-                 method = mesh
-             }
-         }
-
 -  smearing の方法としてtetrahedral 法を採用している
 
 .. code-block:: text
@@ -1978,13 +1968,26 @@ dos ブロックでは以下の設定を行うことができます。
              }
          }
 
+-  k点サンプリング手法としてmesh 法を採用している
+
+.. code-block:: text
+
+         accuracy{
+             ksampling{
+                 method = mesh
+             }
+         }
+
+smearing が tetrahedral の場合、 k点サンプリング手法の既定値はmesh 法です。
+指定を省略することはできますが、monkを指定しないでください。
+
 以上が満たされていないとgaussian
 法による状態密度計算が行われてしまうので、ご注意ください。
 
 参考のため、gaussian 法とtetraheral
 法で計算した体心立方鉄の状態密度をそれぞれ :numref:`basics_bccdos_g` と :numref:`basics_bccdos_t` に示します。k
 点メッシュはそれぞれ10 × 10 × 10 を採用しました。
-Tetrahedral法で計算状態密度の方がシャープで精度のよいものが得られていることが分かります。
+Tetrahedral法で求めた状態密度の方が、滑らかで適切であることが分かります。
 
 .. figure:: images/basics_image28.svg
  :name: basics_bccdos_g

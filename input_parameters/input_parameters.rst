@@ -1409,8 +1409,8 @@ FCC-AlとBCC-Feの例題が格納されています。それぞれの結晶に�
 交換相関エネルギー
 ~~~~~~~~~~~~~~~~~~
 
-交換相関エネルギーは、LDAとGGAの２種類があります。LDAはLDAPW91,
-PZ、GGAはGGAPBE, RPBE, REVPBEが利用できます。
+交換相関エネルギーは、GGA （もしくはLDA）を使うのが基本です。
+GGAはGGAPBE, RPBE, REVPBE、LDAはLDAPW91, PZから、それぞれ選択して指定します。
 
 .. code-block:: text
 
@@ -1425,6 +1425,21 @@ xctype 交換相関エネルギー(LDA, GGA)
 
        GGA ： GGAPBE, RPBE, REVPBE
 ====== ============================
+
+GGAPBEの擬ポテンシャルを使って、GGAPBEの計算をする場合は、指定不要です。
+
+その他、:numref:`advestructure_chapter` 高度な電子状態計算では、xctypeにキーワードを設定します。
+詳細はマニュアルの各説明を参照してください。
+
+================  =======================================
+PBEsol汎関数      :numref:`advanced_pbesol_section`
+
+meta-gga (tb09)   :numref:`advanced_metagga_section`
+
+Libxcライブラリ   :numref:`advanced_libxc_section`
+
+vdW-DF            :numref:`advanced_vdwdf_section`
+================  =======================================
 
 収束判定
 ~~~~~~~~
