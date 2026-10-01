@@ -1209,7 +1209,7 @@ epsilonブロックにおいて、誘電関数の計算方法を指定する。�
 | 　　　　　　　　　　　＝gaussian（省略形g） ：gaussian smearing法を用いる。
 | 　　　　　width　　 ：gaussian/parabolic smearing法におけるsmearing幅の指定
 | 　　　　　　　　　　（Hartree 単位；デフォルト値＝0.01837451 Hartree(=0.50 eV)）
-|           spin      ：電子スピンの指定（magnetic_state=ferro/afの場合のみ有効
+|           spin      ：電子スピンの指定（magnetic_state=ferroの場合のみ有効
 |           オプション  ＝both ：major及びminor スピン状態の電子遷移について
 | 　　　　　　　　　　　　　　　  積分する（デフォルト）
 | 　　　　　　　　　　　＝major：majorスピン状態の電子遷移について積分する
@@ -1704,67 +1704,58 @@ F_NLOに指定したファイルには、波長依存の\ :math:`\chi^{(3)}\left
 
 **電子密度の計算**
 
-インストールが完了したら、テスト計算を兼ねて、シリコン結晶の誘電関数及び光学スペクトルを計算してみましょう。入力は :code:`samples/dielectric/electron/Si` にあります。 :code:`samples/dielectric/electron/Si` の下位には、scf、
-eps及びPPという名称のディレクトリがあります。scfはphaseによる電荷密度計算用のディレクトリ、epsはUVSOR-Epsilonによる誘電率計算用のディレクトリ、PPはSi原子の擬ポテンシャルファイルを格納するディレクトリです。
+シリコン結晶の誘電関数及び光学スペクトルを計算してみましょう。
+入力は :code:`samples/dielectric/electron/Si` にあります。
+:code:`samples/dielectric/electron/Si` の下位には、scf, epsという名称のディレクトリがあります。
+scfはphaseによる電荷密度計算用のディレクトリ、epsはUVSOR-Epsilonによる誘電率計算用のディレクトリです。
 
-| 最初に、Si結晶の電子密度をPHASEで計算します。scfに移動してください。scfには以下のファイルが含まれています。
-| 　file_names.data
-|   nfinput.data
-| file_names.dataはPHASEの入出力ファイルを指定するファイルです。この入力例では、電荷密度を./nfchgt.dataに出力する設定になっています。
+最初に、Si結晶の電子密度をPHASEで計算します。scfに移動してください。scfには以下のファイルが含まれています。
+
+- file_names.data
+- nfinput.data
+
+file_names.dataはPHASEの入出力ファイルを指定するファイルです。
 
 .. code-block::
 
  &fnames
  F_INP    = './nfinput.data'
- F_POT(1) = '../PP/atom_14_Si_lda_nc_bhs.gncpp2'
- F_CHGT   = './nfchgt.data' 　←　電荷密度ファイルの設
+ F_POT(1) = '../../../../pp/Si_ggapbe_paw_nc_01m.pp'
  /
 
-nfinput.dataはPHASEによりSi結晶の電荷密度を計算するためのファイルです。計算条件は以下のように設定されています。
-
-交換相関ポテンシャル：LDAPW91
-
-バンド数：8
-
-k点セット：メッシュ法(4x4x4)
-
-SCF収束条件：scf_convergence = 10\ :sup:`-12` Hartree; succession = 3
-
-使用する擬ポテンシャルは、PPに格納されているatom_14_Si_lda_nc_bhs.gncpp2です。
-擬ポテンシャルの形式は以下の通りです。
-
-交換相関ポテンシャル：LDAPW91
-
-局所ポテンシャル：BHS形式
+nfinput.dataはPHASEによりSi結晶の電荷密度を計算するためのファイルです。
 
 以下のコマンドを入力してPHASEの計算を行います。
 
 .. code-block::
 
- % mpirun  -np  1  PATH_TO_PHASE0/bin/phase >& log
+ % mpirun -np 1 PATH_TO_PHASE0/bin/phase >& log
 
 .. _誘電関数の計算-1:
 
 **誘電関数の計算**
 
-| 電子密度の計算が終了したら、誘電関数の計算を行います。epsディレクトリに移動してください。このディレクトリには以下のファイルが格納されています。
-| 　file_names.data
-|   nfinput.data
-| file_names.dataはUVSORの入出力ファイル設定を行うファイル、nfinput.dataはUVSORの入力ファイルです。file_names.dataは以下のように設定されています。
+電子密度の計算が終了したら、誘電関数の計算を行います。epsディレクトリに移動します。
+このディレクトリには以下のファイルが格納されています。
+
+- file_names.data
+- nfinput.data
+
+file_names.dataはUVSORの入出力ファイル設定を行うファイル、nfinput.dataはUVSORの入力ファイルです。
+file_names.dataは以下のように設定されています。
 
 .. code-block::
 
  &fnames
- F_INP    = './nfinput.data'                     ←(1)入力データファイルの設定
- F_POT(1) = '../PP/atom_14_Si_lda_nc_bhs.gncpp2' ←(2)擬ポテンシャルファイルの設定
- F_CHGT   = '../scf/nfchgt.data'                 ←(3)電子密度ファイルの設定
- F_EPSOUT = './eps.data'                         ←(4)誘電関数出力ファイルの設定
+ F_INP    = './nfinput.data'
+ F_POT(1) = '../../../../pp/Si_ggapbe_paw_nc_01m.pp'
+ F_CHGT   = '../scf/nfchgt.data'
  /
 
-| (1)入力ファイルはPHASE/EKCALと同じ形式です。入力ファイル例は次節で説明します。
-| (2)擬ポテンシャルファイルは、電子密度計算の用いたものと同じです。
-| (3)scfディレクトリでPHASEを実行して得られた電子密度ファイルを指定します。
-| (4)誘電関数用の出力ファイルです。名称は任意です。
+
+#. 入力ファイルはPHASE/EKCALと同じ形式です。入力ファイル例は次節で説明します。
+#. 擬ポテンシャルファイルは、電子密度計算の用いたものと同じです。
+#. scfディレクトリでPHASEを実行して得られた電子密度ファイルを指定します。
 
 入力ファイルの設定
 
@@ -1772,116 +1763,116 @@ nfinput.dataは、以下内容となっています。
 
 .. code-block::
 
- Control{
-         condition = 2  (1) !      {0|1|2|3}|{initial|continuation|fixed_charge|fixed_charge_continuation}
-         cpumax = 1 day  ! {sec|min|hour|day}
-         max_iteration =  6000
-         use_additional_projector = off
-         nfstopcheck = 1
- }
- accuracy{
-         cke_wavefunctions =  25.0       rydberg  ! cke_wf
-         cke_chargedensity = 100.0       rydberg  ! cke_cd
-         num_bands = 18 (2)
-         ksampling{
-                 method = mesh ! {mesh|file|directin|gamma|monk}
-                 mesh{  nx= 4,  ny =  4, nz =  4   }
-         }
-         smearing{
-                 method = tetrahedral   ! {parabolic|tetrahedral}
-                 width  = 0.001 hartree
-         }
-         xctype = ldapw91  ! ldapw91
-         scf_convergence{
-                 delta_total_energy = 1.e-12  hartree
-                 succession   = 3   !default value = 3
-         }
-         force_convergence{
-                 max_force = 0.1e-3
-         }
-         ek_convergence{
-                 num_extra_bands = 0
-                 num_max_iteration = 300
-                 sw_eval_eig_diff = on (3)
-                 delta_eigenvalue = 1.e-6 rydberg (4)
-                 succession   = 3　(5)
-         }
-         initial_wavefunctions = matrix_diagon  !{random_numbers|matrix_diagion}
-             matrix_diagon{
-                cke_wf =  20.00  rydberg  ! cke_wf
-             }
-         initial_charge_density = file !{Gauss|Very_broad|pseudopotentialfile}
- }
-         （中略）
- epsilon {
-         sw_epsilon = on　a
-         crystal_type = single ! {single|poly}  b
-         fermi_energy{
-                read_efermi = off  c
-                efermi = 0.0000
-         }
-         photon{
-                polar    {ux=1.00, uy=0.00, uz=0.00 } d
-                Poynting {px=0.00, py=0.00, pz=0.00}
-                energy   {low=0.000, high=2.000, step=0.002}  e
-         }
-         transition_moment{
-          type = ks ! {l|rn|ks}  f　　　　　　　　　　　　　　　　(6)
-                 delq = 0.001
-                 symmetry = on  g
-         }
-         BZ_integration {
-             method = t !{parabolic(p)|gaussian(g)|tetrahedron(t)}  h
-         }
-         band_gap_correction{
-                 scissor_operator=0.0d0  i
-         }
-         drude_term {
-                 drude = off  j
-         }
-         ipriepsilon = 1  k
- }
- (以下略)
+  Control {
+  	condition = fixed_charge    (1)
+  	use_additional_projector = off
+  }
 
-(1) controlタグにおいてcondition=2とします。
+  accuracy {
+  	cutoff_wf = 25.0 rydberg
+  	cutoff_cd = 100.0 rydberg
+  	num_bands = 18    (2)
+  	ksampling {
+  		method = mesh ! { mesh|file|directin|gamma|monk }
+  		mesh { nx = 4, ny = 4, nz = 4 }
+  	}
+  	smearing {
+  		method = tetrahedral ! parabolic ! { parabolic|tetrahedral }
+  	}
+  	scf_convergence {
+  		delta_total_energy = 1.e-12 hartree
+  	}
+  	force_convergence {
+  		max_force = 0.1e-3
+  	}
+  	ek_convergence {
+  		num_extra_bands = 4
+  		sw_eval_eig_diff = on    (3)
+  		delta_eigenvalue = 1.e-6 rydberg    (4)
+  		succession = 3    (5)
+  	}
+  }
 
-(2)
-num_bandsを設定します。num_bandsは通常のSCF計算の場合よりも大きな値として、１電子あたりの振動子強度が0.7以上になるようにします。詳細は次節で説明します。
+  （中略）
 
-(3) sw_eval_eig_diff=onとします。
+  epsilon {    (6)
+  	sw_epsilon = on    (a)
+  	crystal_type = single ! { single|poly }    (b)
+  	fermi_energy {
+  		read_efermi = off    (c)
+  		efermi = 0.0000
+  	}
+  	photon {
+  		polar { ux = 1.00, uy = 0.00, uz = 0.00 }    (d)
+  		Poynting { px = 0.00, py = 0.00, pz = 0.00 }
+  		energy { low = 0.000, high = 2.000, step = 0.002 }    (e)
+  	}
+  	transition_moment {
+  		type = ks ! { l|rn|ks }    (f)
+  		symmetry = on
+  	}
+  	mass {
+  		sw_mass = off
+  		direction { nx = 1.0, ny = 0.0, nz = 0.0 }
+  		point = band_edge ! { band_edge|input }
+  		shift = 1.0d-4
+  		ik = 1
+  		ib = 5
+  	}
+  	BZ_integration {
+  		method = t ! { parabolic(p)|gaussian(g)|tetrahedron(t) }    (g)
+  	}
+  	band_gap_correction {
+  		scissor_operator = 0.0d0    (h)
+  	}
+  	drude_term {
+  		drude = off
+  	}
+  	nonlinear_optics {
+  		process = off ! { off|shg }
+  		excitation = all ! { all|electron|hole }
+  		term = all ! { all|omega|2omega }
+  		dres_cut_off = 1.0d-3
+  	}
+  	ipriepsilon = 2
+  }
 
-(4) delta_eigenvalue 値を設定します。delta_eigenvalue
-の推奨値は、半導体・金属の場合は10\ :math:`{}^{- 6}`
-Rydberg程度、絶縁体の場合10\ :math:`{}^{- 4}` Rydberg程度です。
+  printlevel {
+  	base = 1
+  }
 
-(5) succession=3とします。
+#. controlタグにおいてcondition=fixed_chargeとします。
 
-(6)
-epsilonタグを設定。epsilonタグで誘電関数の計算方法を指定します。この入力例におけるepsilonタグのa,
-b, c, d, e, f, g, h, i, kの意味は以下の通りです。
+#. num_bandsを設定します。num_bandsは通常のSCF計算の場合よりも大きな値として、１電子あたりの振動子強度が0.7以上になるようにします。詳細は次節で説明します。
 
-a 誘電関数の計算を行う
+#. sw_eval_eig_diff=onとします。
 
-sw_epsilon=offとすると誘電関数の計算を行わないので注意してください。
+#. delta_eigenvalue 値を設定します。delta_eigenvalue の推奨値は、半導体・金属の場合は10\ :math:`{}^{- 6}` Rydberg程度、絶縁体の場合10\ :math:`{}^{- 4}` Rydberg程度です。
 
-b 単結晶として計算する
+#. succession=3とします。
 
-c フェルミレベルを計算する。
+#. epsilonタグを設定。epsilonタグで誘電関数の計算方法を指定します。この入力例におけるepsilonタグのa, b, c, d, e, f, g, hの意味は以下の通りです。
 
-d 入射電磁波は直線偏光しており、偏光ベクトルは(1.0, 0.0, 0.0)(x軸)の方向を向いている。
+a. 誘電関数を計算します。sw_epsilon=offとすると誘電関数の計算を行わないので注意してください。
 
-e 入射電磁波のエネルギーレンジは0～2.0 Hartreeであり、エネルギーステップは0.002 Hartreeである。
+b. 単結晶として計算します。
 
-f
-遷移モーメント補正を行い、全電子計算と同じ結果が得られようにする。補正法はKageshima-Shiraishi(KS)法を用いる。
+c. フェルミレベルを計算します。
 
-g リニアテトラヘドロン法を用いて誘電率の虚部を求める
+d. 入射電磁波は直線偏光しており、偏光ベクトルは(1.0, 0.0, 0.0)(x軸)の方向を向いています。
 
-h scissors operator 値を0とする(バンドギャップの補正を行わない)。
+e. 入射電磁波のエネルギーレンジは0～2.0 Hartree、エネルギーステップは0.002 Hartreeです。
 
-i 標準出力とする。
+f. 遷移モーメント補正を行い、全電子計算と同じ結果が得られようにします。補正法はKageshima-Shiraishi(KS)法を用います。
 
-(注意)Read and Needs(RN)法は、ノルム保存型擬ポテンシャルの場合にのみ有効です。KS法はノルム保存及びウルトラソフト擬ポテンシャルに有効ですが、CIAOにより作成されたKS補正因子(Dipole 補正因子)を含む擬ポテンシャルファイルを使用することが必要です。詳細は、UVSOR-Epsilon及びCIAOのマニュアルを参照ください。なお、この計算に用いる擬ポテンシャルは補正因子を含んでいます。
+g. リニアテトラヘドロン法を用いて誘電率の虚部を求めます。
+
+h. scissors operator 値を0とします(バンドギャップを補正しません)。
+
+(注意)Read and Needs(RN)法は、ノルム保存型擬ポテンシャルの場合にのみ有効です。
+KS法はノルム保存及びウルトラソフト擬ポテンシャルに有効ですが、CIAOにより作成されたKS補正因子(Dipole 補正因子)を含む擬ポテンシャルファイルを使用することが必要です。
+詳細は、UVSOR-Epsilon及びCIAOのマニュアルを参照ください。
+なお、この計算に用いる擬ポテンシャルは補正因子を含んでいます。
 
 .. _uvsor_sieps_1:
 
@@ -1901,76 +1892,58 @@ epsディレクトリで以下のコマンドを実行してみてください�
 
 このコマンドを実行して、!\* all k-points are convergedと画面に表示されれば、電子状態は収束しています。
 
-eps.dataを見てみましょう。以下のような出力が得られているはずです。
+eps.dataを見てみましょう。
 
 .. code-block::
 
-               Dielectric Function                                    Optical Properties
-         (1)            (2)           (3)              (4)            (5)            (6)            (7)　
-  Photon Energy(eV)   Real Part   Imaginary Part   　    n              k      abs(in 10**8 m-1)      R
-       0.00000       13.90891       0.00000          3.72946        0.00000        0.00000        0.33307
-       0.05442       13.91137       0.00000          3.72979        0.00000        0.00000        0.33310
-       0.10885       13.91876       0.00000          3.73079        0.00000        0.00000        0.33320
-       0.16327       13.93110       0.00000          3.73244        0.00000        0.00000        0.33337
-       0.21769       13.94843       0.00000          3.73476        0.00000        0.00000        0.33361
-       0.27211       13.97078       0.00000          3.73775        0.00000        0.00000        0.33392
-                                                     (以下略)
+                 Dielectric Function                                    Optical Properties
+         (1)             (2)            (3)              (4)            (5)            (6)            (7)　
+   Photon Energy(eV)   Real Part   Imaginary Part          n              k      abs(in 10**9 m-1)      R
+        0.00000        13.39700        0.00000          3.66019        0.00000        0.00000        0.32585
+        0.05442        13.39927        0.00000          3.66050        0.00000        0.00000        0.32588
+        0.10885        13.40609        0.00000          3.66143        0.00000        0.00000        0.32598
+        0.16327        13.41749        0.00000          3.66299        0.00000        0.00000        0.32614
+        0.21769        13.43348        0.00000          3.66517        0.00000        0.00000        0.32637
+        0.27211        13.45412        0.00000          3.66799        0.00000        0.00000        0.32667
+                                              (以下略)
 
-| 各カラムの意味は以下の通りです。
-| (1)電磁波のエネルギー (2)誘電関数(実部)  (3)誘電関数(虚部)
-| (4)屈折率(実部)  (5)屈折率(虚部)　(6)吸収係数　(7)反射率
-| 電磁波のエネルギー＝0における誘電率が静的誘電率です。計算により得られた静的誘電率は13.90で、実測(11.7)よりも大きな値となります。これは、LDA法がSiのバンドギャップを過少評価することに起因しています。
+各カラムの意味は以下の通りです。
+
+(1)電磁波のエネルギー (2)誘電関数(実部) (3)誘電関数(虚部) (4)屈折率(実部) (5)屈折率(虚部) (6)吸収係数 (7)反射率
+
+電磁波のエネルギー=0における誘電率が静的誘電率です。
+計算により得られた静的誘電率は13.90で、実測(11.7)よりも大きな値です。
+この主要な原因は、Siのバンドギャップが過少評価されていることです。
 
 **バンド数の設定法**
 
-計算の信頼性は、計算に用いるバンド数に大きく依存します。信頼性を確認するには、１電子あたりの振動子強度の総和をしらべます。振動子強度の総和は、以下のコマンドを使用します。
+計算の信頼性は、計算に用いるバンド数に大きく依存します。
+信頼性を確認するには、1電子あたりの振動子強度の総和を確認します。
+振動子強度の総和は、以下のコマンドを使用します。
 
 .. code-block::
 
- % grep  oscillator  output000
+ % grep oscillator output000
 
 このコマンドを実行すると　
 
 .. code-block::
 
-  !* oscillator strength per electron =    0.91165
+  !* oscillator strength per electron =    0.90935
 
 という表示が画面に現われます。
 
-この表示は、この計算における１電子あたりの振動子強度の総和が約0.91であることを示しています。振動子強度の総和則(トーマス・ライヒ・クーンの総和則)は、1電子あたりの振動子強度の総和が1になることを主張します。バンド数(num_bandsパラメータ)を増やすにつれ、oscillator
-strength per
-electronの値は１に近づいていきますが、実際の計算では、この値が0.7を越えるようにnum_bandsを設定すれば、誘電関数はほぼ収束していることが経験的にわかっています。この例では、１電子あたりの振動子強度の総和が0.7以上となっており、バンド数は十分であることがわかります。
+これは、計算における1電子あたりの振動子強度の総和が約0.91であることを示しています。
+振動子強度の総和則(トーマス・ライヒ・クーンの総和則)は、1電子あたりの振動子強度の総和が1になることを主張します。
+バンド数(num_bandsパラメータ)を増やすにつれ、oscillator strength per electronの値は1.0に近づいていきますが、実際の計算では、この値が0.7を越えるようにnum_bandsを設定すれば、誘電関数はほぼ収束していることが経験的にわかっています。
+この例では、1電子あたりの振動子強度の総和が0.7以上となっており、バンド数は十分であることがわかります。
 
-**誘電関数の計算2**
-
-次に、Read and
-Needs(RN)方式で、遷移モーメント補正を行い、Siの誘電率を計算してみましょう。epsilonタグのfの部分を
-type = rnとして、同様に計算を行ってみます。計算を行うとeps.dataが上書きされるので、コピーをとっておきます。
-
-.. code-block::
-
- % cp eps.data  eps.data-ks
-
-同様に計算を行うと、以下のような結果がeps.dataに出力されます。
-
-.. code-block::
-
-               Dielectric Function                                    Optical Properties
-  Photon Energy(eV)   Real Part   Imaginary Part          n              k      abs(in 10**8 m-1)      R
-       0.00000       13.97263       0.00000          3.73800        0.00000        0.00000        0.33395
-       0.05442       13.97510       0.00000          3.73833        0.00000        0.00000        0.33398
-       0.10885       13.98253       0.00000          3.73932        0.00000        0.00000        0.33408
-       0.16327       13.99492       0.00000          3.74098        0.00000        0.00000        0.33425
-       0.21769       14.01231       0.00000          3.74330        0.00000        0.00000        0.33449
-       0.27211       14.03476       0.00000          3.74630        0.00000        0.00000        0.33480
-                                                    （以下略）
-
-静的誘電率は13.97で、KS法による計算値に極めて近い値となっています。先に得られたKS補正による誘電関数と、ここで得られた誘電関数を比較してプロットすると、以下のようになります。なお :numref:`uvsor_fig4` は、比較のため、光学測定により実測された誘電関数も示してあります。
+ここで得られた誘電関数を、実験値と併せて :numref:`uvsor_fig4` に示します。
 
 .. figure:: images/uvsor_image4.svg
  :name: uvsor_fig4
 
- Si結晶の誘電関数：(a)実部; (b)虚部。KS補正及びRN補正をして計算した誘電関数を示す。実測の誘電関数 (CRC Handbook of Chemistry 79-th Ed,CRC Press, New York 1998)を比較のため示す。
+ Si結晶の誘電関数：(a)実部; (b)虚部。赤実線が計算結果、黒点線が実験値 (CRC Handbook of Chemistry 79-th Ed,CRC Press, New York 1998)
 
 UVSOR-Berry-Phonon
 ~~~~~~~~~~~~~~~~~~~
@@ -2609,7 +2582,7 @@ zeff_xx(i),zeff_xy(i)などは原子iの補正されたボルン有効電荷の
      }
      sw_inversion = 0
    }
-   magnetic_state = para  !{para|af|ferro}
+   magnetic_state = para  !{para|ferro}
    atom_list{
      coordinate_system = cartesian ! {cartesian|internal}
      atoms{
@@ -2950,7 +2923,7 @@ phononディレクトリの上にシリコン原子のポテンシャルpotentia
      }
      sw_inversion = 0
    }
-   magnetic_state = para  !{para|af|ferro}
+   magnetic_state = para  !{para|ferro}
    atom_list{
      coordinate_system = cartesian ! {cartesian|internal}
      atoms{

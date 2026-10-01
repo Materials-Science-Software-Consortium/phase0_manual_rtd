@@ -2090,7 +2090,9 @@ modified Becke Johnson 交換ポテンシャルを利用するには、
    xctype = "tb09"
  }
 
-と記入します。 :eq:`advanced_metagga_eq1` のc値はSCF計算で決定しますが、ある値に固定したい場合には、以下のようにします。
+と記入します。
+空間反転対称性（sw_inversion = on）は利用できません。
+:eq:`advanced_metagga_eq1` のc値はSCF計算で決定しますが、ある値に固定したい場合には、以下のようにします。
 
 .. code-block:: text
 

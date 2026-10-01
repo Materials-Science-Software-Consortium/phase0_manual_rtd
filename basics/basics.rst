@@ -848,7 +848,7 @@ Si2のバンド構造を、:numref:`basics_image6` に示します。
 .. code-block:: text
 
  structure{
-   magnetic_state =  ferro   !{para|antiferro|ferro}
+   magnetic_state =  ferro
  }
 
 さらに各原子のスピン分極の初期値を指定する必要があります。
@@ -1045,11 +1045,10 @@ structure_evolution ブロックに、構造最適化の設定をします。
  +--------+------------------------------------------------------------+
  | method | 構造緩和の方法を指定します。                               |
  |        |                                                            |
- |        | 構造緩和のオプションとして、quench (quenched MD法) ,       |
- |        | cg2法（改良CG法；2がつかないcg方は非推奨）                 |
- |        | gdiis(GDIIS法), bfgs (BFGS法) , fire (FIRE法),             |
- |        | lbfgs (LBFGS法)のいずれかが選べます。                      |
+ |        | quench (quenched MD法), cg2法 (改良CG法), bfgs (BFGS法),   |
+ |        | fire (FIRE法), lbfgs (LBFGS法)のいずれかを指定します。     |
  |        | デフォルト値はbfgsです。                                   |
+ |        | （gdiis法、2がつかないcg法は非推奨）                       |
  +--------+------------------------------------------------------------+
  | dt     | 構造緩和を行う際の時間刻みです。                           |
  |        | quench法とfire法で用いられます。                           |
@@ -1078,9 +1077,8 @@ MD法かCG法を利用し、ある程度力が小さくなってからGDIIS(BFGS
  }
  ...
 
-ブロック名は、GDIIS,
-BFGS共通でgdiisです。デフォルト値はinitial_methodがcg2,
-c_forc2gdiisが0.05 hartree/bohr です。
+ブロック名は、GDIIS, BFGS共通でgdiisです。
+デフォルト値はinitial_methodがcg2, c_forc2gdiisが0.05 hartree/bohr です。
 
 .. _basics_FIRE_section:
 
@@ -1189,7 +1187,9 @@ PHASE/0のデフォルトの振る舞いとしては、前処理行列の行列�
    }
  }
 
-タグmethodにlbfgsを指定するとl-BFGS法を利用することができます。Limited-memory BFGS法（および通常のBFGS法、GDIIS法）の詳細設定は、structure_evolutionブロックの下のlbfgsブロック(bfgs, gdiisも可)において行うことができます。lbfgsブロック(もしくはbfgs, gdiisブロック)において設定できる主なパラメーターは下記の通り。
+タグmethodにlbfgsを指定するとl-BFGS法を利用します。
+Limited-memory BFGS法（および通常のBFGS法、GDIIS法）の詳細設定は、structure_evolutionブロックの下のlbfgsブロック(bfgs, gdiisも可)において行います。
+lbfgsブロック(もしくはbfgs, gdiisブロック)において設定できる主なパラメーターは下記の通り。
 
 .. csv-table:: l-BFGS法の詳細設定
   :widths: 30 70
@@ -1432,7 +1432,7 @@ F_POT(1) と F_POT(2) に、Si 原子と H原子の擬ポテンシャルを指�
                  c_vector =   0.000      0.000     30.784
          }
          symmetry{}
-         magnetic_state = para   !{para|af|ferro}
+         magnetic_state = para   !{para|ferro}
          atom_list{
              coordinate_system = internal
              atoms{

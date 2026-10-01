@@ -4569,12 +4569,10 @@ reference\_structureの下のcoordinate\_systemによって座標をデカルト
      ...
  }
 
-ここで、methodとしてはquench, damp, velocity_verlet,
-temperature_controlを利用することができます。拘束条件を課している場合、gdiis,
-cg2などには現バージョンでは未対応なのでご注意ください。また、dampはdamped
-molecular
-dynamics法による構造最適化を実施する場合に指定します。この手法は、多くの場合単純なquenched
-MDよりは大きな時間刻み(dt)を採用することができ、速く収束させることのできる手法です。
+ここで、methodとしてはquench, damp, velocity_verlet, temperature_controlを利用できます。
+拘束条件を課している場合、bfgs, cg2などには現バージョンでは未対応なのでご注意ください。
+また、dampはdamped molecular dynamics法による構造最適化を実施する場合に指定します。
+この手法は、多くの場合単純なquenched MDよりは大きな時間刻み(dt)を採用でき、速く収束させることのできる手法です。
 
 反応座標を変化させる指定
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
