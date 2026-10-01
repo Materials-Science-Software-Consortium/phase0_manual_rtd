@@ -43,7 +43,7 @@
        }
        sw_inversion = off
      }
-     magnetic_state = para  !{para|af|ferro}
+     magnetic_state = para  !{para|ferro}
      atom_list{
        coordinate_system = internal ! {cartesian|internal}
        atoms{

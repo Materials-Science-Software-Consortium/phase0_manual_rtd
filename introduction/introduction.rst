@@ -533,7 +533,7 @@ PHASE/0 2020.01 2020/12 公開
  - 並列パラメーターを自動的に選定することができるようになりました(\ :numref:`firststep_autores_para_section` )
  - 入力パラメーターファイルにおいて，二項演算による数値指定が可能となりました(\ :numref:`input_parameters_binaryop_section` )
  - 必須設定項目を減らしました（元素指定 :numref:`input_parameters_atomtyp` ，電荷密度のカットオフエネルギー :numref:`input_parameters_cutoff` ，k点サンプリング :numref:`input_parameters_2020_kp` など）
- - “密度”よる\ **k**\ 点メッシュ指定対応しまし(\ :numref:`input_parameters_2020_kp` )
+ - k点サンプリングを“密度”で指定できるようになりました(\ :numref:`input_parameters_2020_kp` )
  - 異なるカットオフエネルギーで出力された波動関数・電荷密度データを読み込むことができるようになりました(\ :numref:`input_parameters_differenet_wfcut` )
  - ログファイルにエンドマークが出力されるようになりました(\ :numref:`firststep_endmark_section` )
  - open core法が使えるようになりました(\ :numref:`advanced_opencore_section` )
